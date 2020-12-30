@@ -1,0 +1,1 @@
+target_include_directories (Project_Anael_Zateikin_Alexander_Yershov PRIVATE ${CMAKE_CURRENT_LIST_DIR})
