@@ -8,7 +8,7 @@ public:
 	~StaticObject();
 
 private:
-
+	
 };
 
 StaticObject::~StaticObject()
