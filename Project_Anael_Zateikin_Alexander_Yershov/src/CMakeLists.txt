@@ -2,4 +2,5 @@ target_sources (Project_Anael_Zateikin_Alexander_Yershov PRIVATE "main.cpp"
                                                                  "Board.cpp"
                                                                  "TextureHolder.cpp"
                                                                  "Controller.cpp"
-                                                                 "GameObject.cpp")
+                                                                 "GameObject.cpp"
+                                                                 "Wall.cpp")

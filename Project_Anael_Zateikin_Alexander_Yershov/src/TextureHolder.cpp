@@ -3,6 +3,7 @@
 
 TextureHolder::TextureHolder()
 {
+	setImagesForObj();
 }
 
 TextureHolder::~TextureHolder()
