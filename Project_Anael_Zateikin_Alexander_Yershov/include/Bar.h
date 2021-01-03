@@ -8,7 +8,7 @@ public:
 	~Bar();
 
 private:
-
+	
 };
 
 Bar::Bar()

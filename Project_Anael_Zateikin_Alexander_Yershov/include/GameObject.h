@@ -13,7 +13,7 @@ class Bonus;
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(const sf::Texture *);
 	~GameObject();
 	bool collidesWith(const GameObject&);
 	virtual void handleCollision(const GameObject&) = 0;
@@ -26,8 +26,12 @@ public:
 	virtual void handleCollision(const Coin&) = 0;
 	virtual void handleCollision(const Bonus&) = 0;
 	
-
-private:
+	//virtual void draw(sf::RenderWindow&) const = 0;
+	void draw(sf::RenderWindow&) const ;
 	sf::Sprite m_icon;
+protected:
+	
+private:
+	
 };
 

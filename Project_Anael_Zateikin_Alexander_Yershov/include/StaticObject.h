@@ -6,6 +6,8 @@ class StaticObject : public GameObject
 public:
 	using GameObject::GameObject;
 	~StaticObject();
+	void foo();
+protected:
 
 private:
 	
@@ -14,3 +16,4 @@ private:
 StaticObject::~StaticObject()
 {
 }
+

@@ -1,7 +1,7 @@
 #pragma once
 #include "StaticObject.h"
 
-class Wall : StaticObject
+class Wall : public StaticObject
 {
 public:
 	Wall();
@@ -10,11 +10,3 @@ public:
 private:
 
 };
-
-Wall::Wall()
-{
-}
-
-Wall::~Wall()
-{
-}
