@@ -3,4 +3,9 @@ target_sources (Project_Anael_Zateikin_Alexander_Yershov PRIVATE "main.cpp"
                                                                  "TextureHolder.cpp"
                                                                  "Controller.cpp"
                                                                  "GameObject.cpp"
-                                                                 "Wall.cpp")
+                                                                 "Wall.cpp"
+                                                                 "Enemy.cpp"
+                                                                 "MovingObject.cpp"
+                                                                 "DumbEnemy.cpp"
+                                                                 "MediocreEnemy.cpp"
+                                                                 "SmartEnemy.cpp")
