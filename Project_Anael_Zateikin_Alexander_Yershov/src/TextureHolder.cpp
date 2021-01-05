@@ -13,26 +13,32 @@ TextureHolder::~TextureHolder()
 // load all the object images
 void TextureHolder::setImagesForObj()
 {
-	
 	sf::Texture newImage;
 
-	newImage.loadFromFile("../../../Resource/Bar.jpg");
+	newImage.loadFromFile("bar.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("../../../Resource/Coin.jfif");
+	newImage.loadFromFile("coin.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("../../../Resource/Enemy.jpg");
+	newImage.loadFromFile("enemy.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("../../../Resource/Player.png");
+	newImage.loadFromFile("player.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("../../../Resource/Wall.jfif");
+	newImage.loadFromFile("wall.jfif");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("../../../Resource/Ladder.png");
+	newImage.loadFromFile("ladder.png");
 	m_textures.push_back(newImage);
+
+	newImage.loadFromFile("floor.png");
+	m_textures.push_back(newImage);
+
+	sf::Font newFont;
+	newFont.loadFromFile("sansation.ttf");
+	this->m_font = newFont;
 }
 
 sf::Texture* TextureHolder::getIcon(const Elements symbol)
@@ -56,6 +62,9 @@ sf::Texture* TextureHolder::getIcon(const Elements symbol)
 		break;
 	case Elements::ladder:
 		return &m_textures[5];
+		break;
+	case Elements::floor:
+		return &m_textures[6];
 		break;
 	default:
 		break;

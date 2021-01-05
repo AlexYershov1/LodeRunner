@@ -14,4 +14,11 @@ target_sources (Project_Anael_Zateikin_Alexander_Yershov PRIVATE "main.cpp"
                                                                  "TimeBonus.cpp"
                                                                  "ScoreBonus.cpp"
                                                                  "BadBonus.cpp"
-                                                                 "LifeBonus.cpp")
+                                                                 "LifeBonus.cpp"
+                                                                 "StartScreen.cpp"
+                                                                 "Bonus.cpp"
+                                                                 "Ladder.cpp"
+                                                                 "Bar.cpp"
+                                                                 "Floor.cpp"
+                                                                 "Coin.cpp"
+                                                                 "Macros.cpp")

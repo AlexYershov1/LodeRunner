@@ -1,26 +1,31 @@
 #include "Enemy.h"
 
+Enemy::Enemy(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH)
+	: MovingObject(icon, position, mapW, mapH), m_direction(Direction::Left)
+{
+}
+
 Enemy::~Enemy()
 {
 }
 
-void Enemy::move()
+void Enemy::move(sf::Time& clock)
 {
 	auto currPos = this->m_icon.getPosition();	// enemy position
 
 	switch (this->m_direction)
 	{
 	case Direction::Left:
-		this->m_icon.setPosition(currPos.x - STEP, currPos.y);
+		this->m_icon.setPosition(currPos.x - STEP * clock.asSeconds(), currPos.y);
 		break;
 	case Direction::Right:
-		this->m_icon.setPosition(currPos.x + STEP, currPos.y);
+		this->m_icon.setPosition(currPos.x + STEP * clock.asSeconds(), currPos.y);
 		break;
 	case Direction::Down:
-		this->m_icon.setPosition(currPos.x, currPos.y - STEP);
+		this->m_icon.setPosition(currPos.x, currPos.y - STEP * clock.asSeconds());
 		break;
 	case Direction::Up:
-		this->m_icon.setPosition(currPos.x, currPos.y + STEP);
+		this->m_icon.setPosition(currPos.x, currPos.y + STEP * clock.asSeconds());
 		break;
 	}
 }

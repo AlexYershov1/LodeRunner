@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Macros.h"
 
 GameObject::GameObject(const sf::Texture* texturePtr, const sf::Vector2f& location, int mapWidth, int mapHeight)
 {

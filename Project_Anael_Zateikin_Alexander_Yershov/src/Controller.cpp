@@ -1,6 +1,6 @@
 #pragma once
 #include "Controller.h"
-#include "Macros.h"
+//#include "Macros.h"
 
 Controller::Controller()
 	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game Window")), 
@@ -20,10 +20,14 @@ Controller::~Controller()
 void Controller::run()
 {
 	// game loop
-	sf::Event ev;
-	int key;
-
+	//sf::Event ev;
 	sf::Clock clock;
+
+	
+	m_menu.activateStartScreen(this->m_gameWindow);
+	m_map.readLvlMap();
+	createObject();
+
     while(this->m_gameWindow.isOpen())
 	{
 		//clear, draw , display
@@ -46,6 +50,13 @@ void Controller::run()
 		//auto deltaTime = clock.restart();
 		//while stage is not over 
 		//restart clock and save deltaTime 
+
+		// if(isWon())
+			// m_map.LoadLvlMap();
+			// update data in controller
+		// if(lostGame())
+			// update data in contoller
+			// activateStartScreen(this->m_window);
 		move(clock.restart());	 //send deltaTime to move function
 		
 
@@ -64,7 +75,7 @@ void Controller::move(sf::Time deltatime)
 		
 }
 
-bool Controller::checkCollision(MovingObject& thisObj )
+void Controller::checkCollision(MovingObject& thisObj )
 {
 	// check collision between player and enemies
 	for (auto& movable : m_movingObj)
@@ -107,9 +118,10 @@ void Controller::createObject()
 		for (int col = 0; col < m_map.getWidth(); col++)
 		{
 			symbol = m_map.getSymbol(row, col);
-			icon = m_textures.getIcon(symbol);
-			xPos = WINDOW_WIDTH / (m_map.getWidth() * col);
-			yPos = WINDOW_HEIGHT / (m_map.getHeight() * row);
+			if ((icon = m_textures.getIcon(symbol)) == nullptr)
+				continue;
+			xPos = (float)WINDOW_WIDTH / (float)(m_map.getWidth() * col);
+			yPos = (float)WINDOW_HEIGHT / (float)(m_map.getHeight() * row);
 			position = { xPos, yPos };
 			
 
@@ -122,7 +134,7 @@ void Controller::createObject()
 			}
 			else   //moving object
 			{
-				std::unique_ptr<MovingObject> movable = createMovingObject(symbol, icon, position);
+				std::unique_ptr<MovingObject> movable = createMovingObject(symbol, icon, position, m_map.getWidth(), m_map.getHeight());
 				m_movingObj.push_back(std::move(movable));
 					
 			}
@@ -158,6 +170,8 @@ std::unique_ptr<Enemy> selectEnemyType(sf::Texture* icon, sf::Vector2f position,
 	case EnemyType::smart:
 		return std::make_unique<SmartEnemy>(icon, position, mapW, mapH);
 	}
+
+	return nullptr;
 }
 std::unique_ptr<Bonus> selectBonusType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
 {
@@ -174,6 +188,7 @@ std::unique_ptr<Bonus> selectBonusType(sf::Texture* icon, sf::Vector2f position,
 	case BonusType::bad:
 		return std::make_unique<BadBonus>(icon, position, mapW, mapH);
 	}
+	return nullptr;
 }
 
 std::unique_ptr<StaticObject>  Controller::createStaticObject(Elements type, sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
@@ -190,7 +205,6 @@ std::unique_ptr<StaticObject>  Controller::createStaticObject(Elements type, sf:
 		return std::make_unique<Coin>(icon, position, mapW, mapH);
 	case Elements::bonus:
 		return selectBonusType(icon, position, mapW, mapH);
-		//return std::make_unique<Bonus>(icon, position, mapW, mapH);
 	
 	}
 	return nullptr;
