@@ -4,7 +4,8 @@
 class Wall : public StaticObject
 {
 public:
-	Wall();
+	using StaticObject::GameObject; //CHECK THIS
+	//Wall();
 	~Wall();
 
 private:

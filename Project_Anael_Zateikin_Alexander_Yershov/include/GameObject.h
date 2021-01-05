@@ -1,4 +1,5 @@
 #pragma once
+#include "Macros.h"
 #include <SFML/Graphics.hpp>
 
 class Wall;
@@ -13,9 +14,9 @@ class Bonus;
 class GameObject
 {
 public:
-	GameObject(const sf::Texture *);
+	GameObject(const sf::Texture *, const sf::Vector2f&, int, int); //should receive a board
 	~GameObject();
-	bool collidesWith(const GameObject&);
+	bool collidesWith(const GameObject&) const;
 	virtual void handleCollision(const GameObject&) = 0;
 	virtual void handleCollision(const Wall&) = 0;
 	// virtual void handleCollision(const Floor&) = 0;	// maybe relevent

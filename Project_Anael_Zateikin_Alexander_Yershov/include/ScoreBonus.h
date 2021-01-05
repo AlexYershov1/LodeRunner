@@ -4,17 +4,10 @@
 class ScoreBonus : public Bonus
 {
 public:
-	ScoreBonus();
+	using Bonus::Bonus;
+	//ScoreBonus();
 	~ScoreBonus();
 
 private:
 
 };
-
-ScoreBonus::ScoreBonus()
-{
-}
-
-ScoreBonus::~ScoreBonus()
-{
-}

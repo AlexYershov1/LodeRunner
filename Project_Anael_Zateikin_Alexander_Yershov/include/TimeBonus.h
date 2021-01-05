@@ -1,13 +1,13 @@
 #pragma once
 #include "Bonus.h"
 
-class LifeBonus : public Bonus
+class TimeBonus : public Bonus
 {
 public:
 	using Bonus::Bonus;
-	//LifeBonus();
-	~LifeBonus();
+	//TimeBonus();
+	~TimeBonus();
 
 private:
-
+	
 };

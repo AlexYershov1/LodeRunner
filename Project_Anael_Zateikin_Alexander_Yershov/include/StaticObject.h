@@ -13,7 +13,3 @@ private:
 	
 };
 
-StaticObject::~StaticObject()
-{
-}
-
