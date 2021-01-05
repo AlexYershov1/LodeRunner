@@ -4,17 +4,9 @@
 class Coin : public StaticObject
 {
 public:
-	Coin();
+	using::StaticObject::StaticObject;
 	~Coin();
 
 private:
 
 };
-
-Coin::Coin()
-{
-}
-
-Coin::~Coin()
-{
-}

@@ -1,25 +1,27 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <vector>
+//#include <SFML/Graphics.hpp>
+//#include <vector>
 #include <memory>
 #include "Board.h"
-#include "MovingObject.h"
-#include "StaticObject.h"
+//#include "MovingObject.h"
+//#include "StaticObject.h"
 #include "TextureHolder.h"
 #include "Player.h"
-#include "Enemy.h"
+//#include "Enemy.h"
 #include "DumbEnemy.h"
 #include "MediocreEnemy.h"
 #include "SmartEnemy.h"
-#include "Wall.h"
+//#include "Wall.h"
 #include "Ladder.h"
+#include "Floor.h"
 #include "Bar.h"
 #include "Coin.h"
-#include "Bonus.h"
+//#include "Bonus.h"
 #include "LifeBonus.h"
 #include "ScoreBonus.h"
 #include "TimeBonus.h"
 #include "BadBonus.h"
+#include "StartScreen.h"
 
 
 class Controller
@@ -29,7 +31,7 @@ public:
 	~Controller();
 	void run();
 	void move(sf::Time);
-	bool checkCollision(MovingObject&);
+	void checkCollision(MovingObject&);
 	void draw();
 private:
 	void createObject();
@@ -43,6 +45,7 @@ private:
 	TextureHolder m_textures;
 	sf::RenderWindow m_gameWindow;
 	sf::Clock m_stageTime;
+	StartScreen m_menu;
 	int m_level;
 };
 static std::unique_ptr<MovingObject> createMovingObject(Elements, sf::Texture*, sf::Vector2f, int, int);

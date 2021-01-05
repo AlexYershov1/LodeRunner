@@ -4,17 +4,9 @@
 class SmartEnemy : public Enemy
 {
 public:
-	SmartEnemy();
+	using Enemy::Enemy;
 	~SmartEnemy();
 
 private:
 
 };
-
-SmartEnemy::SmartEnemy()
-{
-}
-
-SmartEnemy::~SmartEnemy()
-{
-}

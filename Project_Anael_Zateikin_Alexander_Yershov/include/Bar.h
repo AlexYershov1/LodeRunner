@@ -4,17 +4,9 @@
 class Bar : public StaticObject
 {
 public:
-	Bar();
+	using StaticObject::StaticObject;
 	~Bar();
 
 private:
 	
 };
-
-Bar::Bar()
-{
-}
-
-Bar::~Bar()
-{
-}

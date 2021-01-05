@@ -4,17 +4,8 @@
 class MediocreEnemy : public Enemy
 {
 public:
-	MediocreEnemy();
+	using Enemy::Enemy;
 	~MediocreEnemy();
-
 private:
 
 };
-
-MediocreEnemy::MediocreEnemy()
-{
-}
-
-MediocreEnemy::~MediocreEnemy()
-{
-}

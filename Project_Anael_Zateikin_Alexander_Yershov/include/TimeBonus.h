@@ -5,7 +5,6 @@ class TimeBonus : public Bonus
 {
 public:
 	using Bonus::Bonus;
-	//TimeBonus();
 	~TimeBonus();
 
 private:

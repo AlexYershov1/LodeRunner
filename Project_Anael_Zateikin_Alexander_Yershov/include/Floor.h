@@ -4,17 +4,9 @@
 class Floor : public Wall
 {
 public:
-	Floor();
+	using Wall::Wall;
 	~Floor();
 
 private:
 
 };
-
-Floor::Floor()
-{
-}
-
-Floor::~Floor()
-{
-}

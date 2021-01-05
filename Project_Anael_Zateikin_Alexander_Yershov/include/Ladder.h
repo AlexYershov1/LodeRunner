@@ -4,17 +4,9 @@
 class Ladder : public StaticObject
 {
 public:
-	Ladder();
+	using StaticObject::StaticObject;
 	~Ladder();
 
 private:
 
 };
-
-Ladder::Ladder()
-{
-}
-
-Ladder::~Ladder()
-{
-}

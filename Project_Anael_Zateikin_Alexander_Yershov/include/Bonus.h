@@ -4,17 +4,9 @@
 class Bonus : public StaticObject
 {
 public:
-	Bonus();
+	Bonus(const sf::Texture*, const sf::Vector2f&, int, int);
 	~Bonus();
-
 private:
 
 };
 
-Bonus::Bonus()
-{
-}
-
-Bonus::~Bonus()
-{
-}

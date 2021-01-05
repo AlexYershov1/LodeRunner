@@ -8,7 +8,7 @@ public:
 	Player(const sf::Texture*, const sf::Vector2f& , int , int);
 	~Player();
 
-	virtual void move(sf::Time) override {} ;
+	virtual void move(sf::Time&) override;
 
 	
 	void handleCollision(const GameObject&) override ;

@@ -13,5 +13,6 @@ public:
 
 private:
 	std::vector<sf::Texture> m_textures;
+	sf::Font m_font;
 };
 
