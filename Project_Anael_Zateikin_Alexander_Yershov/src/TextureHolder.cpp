@@ -13,7 +13,7 @@ TextureHolder::~TextureHolder()
 // load all the object images
 void TextureHolder::setImagesForObj()
 {
-
+	
 	sf::Texture newImage;
 
 	newImage.loadFromFile("../../../Resource/Bar.jpg");

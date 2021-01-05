@@ -1,19 +1,27 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const sf::Texture* texturePtr)
+GameObject::GameObject(const sf::Texture* texturePtr, const sf::Vector2f& location, int mapWidth, int mapHeight)
 {
 	m_icon.setTexture(*texturePtr);
-	m_icon.scale(0.2f, 0.2f);
+
+	//this section should be in a seperate function - will be called in a new level
+	
+	auto xScaleValue = (float)WINDOW_WIDTH / ((float)ICON_SIZE * (float)mapWidth);
+	auto yScaleValue = (float)WINDOW_HEIGHT / ((float)ICON_SIZE * (float)mapHeight);
+
+	m_icon.scale(xScaleValue, yScaleValue);
+	m_icon.setPosition(location);
+	
 	//set origin
-	const auto rect = m_icon.getLocalBounds();
-	m_icon.setOrigin(rect.width / 2, rect.height / 2);
+	//const auto rect = m_icon.getGlobalBounds();			//for now - taking this down. Easier to place the sprites with default origin
+	//m_icon.setOrigin(rect.width / 2, rect.height / 2);
 }
 
 GameObject::~GameObject()
 {
 }
 
-bool GameObject::collidesWith(const GameObject& obj)
+bool GameObject::collidesWith(const GameObject& obj) const
 {
 	return m_icon.getGlobalBounds().intersects(obj.m_icon.getGlobalBounds());
 }

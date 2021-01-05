@@ -1,7 +1,7 @@
 #include "MovingObject.h"
 
-MovingObject::MovingObject(const sf::Texture* texturePtr, const sf::Vector2f& initLoction)
-	: GameObject(texturePtr), m_speed(BASE_SPEED), m_respawnLocation(initLoction)
+MovingObject::MovingObject(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH)
+	: GameObject(icon, position, mapW, mapH), m_speed(BASE_SPEED), m_respawnLocation(position)
 {
 }
 

@@ -8,4 +8,10 @@ target_sources (Project_Anael_Zateikin_Alexander_Yershov PRIVATE "main.cpp"
                                                                  "MovingObject.cpp"
                                                                  "DumbEnemy.cpp"
                                                                  "MediocreEnemy.cpp"
-                                                                 "SmartEnemy.cpp")
+                                                                 "SmartEnemy.cpp"
+                                                                 "Player.cpp"
+                                                                 "StaticObject.cpp"
+                                                                 "TimeBonus.cpp"
+                                                                 "ScoreBonus.cpp"
+                                                                 "BadBonus.cpp"
+                                                                 "LifeBonus.cpp")
