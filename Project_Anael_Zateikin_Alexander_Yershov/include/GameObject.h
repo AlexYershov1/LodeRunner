@@ -16,15 +16,15 @@ public:
 	GameObject(const sf::Texture *, const sf::Vector2f&, int, int); //should receive a board
 	~GameObject();
 	bool collidesWith(const GameObject&) const;
-	virtual void handleCollision(const GameObject&) = 0;
-	virtual void handleCollision(const Wall&) = 0;
+	virtual void handleCollision(GameObject&) = 0;
+	virtual void handleCollision(Wall&) = 0;
 	// virtual void handleCollision(const Floor&) = 0;	// maybe relevent
-	virtual void handleCollision(const Player&) = 0;
-	virtual void handleCollision(const Enemy&) = 0;
-	virtual void handleCollision(const Bar&) = 0;
-	virtual void handleCollision(const Ladder&) = 0;
-	virtual void handleCollision(const Coin&) = 0;
-	virtual void handleCollision(const Bonus&) = 0;
+	virtual void handleCollision(Player&) = 0;
+	virtual void handleCollision(Enemy&) = 0;
+	virtual void handleCollision(Bar&) = 0;
+	virtual void handleCollision(Ladder&) = 0;
+	virtual void handleCollision(Coin&) = 0;
+	virtual void handleCollision(Bonus&) = 0;
 	
 	//virtual void draw(sf::RenderWindow&) const = 0;
 	void draw(sf::RenderWindow&) const ;

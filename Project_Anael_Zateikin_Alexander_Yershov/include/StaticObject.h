@@ -8,14 +8,14 @@ public:
 	~StaticObject();
 
 	
-	virtual void handleCollision(const GameObject&) override {};
-	virtual void handleCollision(const Wall&) override {};
-	virtual void handleCollision(const Player&) override {};
-	virtual void handleCollision(const Enemy&) override {};
-	virtual void handleCollision(const Bar&) override {};
-	virtual void handleCollision(const Ladder&) override {};
-	virtual void handleCollision(const Coin&) override {};
-	virtual void handleCollision(const Bonus&) override {};
+	virtual void handleCollision(GameObject&) override {};
+	virtual void handleCollision(Wall&) override {};
+	virtual void handleCollision(Player&) override {};
+	virtual void handleCollision(Enemy&) override {};
+	virtual void handleCollision(Bar&) override {};
+	virtual void handleCollision(Ladder&) override {};
+	virtual void handleCollision(Coin&) override {};
+	virtual void handleCollision(Bonus&) override {};
 	
 protected:
 

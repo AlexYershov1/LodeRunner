@@ -1,11 +1,11 @@
 #pragma once
 
 const float BASE_SPEED = 1.0;
-const float STEP = 2.0;
+const float STEP = 35.0;
 const int NUM_OF_LIVES = 3;
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
-const float ICON_SIZE = 300;
+const float ICON_SIZE = 512;
 const int SEED = 17;
 const int NUM_OF_ENEMIE_TYPES = 3;
 const int NUM_OF_BONUS_TYPES = 4;
