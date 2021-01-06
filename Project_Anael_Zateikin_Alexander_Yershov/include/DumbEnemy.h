@@ -9,5 +9,4 @@ public:
 
 	virtual void move(sf::Time&) override;
 private:
-	sf::Vector2f m_prevPos;
 };
