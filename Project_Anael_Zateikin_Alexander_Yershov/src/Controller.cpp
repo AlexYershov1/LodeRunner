@@ -36,19 +36,32 @@ void Controller::run()
 		draw();
 		this->m_gameWindow.display();
 		
-
-		/*while (this->m_gameWindow.pollEvent(ev))
+		for (auto evnt = sf::Event(); m_gameWindow.pollEvent(evnt); )
+		{
+		
+		
+			switch (evnt.type)
+			{
+			case sf::Event::Closed:
+				m_gameWindow.close();
+				break;
+			default:
+				break;
+			}
+		}
+			/*
+		for (this->m_gameWindow.pollEvent(ev))
 		{
 			switch (ev.type)
 			{
 			default:
 				break;
 			}
-		}*/
+		}
 
-		
+		*/
 		//start clock
-		//auto deltaTime = clock.restart();
+		
 		//while stage is not over 
 		//restart clock and save deltaTime 
 

@@ -1,14 +1,18 @@
 #pragma once
 
-const float BASE_SPEED = 1.0;
-const float STEP = 35.0;
-const int NUM_OF_LIVES = 3;
+
+
+//grapics
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
 const float ICON_SIZE = 512;
 const int SEED = 17;
 const int NUM_OF_ENEMIE_TYPES = 3;
 const int NUM_OF_BONUS_TYPES = 4;
+const float BASE_SPEED = 50.0;
+const float FALL_SPEED = 100.0;
+const float STEP = 35.0;
+const int NUM_OF_LIVES = 3;
 
 const int HEADER_SIZE = 60;
 const int REG_CHAR_SIZE = 100;
@@ -21,7 +25,7 @@ ENEMY_C = '%', LADDER_C = 'H', COIN_C = '*', BONUS_C = '?' ;
 
 enum class Elements
 {
-	bar, coin, enemy, player, wall, ladder, floor, bonus
+	bar, coin, enemy, player, wall, ladder, floor, bonus, empty
 };
 
 enum class EnemyType
@@ -35,7 +39,7 @@ enum class BonusType
 
 enum class Direction
 {
-	Left, Right, Up, Down
+	Left , Right, Up, Down
 };
 
 enum class MovingObjTexture

@@ -18,6 +18,7 @@ void Enemy::move(sf::Time& clock)
 	switch (this->m_direction)
 	{
 	case Direction::Left:
+		//this->m_icon.move(m_speed * clock.asSeconds());
 		this->m_icon.setPosition(currPos.x - STEP * clock.asSeconds(), currPos.y);
 		break;
 	case Direction::Right:
@@ -44,7 +45,7 @@ void Enemy::handleCollision(Wall& NO_USE)
 	else
 		m_direction = Direction::Left;
 
-	this->m_icon.rotate(-1);	// flipIcon();
+	this->m_icon.scale(-1, 1);	// flipIcon();
 }
 
 void Enemy::handleCollision(Player& ply)
@@ -57,7 +58,7 @@ void Enemy::handleCollision(Bar& barObj)
 	m_icon.setTexture(*m_iconArsenal[(int)MovingObjTexture::charOnBarIcon]);
 }
 
-void Enemy::handleCollision(Ladder&)
+void Enemy::handleCollision(Ladder& ladderObj)
 {
 	m_icon.setTexture(*m_iconArsenal[(int)MovingObjTexture::enemyClimbingIcon]);
 }

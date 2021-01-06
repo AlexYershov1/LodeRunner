@@ -6,8 +6,7 @@ int main()
 {
 	/*
 	TO-DO:
-	3)Think if the set icon shoud be a different function - will be called each time 
-	a new stage is loaded. 
+	
 
 	*/
 

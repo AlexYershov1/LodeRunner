@@ -106,7 +106,6 @@ Elements Board::getSymbol(int row, int col)
 	case WALL_C:
 		//distinguish floor / wall
 		if (checkIfFloorSymbol(row, col)) 
-							//this->m_map[row][col + 1] == '#' || this->m_map[row][col - 1] == '#'  //THIS LINE IS BAD. COL-1 
 			return Elements::floor;
 		else
 			return Elements::wall;

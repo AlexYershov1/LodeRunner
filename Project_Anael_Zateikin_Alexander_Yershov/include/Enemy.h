@@ -15,7 +15,7 @@ public:
 	virtual void handleCollision(Player&);
 	virtual void handleCollision(Enemy&) override {};
 	virtual void handleCollision(Bar&) override;
-	virtual void handleCollision(Ladder&);
+	virtual void handleCollision(Ladder&) override;
 	virtual void handleCollision(Coin&) override {};
 	virtual void handleCollision(Bonus&) override {};
 	
