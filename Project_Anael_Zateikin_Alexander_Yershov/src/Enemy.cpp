@@ -12,25 +12,10 @@ Enemy::~Enemy()
 
 void Enemy::move(sf::Time& clock)
 {
-	auto currPos = this->m_icon.getPosition();	// enemy position
+	// set to default icon
 	m_icon.setTexture(*m_iconArsenal[(int)MovingObjTexture::enemyDefaultIcon]);
-
-	switch (this->m_direction)
-	{
-	case Direction::Left:
-		//this->m_icon.move(m_speed * clock.asSeconds());
-		this->m_icon.setPosition(currPos.x - STEP * clock.asSeconds(), currPos.y);
-		break;
-	case Direction::Right:
-		this->m_icon.setPosition(currPos.x + STEP * clock.asSeconds(), currPos.y);
-		break;
-	case Direction::Down:
-		this->m_icon.setPosition(currPos.x, currPos.y - STEP * clock.asSeconds());
-		break;
-	case Direction::Up:
-		this->m_icon.setPosition(currPos.x, currPos.y + STEP * clock.asSeconds());
-		break;
-	}
+	// set new position
+	this->m_icon.move(DirectionVec[(int)this->m_direction] * BASE_SPEED * clock.asSeconds());
 }
 
 void Enemy::handleCollision(GameObject& obj)
