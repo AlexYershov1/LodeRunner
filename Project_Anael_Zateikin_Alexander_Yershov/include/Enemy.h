@@ -1,6 +1,7 @@
 #pragma once
 #include "MovingObject.h"
 #include "Macros.h"
+class Ladder;
 
 class Enemy : public MovingObject
 {
@@ -13,7 +14,7 @@ public:
 	virtual void handleCollision(Player&);
 	virtual void handleCollision(Enemy&) override {};
 	virtual void handleCollision(Bar&) override {/*do stuff*/};
-	virtual void handleCollision(Ladder&);
+	virtual void handleCollision(Ladder&) override {};
 	virtual void handleCollision(Coin&) override {};
 	virtual void handleCollision(Bonus&) override {};
 	

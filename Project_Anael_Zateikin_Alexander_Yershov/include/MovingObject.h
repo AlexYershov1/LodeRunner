@@ -13,7 +13,7 @@ public:
 
 	virtual void move(sf::Time&) = 0;
 protected:
-	float m_speed; //speed per second
+	//float m_speed; //speed per second
 	sf::Vector2f m_respawnLocation;
 	std::vector<sf::Texture*> m_iconArsenal;
 };
