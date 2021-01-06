@@ -55,7 +55,7 @@ sf::Texture* TextureHolder::getIcon(const Elements symbol)
 		return &m_textures[2];
 		break;
 	case Elements::player:
-		return &m_textures[3];
+		return &m_textures[3]; //SOMEWHY THE TEXTURE IS AS ENEMIE'S
 		break;
 	case Elements::wall:
 		return &m_textures[4];

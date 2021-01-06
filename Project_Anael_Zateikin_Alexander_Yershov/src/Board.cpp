@@ -37,28 +37,33 @@ Elements Board::getSymbol(int row, int col)
 
 	switch (symbol)
 	{
-	case '-':
+	case BAR_C:
 		return Elements::bar;
 		break;
-	case '*':
+	case COIN_C:
 		return Elements::coin;
 		break;
-	case '%':
+	case ENEMY_C:
 		return Elements::enemy;
 		break;
-	case '@':
+	case PLAYER_C:
 		return Elements::player;
 		break;
-	case '#':
-		if (this->m_map[row][col + 1] == '#' || this->m_map[row][col - 1] == '#')
+	case WALL_C:
+		//distinguish floor / wall
+		if (checkIfFloorSymbol(row, col)) 
+							//this->m_map[row][col + 1] == '#' || this->m_map[row][col - 1] == '#'  //THIS LINE IS BAD. COL-1 
 			return Elements::floor;
 		else
 			return Elements::wall;
 		break;
-	case 'H':
+	case LADDER_C:
 		return Elements::ladder;
 		break;
-	case ' ':
+	case BONUS_C:
+		return Elements::bonus;
+		break;
+	case EMPTY_C:
 		return Elements::empty;
 		break;
 	default:
@@ -77,6 +82,16 @@ void Board::readLvlSize()
 	this->m_fRead >> number;
 	this->m_width = std::stoi(number, nullptr);
 	this->m_fRead.ignore();
+}
+
+bool Board::checkIfFloorSymbol(int row, int col) const
+{
+	if(row == 0 ) //ceiling
+		return false;
+	if (m_map[row - 1][col] == WALL_C) //check if there is a wall above
+		return false;
+
+	return true; //is a floor
 }
 
 

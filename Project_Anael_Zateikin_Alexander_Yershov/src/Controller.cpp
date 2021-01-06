@@ -96,13 +96,13 @@ void Controller::checkCollision(MovingObject& thisObj )
 void Controller::draw()
 {
 	//draw ststics
-	auto staticObjPtr = m_staticObj.begin();
-	for (; staticObjPtr != m_staticObj.end(); staticObjPtr++)
-		(*staticObjPtr)->draw(this->m_gameWindow);
+	//auto staticObjPtr = m_staticObj.begin();
+	for (auto& unmovable : m_staticObj)
+		unmovable->draw(this->m_gameWindow);
 	//draw moving
-	auto movingObjPtr = m_movingObj.begin();
-	for (; movingObjPtr != m_movingObj.end(); movingObjPtr++)
-		(*movingObjPtr)->draw(this->m_gameWindow);
+	//auto movingObjPtr = m_movingObj.begin();
+	for (auto& movable : m_movingObj)
+		movable->draw(this->m_gameWindow);
 	
 }
 
@@ -120,8 +120,8 @@ void Controller::createObject()
 			symbol = m_map.getSymbol(row, col);
 			if ((icon = m_textures.getIcon(symbol)) == nullptr)
 				continue;
-			xPos = (float)WINDOW_WIDTH / (float)(m_map.getWidth() * col);
-			yPos = (float)WINDOW_HEIGHT / (float)(m_map.getHeight() * row);
+			xPos = ((float)WINDOW_WIDTH / (float)(m_map.getWidth())) * col ;
+			yPos = ((float)WINDOW_HEIGHT / (float)(m_map.getHeight())) * row;
 			position = { xPos, yPos };
 			
 
@@ -196,6 +196,7 @@ std::unique_ptr<StaticObject>  Controller::createStaticObject(Elements type, sf:
 	switch (type)
 	{
 	case Elements::wall:
+	case Elements::floor:
 		return std::make_unique<Wall>(icon, position, mapW, mapH);
 	case Elements::ladder:
 		return std::make_unique<Ladder>(icon, position, mapW, mapH);
