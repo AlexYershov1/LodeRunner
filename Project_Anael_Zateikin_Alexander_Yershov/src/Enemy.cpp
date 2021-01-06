@@ -1,8 +1,8 @@
 #include "Enemy.h"
 #include "Player.h"
 
-Enemy::Enemy(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH)
-	: MovingObject(icon, position, mapW, mapH), m_direction(Direction::Left)
+Enemy::Enemy(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH, std::vector<sf::Texture*>& iconVec)
+	: MovingObject(icon, position, mapW, mapH, iconVec), m_direction(Direction::Left)
 {
 }
 
@@ -48,6 +48,5 @@ void Enemy::handleCollision(Wall& NO_USE)
 
 void Enemy::handleCollision(Player& ply)
 {
-	sf::Time x;
-	ply.move(x);
+	ply.decreaseLife();
 }

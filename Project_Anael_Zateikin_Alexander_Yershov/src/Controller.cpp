@@ -129,30 +129,30 @@ void Controller::createObject()
 
 std::unique_ptr<MovingObject> Controller::createMovingObject(Elements type, sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
 {
-	
+	auto iconVec = this->m_textures.createSwitchingIcons();
 	switch (type)
 	{
 	case Elements::player:
-		return std::make_unique<Player>(icon, position, mapW, mapH);
+		return std::make_unique<Player>(icon, position, mapW, mapH, iconVec);
 		
 	case Elements::enemy:
-		return selectEnemyType(icon, position, mapW, mapH); 
+		return selectEnemyType(icon, position, mapW, mapH, iconVec); 
 	}
 	return nullptr;
 }
 
-std::unique_ptr<Enemy> selectEnemyType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
+std::unique_ptr<Enemy> selectEnemyType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH, std::vector<sf::Texture*>& iconVec)
 {
 	int choice = rand() % NUM_OF_ENEMIE_TYPES; //choose one of three enemy types
 
 	switch ((EnemyType)choice)
 	{
 	case EnemyType::dumb :
-		return std::make_unique<DumbEnemy>(icon, position, mapW, mapH);
+		return std::make_unique<DumbEnemy>(icon, position, mapW, mapH, iconVec);
 	case EnemyType::mediocre:
-		return std::make_unique<MediocreEnemy>(icon, position, mapW, mapH);
+		return std::make_unique<MediocreEnemy>(icon, position, mapW, mapH, iconVec);
 	case EnemyType::smart:
-		return std::make_unique<SmartEnemy>(icon, position, mapW, mapH);
+		return std::make_unique<SmartEnemy>(icon, position, mapW, mapH, iconVec);
 	}
 
 	return nullptr;

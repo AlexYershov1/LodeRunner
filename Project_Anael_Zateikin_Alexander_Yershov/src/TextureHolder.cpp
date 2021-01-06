@@ -45,6 +45,9 @@ void TextureHolder::setImagesForObj()
 	newImage.loadFromFile("climbingLadder.png");
 	m_textures.push_back(newImage);
 
+	newImage.loadFromFile("climbingPlayer.png");
+	m_textures.push_back(newImage);
+
 	this->m_font.loadFromFile("SundayMorning.ttf");
 }
 
@@ -53,28 +56,40 @@ sf::Texture* TextureHolder::getIcon(const Elements symbol)
 	switch (symbol)
 	{
 	case Elements::bar:
-		return &m_textures[0];
+		return &m_textures[(int)Elements::bar];
 		break;
 	case Elements::coin:
-		return &m_textures[1];
+		return &m_textures[(int)Elements::coin];
 		break;
 	case Elements::enemy:
-		return &m_textures[2];
+		return &m_textures[(int)Elements::enemy];
 		break;
 	case Elements::player:
-		return &m_textures[3]; //SOMEWHY THE TEXTURE IS AS ENEMIE'S
+		return &m_textures[(int)Elements::player];
 		break;
 	case Elements::wall:
-		return &m_textures[4];
+		return &m_textures[(int)Elements::wall];
 		break;
 	case Elements::ladder:
-		return &m_textures[5];
+		return &m_textures[(int)Elements::ladder];
 		break;
 	case Elements::floor:
-		return &m_textures[6];
+		return &m_textures[(int)Elements::floor];
 		break;
 	default:
 		break;
 	}
 	return nullptr;
+}
+
+std::vector<sf::Texture*> TextureHolder::createSwitchingIcons()
+{
+	std::vector<sf::Texture*> iconVec;
+	iconVec.push_back(&this->m_textures[(int)Elements::player]);
+	iconVec.push_back(&this->m_textures[10]);
+	iconVec.push_back(&this->m_textures[(int)Elements::enemy]);
+	iconVec.push_back(&this->m_textures[9]);
+	iconVec.push_back(&this->m_textures[8]);
+
+	return iconVec;
 }
