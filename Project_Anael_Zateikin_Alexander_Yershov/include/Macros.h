@@ -21,8 +21,7 @@ ENEMY_C = '%', LADDER_C = 'H', COIN_C = '*', BONUS_C = '?' ;
 
 enum class Elements
 {
-	coin, ladder, bar, wall, floor, bonus,
-	enemy, player, empty
+	bar, coin, enemy, player, wall, ladder, floor, bonus
 };
 
 enum class EnemyType
@@ -38,4 +37,12 @@ enum class Direction
 {
 	Left, Right, Up, Down
 };
+
+enum class MovingObjTexture
+{
+	playerDefaultIcon, playerClimbingIcon,
+	enemyDefaultIcon, enemyClimbingIcon, 
+	charOnBarIcon
+};
+
 bool isStaticObj(const Elements);

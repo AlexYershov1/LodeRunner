@@ -5,15 +5,15 @@
 class Enemy : public MovingObject
 {
 public:
-	Enemy(const sf::Texture*, const sf::Vector2f&, int, int);
+	Enemy(const sf::Texture*, const sf::Vector2f&, int, int, std::vector<sf::Texture*>&);
 	~Enemy();
 	void move(sf::Time&) override;
-	virtual void handleCollision(GameObject&) override;
-	virtual void handleCollision(Wall&) override;
-	virtual void handleCollision(Player&) override;
+	virtual void handleCollision(GameObject&);
+	virtual void handleCollision(Wall&);
+	virtual void handleCollision(Player&);
 	virtual void handleCollision(Enemy&) override {};
 	virtual void handleCollision(Bar&) override {/*do stuff*/};
-	virtual void handleCollision(Ladder&) override {/*do stuff*/};
+	virtual void handleCollision(Ladder&);
 	virtual void handleCollision(Coin&) override {};
 	virtual void handleCollision(Bonus&) override {};
 	

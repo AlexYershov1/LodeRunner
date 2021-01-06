@@ -49,5 +49,5 @@ private:
 	int m_level;
 };
 //static std::unique_ptr<MovingObject> createMovingObject(Elements, sf::Texture*, sf::Vector2f, int, int);
-static std::unique_ptr<Enemy> selectEnemyType(sf::Texture*, sf::Vector2f, int, int);
+static std::unique_ptr<Enemy> selectEnemyType(sf::Texture*, sf::Vector2f, int, int, std::vector<sf::Texture*>&);
 //static std::unique_ptr<Bonus> selectBonusType(sf::Texture*, sf::Vector2f, int, int);
