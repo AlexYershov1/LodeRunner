@@ -1,5 +1,5 @@
 #pragma once
-
+#include <SFML/Graphics.hpp>
 
 
 //grapics
@@ -22,6 +22,7 @@ const float BOLD_OUTLINE = 10.0;
 const char WALL_C = '#', EMPTY_C = ' ', BAR_C = '-', PLAYER_C = '@',
 ENEMY_C = '%', LADDER_C = 'H', COIN_C = '*', BONUS_C = '?' ;
 
+const sf::Vector2f DirectionVec[] = { {-1, 0}, {1, 0}, {0, 1}, {0, -1} };
 
 enum class Elements
 {
@@ -39,7 +40,7 @@ enum class BonusType
 
 enum class Direction
 {
-	Left , Right, Up, Down
+	Left, Right, Up, Down
 };
 
 enum class MovingObjTexture
