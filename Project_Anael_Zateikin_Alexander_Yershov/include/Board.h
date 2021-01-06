@@ -24,4 +24,5 @@ private:
 	int m_width;
 
 	void readLvlSize();
+	bool checkIfFloorSymbol(int, int) const;
 };

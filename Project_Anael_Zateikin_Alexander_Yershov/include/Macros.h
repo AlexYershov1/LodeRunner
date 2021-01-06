@@ -15,6 +15,10 @@ const int REG_CHAR_SIZE = 100;
 const float OUTLINE_THICKNESS = 5.0;
 const float BOLD_OUTLINE = 10.0;
 
+const char WALL_C = '#', EMPTY_C = ' ', BAR_C = '-', PLAYER_C = '@',
+ENEMY_C = '%', LADDER_C = 'H', COIN_C = '*', BONUS_C = '?' ;
+
+
 enum class Elements
 {
 	coin, ladder, bar, wall, floor, bonus,
