@@ -30,10 +30,22 @@ void Enemy::move(sf::Time& clock)
 	}
 }
 
-void Enemy::handleCollision(const Wall& NO_USE)
+void Enemy::handleCollision(GameObject& obj)
+{
+	obj.handleCollision(*this);
+}
+
+void Enemy::handleCollision(Wall& NO_USE)
 {
 	if (m_direction == Direction::Left)
 		m_direction = Direction::Right;
 	else
 		m_direction = Direction::Left;
+
+	// flipIcon();
+}
+
+void Enemy::handleCollision(Player& ply)
+{
+	//ply.looseLife();
 }

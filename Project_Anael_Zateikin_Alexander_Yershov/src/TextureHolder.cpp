@@ -27,7 +27,7 @@ void TextureHolder::setImagesForObj()
 	newImage.loadFromFile("player.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("wall.jfif");
+	newImage.loadFromFile("wall.png");
 	m_textures.push_back(newImage);
 
 	newImage.loadFromFile("ladder.png");
@@ -36,9 +36,16 @@ void TextureHolder::setImagesForObj()
 	newImage.loadFromFile("floor.png");
 	m_textures.push_back(newImage);
 
-	sf::Font newFont;
-	newFont.loadFromFile("sansation.ttf");
-	this->m_font = newFont;
+	newImage.loadFromFile("bonus.png");
+	m_textures.push_back(newImage);
+
+	newImage.loadFromFile("barClimbing.png");
+	m_textures.push_back(newImage);
+
+	newImage.loadFromFile("climbingLadder.png");
+	m_textures.push_back(newImage);
+
+	this->m_font.loadFromFile("SundayMorning.ttf");
 }
 
 sf::Texture* TextureHolder::getIcon(const Elements symbol)

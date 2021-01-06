@@ -16,12 +16,12 @@ void Player::move(sf::Time& clock)
 	return;
 }
 
-void Player::handleCollision(const GameObject&) 
+void Player::handleCollision(GameObject&) 
 {
 
 }
 
-void Player::handleCollision(const Wall&)
+void Player::handleCollision(Wall&)
 {
 
 }

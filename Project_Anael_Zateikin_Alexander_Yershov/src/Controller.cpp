@@ -3,7 +3,8 @@
 //#include "Macros.h"
 
 Controller::Controller()
-	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game Window")), 
+	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game Window",
+									sf::Style::Titlebar | sf::Style::Close)), 
 	  m_level(1)
 {
 	srand(SEED);
@@ -75,7 +76,7 @@ void Controller::move(sf::Time deltatime)
 		
 }
 
-void Controller::checkCollision(MovingObject& thisObj )
+void Controller::checkCollision(MovingObject& thisObj)
 {
 	// check collision between player and enemies
 	for (auto& movable : m_movingObj)
@@ -83,24 +84,13 @@ void Controller::checkCollision(MovingObject& thisObj )
 		if (thisObj.collidesWith(*movable))
 			thisObj.handleCollision(*movable);
 	}
-
-	// check collision between moving objects and static objects
-	for (auto& unmovable : m_staticObj)
-	{
-		if (thisObj.collidesWith(*unmovable))
-			thisObj.handleCollision(*unmovable);
-	}
-
+	m_map.checkCollision(thisObj);
 }
 
 void Controller::draw()
 {
-	//draw ststics
-	//auto staticObjPtr = m_staticObj.begin();
-	for (auto& unmovable : m_staticObj)
-		unmovable->draw(this->m_gameWindow);
+	this->m_map.draw(this->m_gameWindow);
 	//draw moving
-	//auto movingObjPtr = m_movingObj.begin();
 	for (auto& movable : m_movingObj)
 		movable->draw(this->m_gameWindow);
 	
@@ -129,8 +119,9 @@ void Controller::createObject()
 			{
 				//should be devided to cases of each object.
 				//m_staticObj.push_back(std::make_unique<StaticObject>(icon));
-				std::unique_ptr<StaticObject> unmovable = createStaticObject(symbol, icon, position, m_map.getWidth(), m_map.getHeight());
-				m_staticObj.push_back(std::move(unmovable));
+				//std::unique_ptr<StaticObject> unmovable = createStaticObject(symbol, icon, position, m_map.getWidth(), m_map.getHeight());
+				//m_staticObj.push_back(std::move(unmovable));
+				this->m_map.createStaticObject(symbol, icon, position);
 			}
 			else   //moving object
 			{
@@ -143,7 +134,7 @@ void Controller::createObject()
 	}
 }
 
-static std::unique_ptr<MovingObject> createMovingObject(Elements type, sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
+std::unique_ptr<MovingObject> Controller::createMovingObject(Elements type, sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
 {
 	
 	switch (type)
@@ -173,41 +164,42 @@ std::unique_ptr<Enemy> selectEnemyType(sf::Texture* icon, sf::Vector2f position,
 
 	return nullptr;
 }
-std::unique_ptr<Bonus> selectBonusType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
-{
-	int choice = rand() % NUM_OF_BONUS_TYPES; //choose one of three enemy types
 
-	switch ((BonusType)choice)
-	{
-	case BonusType::life:
-		return std::make_unique<LifeBonus>(icon, position, mapW, mapH);
-	case BonusType::score:
-		return std::make_unique<ScoreBonus>(icon, position, mapW, mapH);
-	case BonusType::time:
-		return std::make_unique<TimeBonus>(icon, position, mapW, mapH);
-	case BonusType::bad:
-		return std::make_unique<BadBonus>(icon, position, mapW, mapH);
-	}
-	return nullptr;
-}
+//std::unique_ptr<Bonus> selectBonusType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
+//{
+//	int choice = rand() % NUM_OF_BONUS_TYPES; //choose one of three enemy types
+//
+//	switch ((BonusType)choice)
+//	{
+//	case BonusType::life:
+//		return std::make_unique<LifeBonus>(icon, position, mapW, mapH);
+//	case BonusType::score:
+//		return std::make_unique<ScoreBonus>(icon, position, mapW, mapH);
+//	case BonusType::time:
+//		return std::make_unique<TimeBonus>(icon, position, mapW, mapH);
+//	case BonusType::bad:
+//		return std::make_unique<BadBonus>(icon, position, mapW, mapH);
+//	}
+//	return nullptr;
+//}
 
-std::unique_ptr<StaticObject>  Controller::createStaticObject(Elements type, sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
-{
-	switch (type)
-	{
-	case Elements::wall:
-	case Elements::floor:
-		return std::make_unique<Wall>(icon, position, mapW, mapH);
-	case Elements::ladder:
-		return std::make_unique<Ladder>(icon, position, mapW, mapH);
-	case Elements::bar:
-		return std::make_unique<Bar>(icon, position, mapW, mapH);
-	case Elements::coin:
-		return std::make_unique<Coin>(icon, position, mapW, mapH);
-	case Elements::bonus:
-		return selectBonusType(icon, position, mapW, mapH);
-	
-	}
-	return nullptr;
-}
+//std::unique_ptr<StaticObject>  Controller::createStaticObject(Elements type, sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
+//{
+//	switch (type)
+//	{
+//	case Elements::wall:
+//	case Elements::floor:
+//		return std::make_unique<Wall>(icon, position, mapW, mapH);
+//	case Elements::ladder:
+//		return std::make_unique<Ladder>(icon, position, mapW, mapH);
+//	case Elements::bar:
+//		return std::make_unique<Bar>(icon, position, mapW, mapH);
+//	case Elements::coin:
+//		return std::make_unique<Coin>(icon, position, mapW, mapH);
+//	case Elements::bonus:
+//		return selectBonusType(icon, position, mapW, mapH);
+//	
+//	}
+//	return nullptr;
+//}
 

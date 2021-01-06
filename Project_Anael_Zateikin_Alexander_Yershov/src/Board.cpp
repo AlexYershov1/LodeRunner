@@ -1,5 +1,6 @@
 #include "Board.h"
 
+
 Board::Board() : m_height(0), m_width(0)
 {
 	this->m_fRead.open("board.txt", std::ios_base::in);
@@ -21,6 +22,59 @@ void Board::readLvlMap()
 	}
 }
 
+std::unique_ptr<StaticObject> Board::createStaticObject(Elements type, sf::Texture* icon, sf::Vector2f position)
+{
+	switch (type)
+	{
+	case Elements::wall:
+		m_staticObj.push_back(std::make_unique<Wall>(icon, position, m_width, m_height));
+		break;
+	case Elements::floor:
+		m_staticObj.push_back(std::make_unique<Floor>(icon, position, m_width, m_height));
+		break;
+	case Elements::ladder:
+		m_staticObj.push_back(std::make_unique<Ladder>(icon, position, m_width, m_height));
+		break;
+	case Elements::bar:
+		m_staticObj.push_back(std::make_unique<Bar>(icon, position, m_width, m_height));
+		break;
+	case Elements::coin:
+		m_staticObj.push_back(std::make_unique<Coin>(icon, position, m_width, m_height));
+		break;
+	case Elements::bonus:
+		m_staticObj.push_back(selectBonusType(icon, position, m_width, m_height));
+		break;
+	}
+	return nullptr;
+}
+
+void Board::checkCollision(MovingObject& thisObj)
+{
+	// check collision between moving objects and static objects
+	for (auto& unmovable : m_staticObj)
+	{
+		if (thisObj.collidesWith(*unmovable))
+			thisObj.handleCollision(*unmovable);
+	}
+}
+
+std::unique_ptr<Bonus> selectBonusType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
+{
+	int choice = rand() % NUM_OF_BONUS_TYPES; //choose one of three enemy types
+
+	switch ((BonusType)choice)
+	{
+	case BonusType::life:
+		return std::make_unique<LifeBonus>(icon, position, mapW, mapH);
+	case BonusType::score:
+		return std::make_unique<ScoreBonus>(icon, position, mapW, mapH);
+	case BonusType::time:
+		return std::make_unique<TimeBonus>(icon, position, mapW, mapH);
+	case BonusType::bad:
+		return std::make_unique<BadBonus>(icon, position, mapW, mapH);
+	}
+	return nullptr;
+}
 int Board::getWidth() const
 {
 	return this->m_width;
@@ -69,6 +123,13 @@ Elements Board::getSymbol(int row, int col)
 	default:
 		break;
 	}
+}
+
+void Board::draw(sf::RenderWindow& window)
+{
+	//draw stastics
+	for (auto& unmovable : m_staticObj)
+		unmovable->draw(window);
 }
 
 void Board::readLvlSize()

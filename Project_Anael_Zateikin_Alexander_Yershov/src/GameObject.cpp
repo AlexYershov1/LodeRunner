@@ -4,7 +4,6 @@
 GameObject::GameObject(const sf::Texture* texturePtr, const sf::Vector2f& location, int mapWidth, int mapHeight)
 {
 	m_icon.setTexture(*texturePtr);
-
 	//this section should be in a seperate function - will be called in a new level
 	
 	auto xScaleValue = (float)WINDOW_WIDTH / ((float)ICON_SIZE * (float)mapWidth);
