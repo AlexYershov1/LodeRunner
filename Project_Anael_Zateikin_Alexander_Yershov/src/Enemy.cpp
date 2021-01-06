@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Player.h"
 
 Enemy::Enemy(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH)
 	: MovingObject(icon, position, mapW, mapH), m_direction(Direction::Left)
@@ -47,5 +48,6 @@ void Enemy::handleCollision(Wall& NO_USE)
 
 void Enemy::handleCollision(Player& ply)
 {
-	//ply.looseLife();
+	sf::Time x;
+	ply.move(x);
 }

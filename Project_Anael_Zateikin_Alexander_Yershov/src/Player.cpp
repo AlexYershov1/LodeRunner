@@ -11,6 +11,11 @@ Player::~Player()
 {
 }
 
+void Player::decreaseLife()
+{
+	this->m_life--;
+}
+
 void Player::move(sf::Time& clock)
 {
 	return;

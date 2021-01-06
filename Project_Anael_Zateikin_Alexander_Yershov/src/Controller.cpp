@@ -116,20 +116,13 @@ void Controller::createObject()
 			
 
 			if (isStaticObj(symbol)) //static object
-			{
-				//should be devided to cases of each object.
-				//m_staticObj.push_back(std::make_unique<StaticObject>(icon));
-				//std::unique_ptr<StaticObject> unmovable = createStaticObject(symbol, icon, position, m_map.getWidth(), m_map.getHeight());
-				//m_staticObj.push_back(std::move(unmovable));
 				this->m_map.createStaticObject(symbol, icon, position);
-			}
 			else   //moving object
 			{
 				std::unique_ptr<MovingObject> movable = createMovingObject(symbol, icon, position, m_map.getWidth(), m_map.getHeight());
 				m_movingObj.push_back(std::move(movable));
 					
 			}
-				//m_movingObj.push_back(std::make_unique<MovingObject>(icon));
 		}
 	}
 }
