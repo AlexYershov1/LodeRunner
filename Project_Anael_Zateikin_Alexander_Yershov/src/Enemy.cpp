@@ -13,6 +13,7 @@ Enemy::~Enemy()
 void Enemy::move(sf::Time& clock)
 {
 	auto currPos = this->m_icon.getPosition();	// enemy position
+	m_icon.setTexture(*m_iconArsenal[(int)MovingObjTexture::enemyDefaultIcon]);
 
 	switch (this->m_direction)
 	{
@@ -43,10 +44,20 @@ void Enemy::handleCollision(Wall& NO_USE)
 	else
 		m_direction = Direction::Left;
 
-	// flipIcon();
+	this->m_icon.rotate(-1);	// flipIcon();
 }
 
 void Enemy::handleCollision(Player& ply)
 {
 	ply.decreaseLife();
+}
+
+void Enemy::handleCollision(Bar& barObj)
+{
+	m_icon.setTexture(*m_iconArsenal[(int)MovingObjTexture::charOnBarIcon]);
+}
+
+void Enemy::handleCollision(Ladder&)
+{
+	m_icon.setTexture(*m_iconArsenal[(int)MovingObjTexture::enemyClimbingIcon]);
 }
