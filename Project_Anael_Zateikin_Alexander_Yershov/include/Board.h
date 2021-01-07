@@ -3,17 +3,17 @@
 #include <fstream>
 #include <string>
 #include "Macros.h"
-#include "StaticObject.h"
 #include <memory>
-#include "LifeBonus.h"
-#include "ScoreBonus.h"
-#include "TimeBonus.h"
-#include "BadBonus.h"
-#include "Ladder.h"
-#include "Floor.h"
-#include "Bar.h"
-#include "Coin.h"
-#include "MovingObject.h"
+#include "staticInclude/LifeBonus.h"
+#include "staticInclude/ScoreBonus.h"
+#include "staticInclude/TimeBonus.h"
+#include "staticInclude/BadBonus.h"
+#include "staticInclude/Ladder.h"
+#include "staticInclude/Floor.h"
+#include "staticInclude/Bar.h"
+#include "staticInclude/Coin.h"
+#include "staticInclude/Wall.h"
+#include "movingInclude/MovingObject.h"
 
 class Board
 {

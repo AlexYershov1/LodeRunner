@@ -1,26 +1,11 @@
 #pragma once
-//#include <SFML/Graphics.hpp>
-//#include <vector>
 #include <memory>
 #include "Board.h"
-//#include "MovingObject.h"
-//#include "StaticObject.h"
 #include "TextureHolder.h"
-#include "Player.h"
-//#include "Enemy.h"
-#include "DumbEnemy.h"
-#include "MediocreEnemy.h"
-#include "SmartEnemy.h"
-//#include "Wall.h"
-//#include "Ladder.h"
-//#include "Floor.h"
-//#include "Bar.h"
-//#include "Coin.h"
-//#include "Bonus.h"
-//#include "LifeBonus.h"
-//#include "ScoreBonus.h"
-//#include "TimeBonus.h"
-//#include "BadBonus.h"
+#include "movingInclude/Player.h"
+#include "movingInclude/DumbEnemy.h"
+#include "movingInclude/MediocreEnemy.h"
+#include "movingInclude/SmartEnemy.h"
 #include "StartScreen.h"
 
 
