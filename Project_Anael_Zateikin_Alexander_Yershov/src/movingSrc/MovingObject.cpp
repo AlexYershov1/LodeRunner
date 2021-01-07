@@ -1,4 +1,4 @@
-#include "MovingObject.h"
+#include "movingInclude/MovingObject.h"
 #include "Macros.h"
 
 MovingObject::MovingObject(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH, std::vector<sf::Texture*>& iconVec)

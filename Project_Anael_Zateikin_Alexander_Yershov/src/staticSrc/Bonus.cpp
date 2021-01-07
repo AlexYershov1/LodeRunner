@@ -1,4 +1,4 @@
-#include "Bonus.h"
+#include "staticInclude/Bonus.h"
 
 Bonus::~Bonus()
 {

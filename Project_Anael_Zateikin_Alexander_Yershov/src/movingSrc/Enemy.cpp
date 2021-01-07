@@ -1,5 +1,5 @@
-#include "Enemy.h"
-#include "Player.h"
+#include "movingInclude/Enemy.h"
+#include "movingInclude/Player.h"
 
 Enemy::Enemy(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH, std::vector<sf::Texture*>& iconVec)
 	: MovingObject(icon, position, mapW, mapH, iconVec), m_direction(Direction::Left)

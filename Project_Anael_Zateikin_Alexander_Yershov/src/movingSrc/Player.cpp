@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "movingInclude/Player.h"
 #include "Macros.h"
 
 Player::Player(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH, std::vector<sf::Texture*>& iconsVector)

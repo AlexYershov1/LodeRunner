@@ -1,6 +1,5 @@
 #include "Board.h"
 
-
 Board::Board() : m_height(0), m_width(0)
 {
 	this->m_fRead.open("board.txt", std::ios_base::in);
