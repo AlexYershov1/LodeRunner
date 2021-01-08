@@ -4,7 +4,7 @@
 class StaticObject : public GameObject
 {
 public:
-	StaticObject(const sf::Texture*, const sf::Vector2f&, int, int);
+	StaticObject(Elements, const sf::Vector2f&, int, int);
 	~StaticObject();
 
 	

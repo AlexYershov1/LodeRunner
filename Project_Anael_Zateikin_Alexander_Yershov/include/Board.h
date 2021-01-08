@@ -22,7 +22,7 @@ public:
 	~Board();
 	
 	void readLvlMap();
-	std::unique_ptr<StaticObject> createStaticObject(Elements, sf::Texture*, sf::Vector2f);
+	std::unique_ptr<StaticObject> createStaticObject(Elements, sf::Vector2f);
 	void checkCollision(MovingObject&);
 	// get functions
 	int getWidth() const;
@@ -39,4 +39,4 @@ private:
 	void readLvlSize();
 	bool checkIfFloorSymbol(int, int) const;
 };
-static std::unique_ptr<Bonus> selectBonusType(sf::Texture*, sf::Vector2f, int, int);
+static std::unique_ptr<Bonus> selectBonusType(sf::Vector2f, int, int);

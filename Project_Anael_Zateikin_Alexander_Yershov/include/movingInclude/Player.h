@@ -6,7 +6,7 @@ class Player : public MovingObject
 {
 public:
 	//using MovingObject::MovingObject;
-	Player(const sf::Texture*, const sf::Vector2f& , int , int, std::vector<sf::Texture*>&);
+	Player(Elements, const sf::Vector2f& , int , int);
 	~Player();
 	void decreaseLife();	// decreases players' life by 1
 	virtual void move(sf::Time&) override;

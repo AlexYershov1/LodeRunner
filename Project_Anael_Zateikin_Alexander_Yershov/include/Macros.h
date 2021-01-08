@@ -45,8 +45,8 @@ enum class Direction
 
 enum class MovingObjTexture
 {
-	playerDefaultIcon, playerClimbingIcon,
-	enemyDefaultIcon, enemyClimbingIcon, 
+	playerDefaultIcon, enemyDefaultIcon,
+	playerClimbingIcon, enemyClimbingIcon, 
 	charOnBarIcon
 };
 

@@ -6,13 +6,21 @@
 class TextureHolder
 {
 public:
-	TextureHolder();
 	~TextureHolder();
-	void setImagesForObj();
+	static TextureHolder& instance();
+	
+	// get functions
 	sf::Texture* getIcon(const Elements);
-	std::vector<sf::Texture*> createSwitchingIcons();
+	sf::Texture* getChangingIcon(MovingObjTexture);
 private:
+	TextureHolder();
+	TextureHolder(const TextureHolder&) = default;
+	TextureHolder& operator=(const TextureHolder&) = default;
+
+	void setImagesForObj();
+	void createSwitchingIcons();
 	std::vector<sf::Texture> m_textures;
+	std::vector<sf::Texture> m_iconVec;
 	sf::Font m_font;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "TextureHolder.h"
 
 class Wall;
 class Floor;
@@ -13,7 +14,7 @@ class Bonus;
 class GameObject
 {
 public:
-	GameObject(const sf::Texture *, const sf::Vector2f&, int, int); //should receive a board
+	GameObject(Elements, const sf::Vector2f&, int, int); //should receive a board
 	~GameObject();
 	bool collidesWith(const GameObject&) const;
 	virtual void handleCollision(GameObject&) = 0;

@@ -5,7 +5,7 @@
 class Enemy : public MovingObject
 {
 public:
-	Enemy(const sf::Texture*, const sf::Vector2f&, int, int, std::vector<sf::Texture*>&);
+	Enemy(Elements, const sf::Vector2f&, int, int);
 	~Enemy();
 
 	virtual void move(sf::Time&) override;
