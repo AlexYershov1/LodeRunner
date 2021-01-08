@@ -1,8 +1,9 @@
 #include "GameObject.h"
 #include "Macros.h"
 
-GameObject::GameObject(const sf::Texture* texturePtr, const sf::Vector2f& location, int mapWidth, int mapHeight)
+GameObject::GameObject(Elements symbol, const sf::Vector2f& location, int mapWidth, int mapHeight)
 {
+	auto texturePtr = TextureHolder::instance().getIcon(symbol);
 	m_icon.setTexture(*texturePtr);
 	//this section should be in a seperate function - will be called in a new level
 	

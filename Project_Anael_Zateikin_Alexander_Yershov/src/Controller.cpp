@@ -86,7 +86,6 @@ void Controller::move(sf::Time deltatime)
 		(*objPtr)->move(deltatime);
 		checkCollision(**objPtr);			//operates on this
 	}
-		
 }
 
 void Controller::checkCollision(MovingObject& thisObj)
@@ -112,7 +111,7 @@ void Controller::draw()
 void Controller::createObject() 
 {
 	Elements symbol;
-	sf::Texture* icon;
+	//sf::Texture* icon;
 	sf::Vector2f position ; //xPos, yPos
 	float xPos, yPos;
 
@@ -121,7 +120,7 @@ void Controller::createObject()
 		for (int col = 0; col < m_map.getWidth(); col++)
 		{
 			symbol = m_map.getSymbol(row, col);
-			if ((icon = m_textures.getIcon(symbol)) == nullptr)
+			if (symbol == Elements::empty)
 				continue;
 			xPos = ((float)WINDOW_WIDTH / (float)(m_map.getWidth())) * col ;
 			yPos = ((float)WINDOW_HEIGHT / (float)(m_map.getHeight())) * row;
@@ -129,10 +128,10 @@ void Controller::createObject()
 			
 
 			if (isStaticObj(symbol)) //static object
-				this->m_map.createStaticObject(symbol, icon, position);
+				this->m_map.createStaticObject(symbol, position);
 			else   //moving object
 			{
-				std::unique_ptr<MovingObject> movable = createMovingObject(symbol, icon, position, m_map.getWidth(), m_map.getHeight());
+				std::unique_ptr<MovingObject> movable = createMovingObject(symbol, position, m_map.getWidth(), m_map.getHeight());
 				m_movingObj.push_back(std::move(movable));
 					
 			}
@@ -140,72 +139,33 @@ void Controller::createObject()
 	}
 }
 
-std::unique_ptr<MovingObject> Controller::createMovingObject(Elements type, sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
+std::unique_ptr<MovingObject> Controller::createMovingObject(Elements type, sf::Vector2f position, int mapW, int mapH)
 {
-	auto iconVec = this->m_textures.createSwitchingIcons();
 	switch (type)
 	{
 	case Elements::player:
-		return std::make_unique<Player>(icon, position, mapW, mapH, iconVec);
+		return std::make_unique<Player>(type, position, mapW, mapH);
 		
 	case Elements::enemy:
-		return selectEnemyType(icon, position, mapW, mapH, iconVec); 
+		return selectEnemyType(position, mapW, mapH); 
 	}
 	return nullptr;
 }
 
-std::unique_ptr<Enemy> selectEnemyType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH, std::vector<sf::Texture*>& iconVec)
+std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f position, int mapW, int mapH)
 {
 	int choice = rand() % NUM_OF_ENEMIE_TYPES; //choose one of three enemy types
 
 	switch ((EnemyType)choice)
 	{
 	case EnemyType::dumb :
-		return std::make_unique<DumbEnemy>(icon, position, mapW, mapH, iconVec);
+		return std::make_unique<DumbEnemy>(Elements::enemy, position, mapW, mapH);
 	case EnemyType::mediocre:
-		return std::make_unique<MediocreEnemy>(icon, position, mapW, mapH, iconVec);
+		return std::make_unique<MediocreEnemy>(Elements::enemy, position, mapW, mapH);
 	case EnemyType::smart:
-		return std::make_unique<SmartEnemy>(icon, position, mapW, mapH, iconVec);
+		return std::make_unique<SmartEnemy>(Elements::enemy, position, mapW, mapH);
 	}
 
 	return nullptr;
 }
-
-//std::unique_ptr<Bonus> selectBonusType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
-//{
-//	int choice = rand() % NUM_OF_BONUS_TYPES; //choose one of three enemy types
-//
-//	switch ((BonusType)choice)
-//	{
-//	case BonusType::life:
-//		return std::make_unique<LifeBonus>(icon, position, mapW, mapH);
-//	case BonusType::score:
-//		return std::make_unique<ScoreBonus>(icon, position, mapW, mapH);
-//	case BonusType::time:
-//		return std::make_unique<TimeBonus>(icon, position, mapW, mapH);
-//	case BonusType::bad:
-//		return std::make_unique<BadBonus>(icon, position, mapW, mapH);
-//	}
-//	return nullptr;
-//}
-
-//std::unique_ptr<StaticObject>  Controller::createStaticObject(Elements type, sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
-//{
-//	switch (type)
-//	{
-//	case Elements::wall:
-//	case Elements::floor:
-//		return std::make_unique<Wall>(icon, position, mapW, mapH);
-//	case Elements::ladder:
-//		return std::make_unique<Ladder>(icon, position, mapW, mapH);
-//	case Elements::bar:
-//		return std::make_unique<Bar>(icon, position, mapW, mapH);
-//	case Elements::coin:
-//		return std::make_unique<Coin>(icon, position, mapW, mapH);
-//	case Elements::bonus:
-//		return selectBonusType(icon, position, mapW, mapH);
-//	
-//	}
-//	return nullptr;
-//}
 

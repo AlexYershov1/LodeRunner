@@ -4,7 +4,7 @@ Bonus::~Bonus()
 {
 }
 
-Bonus::Bonus(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH)
-	: StaticObject(icon, position, mapW, mapH)
+Bonus::Bonus(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
+	: StaticObject(symbol, position, mapW, mapH)
 {
 }

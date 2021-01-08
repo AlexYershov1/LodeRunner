@@ -21,27 +21,27 @@ void Board::readLvlMap()
 	}
 }
 
-std::unique_ptr<StaticObject> Board::createStaticObject(Elements type, sf::Texture* icon, sf::Vector2f position)
+std::unique_ptr<StaticObject> Board::createStaticObject(Elements type, sf::Vector2f position)
 {
 	switch (type)
 	{
 	case Elements::wall:
-		m_staticObj.push_back(std::make_unique<Wall>(icon, position, m_width, m_height));
+		m_staticObj.push_back(std::make_unique<Wall>(type, position, m_width, m_height));
 		break;
 	case Elements::floor:
-		m_staticObj.push_back(std::make_unique<Floor>(icon, position, m_width, m_height));
+		m_staticObj.push_back(std::make_unique<Floor>(type, position, m_width, m_height));
 		break;
 	case Elements::ladder:
-		m_staticObj.push_back(std::make_unique<Ladder>(icon, position, m_width, m_height));
+		m_staticObj.push_back(std::make_unique<Ladder>(type, position, m_width, m_height));
 		break;
 	case Elements::bar:
-		m_staticObj.push_back(std::make_unique<Bar>(icon, position, m_width, m_height));
+		m_staticObj.push_back(std::make_unique<Bar>(type, position, m_width, m_height));
 		break;
 	case Elements::coin:
-		m_staticObj.push_back(std::make_unique<Coin>(icon, position, m_width, m_height));
+		m_staticObj.push_back(std::make_unique<Coin>(type, position, m_width, m_height));
 		break;
 	case Elements::bonus:
-		m_staticObj.push_back(selectBonusType(icon, position, m_width, m_height));
+		m_staticObj.push_back(selectBonusType(position, m_width, m_height));
 		break;
 	}
 	return nullptr;
@@ -57,20 +57,20 @@ void Board::checkCollision(MovingObject& thisObj)
 	}
 }
 
-std::unique_ptr<Bonus> selectBonusType(sf::Texture* icon, sf::Vector2f position, int mapW, int mapH)
+std::unique_ptr<Bonus> selectBonusType(sf::Vector2f position, int mapW, int mapH)
 {
 	int choice = rand() % NUM_OF_BONUS_TYPES; //choose one of three enemy types
 
 	switch ((BonusType)choice)
 	{
 	case BonusType::life:
-		return std::make_unique<LifeBonus>(icon, position, mapW, mapH);
+		return std::make_unique<LifeBonus>(Elements::bonus, position, mapW, mapH);
 	case BonusType::score:
-		return std::make_unique<ScoreBonus>(icon, position, mapW, mapH);
+		return std::make_unique<ScoreBonus>(Elements::bonus, position, mapW, mapH);
 	case BonusType::time:
-		return std::make_unique<TimeBonus>(icon, position, mapW, mapH);
+		return std::make_unique<TimeBonus>(Elements::bonus, position, mapW, mapH);
 	case BonusType::bad:
-		return std::make_unique<BadBonus>(icon, position, mapW, mapH);
+		return std::make_unique<BadBonus>(Elements::bonus, position, mapW, mapH);
 	}
 	return nullptr;
 }

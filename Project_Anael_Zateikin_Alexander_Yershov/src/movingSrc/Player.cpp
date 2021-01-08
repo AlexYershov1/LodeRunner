@@ -1,8 +1,8 @@
 #include "movingInclude/Player.h"
 #include "Macros.h"
 
-Player::Player(const sf::Texture* icon, const sf::Vector2f& position, int mapW, int mapH, std::vector<sf::Texture*>& iconsVector)
-	: MovingObject(icon, position, mapW, mapH, iconsVector), m_life(NUM_OF_LIVES)
+Player::Player(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
+	: MovingObject(symbol, position, mapW, mapH), m_life(NUM_OF_LIVES)
 {
 }
 

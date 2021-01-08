@@ -4,10 +4,17 @@
 TextureHolder::TextureHolder()
 {
 	setImagesForObj();
+	createSwitchingIcons();
 }
 
 TextureHolder::~TextureHolder()
 {
+}
+
+TextureHolder& TextureHolder::instance()
+{
+	static TextureHolder inst;
+	return inst;
 }
 
 // load all the object images
@@ -39,57 +46,33 @@ void TextureHolder::setImagesForObj()
 	newImage.loadFromFile("bonus.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("barClimbing.png");
-	m_textures.push_back(newImage);
-
-	newImage.loadFromFile("climbingLadder.png");
-	m_textures.push_back(newImage);
-
-	newImage.loadFromFile("climbingPlayer.png");
-	m_textures.push_back(newImage);
-
 	this->m_font.loadFromFile("SundayMorning.ttf");
 }
 
 sf::Texture* TextureHolder::getIcon(const Elements symbol)
 {
-	switch (symbol)
-	{
-	case Elements::bar:
-		return &m_textures[(int)Elements::bar];
-		break;
-	case Elements::coin:
-		return &m_textures[(int)Elements::coin];
-		break;
-	case Elements::enemy:
-		return &m_textures[(int)Elements::enemy];
-		break;
-	case Elements::player:
-		return &m_textures[(int)Elements::player];
-		break;
-	case Elements::wall:
-		return &m_textures[(int)Elements::wall];
-		break;
-	case Elements::ladder:
-		return &m_textures[(int)Elements::ladder];
-		break;
-	case Elements::floor:
-		return &m_textures[(int)Elements::floor];
-		break;
-	default:
-		break;
-	}
-	return nullptr;
+	return &this->m_textures[(int)symbol];
 }
 
-std::vector<sf::Texture*> TextureHolder::createSwitchingIcons()
+void TextureHolder::createSwitchingIcons()
 {
-	std::vector<sf::Texture*> iconVec;
-	iconVec.push_back(&this->m_textures[(int)Elements::player]);
-	iconVec.push_back(&this->m_textures[10]);
-	iconVec.push_back(&this->m_textures[(int)Elements::enemy]);
-	iconVec.push_back(&this->m_textures[9]);
-	iconVec.push_back(&this->m_textures[8]);
+	
+	sf::Texture newImage;
 
-	return iconVec;
+	m_iconVec.push_back(this->m_textures[(int)Elements::player]);
+	m_iconVec.push_back(this->m_textures[(int)Elements::enemy]);
+
+	newImage.loadFromFile("climbingPlayer.png");
+	m_iconVec.push_back(newImage);
+
+	newImage.loadFromFile("climbingLadder.png");
+	m_iconVec.push_back(newImage);
+
+	newImage.loadFromFile("barClimbing.png");
+	m_iconVec.push_back(newImage);
+}
+
+sf::Texture* TextureHolder::getChangingIcon(const MovingObjTexture symbol)
+{
+	return &this->m_iconVec[(int)symbol];
 }
