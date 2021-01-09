@@ -16,8 +16,13 @@ public:
 	~Controller();
 	void run();
 	void move(sf::Time);
-	void checkCollision(MovingObject&);
+	void checkCollision(MovingObject&, sf::Time);
 	void draw();
+	//erase coin
+	void eraseCoin(Coin&);
+	void increaseScore();
+	void addEnemy(); 
+	void addTime();
 private:
 	void createObject();
 	std::unique_ptr<MovingObject> createMovingObject(Elements, sf::Vector2f, int, int);
@@ -27,8 +32,10 @@ private:
 
 	//TextureHolder m_textures;
 	sf::RenderWindow m_gameWindow;
-	sf::Clock m_stageTime;
+	sf::Clock m_timer;
+	float m_stageTime;
 	StartScreen m_menu;
 	int m_level;
+	int m_score;
 };
 static std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f, int, int);

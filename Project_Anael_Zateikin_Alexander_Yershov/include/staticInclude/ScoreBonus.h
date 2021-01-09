@@ -8,6 +8,7 @@ public:
 	//ScoreBonus();
 	~ScoreBonus();
 
+	virtual void handleCollision(Player&, Controller&) override;
 private:
 
 };

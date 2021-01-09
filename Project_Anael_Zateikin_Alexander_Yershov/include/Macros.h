@@ -13,6 +13,9 @@ const float BASE_SPEED = 50.0;
 const float FALL_SPEED = 100.0;
 const float STEP = 35.0;
 const int NUM_OF_LIVES = 3;
+const int COIN_VALUE = 2, STAGE_VALUE = 50;
+const float STAGE_TIME = 90;
+const float BONUS_TIME = 30;
 
 const int HEADER_SIZE = 60;
 const int REG_CHAR_SIZE = 100;
@@ -22,7 +25,7 @@ const float BOLD_OUTLINE = 10.0;
 const char WALL_C = '#', EMPTY_C = ' ', BAR_C = '-', PLAYER_C = '@',
 ENEMY_C = '%', LADDER_C = 'H', COIN_C = '*', BONUS_C = '?' ;
 
-const sf::Vector2f DirectionVec[] = { {-1, 0}, {1, 0}, {0, 1}, {0, -1} };
+const sf::Vector2f DirectionVec[] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 
 enum class Elements
 {

@@ -8,6 +8,7 @@ public:
 	//LifeBonus();
 	~LifeBonus();
 
+	virtual void handleCollision(Player&, Controller&) override;
 private:
 
 };

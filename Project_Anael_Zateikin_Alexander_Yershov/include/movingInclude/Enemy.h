@@ -10,14 +10,15 @@ public:
 
 	virtual void move(sf::Time&) override;
 
-	virtual void handleCollision(GameObject&);
-	virtual void handleCollision(Wall&);
-	virtual void handleCollision(Player&);
-	virtual void handleCollision(Enemy&) override {};
-	virtual void handleCollision(Bar&) override;
-	virtual void handleCollision(Ladder&) override;
-	virtual void handleCollision(Coin&) override {};
-	virtual void handleCollision(Bonus&) override {};
+	virtual void handleCollision(GameObject&, Controller&) override;
+	virtual void handleCollision(Wall&, Controller&);
+	virtual void handleCollision(Floor&, Controller&) override;
+	virtual void handleCollision(Player&, Controller&);
+	virtual void handleCollision(Enemy&, Controller&) override {};
+	virtual void handleCollision(Bar&, Controller&) override;
+	virtual void handleCollision(Ladder&, Controller&) override;
+	virtual void handleCollision(Coin&, Controller&) override {};
+	virtual void handleCollision(Bonus&, Controller&) override {};
 	
 protected:
 	Direction m_direction = Direction::Left;	// direction of movement

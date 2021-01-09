@@ -23,12 +23,13 @@ public:
 	
 	void readLvlMap();
 	std::unique_ptr<StaticObject> createStaticObject(Elements, sf::Vector2f);
-	void checkCollision(MovingObject&);
+	void checkCollision(MovingObject&, Controller&, const sf::Time& );
 	// get functions
 	int getWidth() const;
 	int getHeight() const;
 	Elements getSymbol(int, int);
 	void draw(sf::RenderWindow&);
+	void eraseCoin(Coin&);
 private:
 	std::ifstream m_fRead;
 	std::vector<std::string> m_map;

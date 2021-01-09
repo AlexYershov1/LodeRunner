@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#include "movingInclude/Player.h"
+#include "movingInclude/Enemy.h"
 
 class StaticObject : public GameObject
 {
@@ -8,14 +10,15 @@ public:
 	~StaticObject();
 
 	
-	virtual void handleCollision(GameObject&) override {};
-	virtual void handleCollision(Wall&) override {};
-	virtual void handleCollision(Player&) override {};
-	virtual void handleCollision(Enemy&) override {};
-	virtual void handleCollision(Bar&) override {};
-	virtual void handleCollision(Ladder&) override {};
-	virtual void handleCollision(Coin&) override {};
-	virtual void handleCollision(Bonus&) override {};
+	virtual void handleCollision(GameObject&, Controller&) override {};
+	virtual void handleCollision(Wall&, Controller&) override {};
+	virtual void handleCollision(Player&, Controller&) = 0;
+	virtual void handleCollision(Enemy&, Controller&)  = 0;
+	virtual void handleCollision(Floor&, Controller&) override {};
+	virtual void handleCollision(Bar&, Controller&) override {};
+	virtual void handleCollision(Ladder&, Controller&) override {};
+	virtual void handleCollision(Coin&, Controller&) override {};
+	virtual void handleCollision(Bonus&, Controller&) override {};
 	
 protected:
 
