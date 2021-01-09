@@ -5,7 +5,7 @@
 Controller::Controller()
 	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game Window",
 									sf::Style::Titlebar | sf::Style::Close)), 
-	  m_level(1)
+	  m_level(1), m_score(0), m_stageTime(STAGE_TIME)
 {
 	srand(SEED);
 	//m_map.get_size();
@@ -66,6 +66,7 @@ void Controller::run()
 		//restart clock and save deltaTime 
 
 		// if(isWon())
+			//m_score += STAGE_VALUE * m_level ;
 			// m_map.LoadLvlMap();
 			// update data in controller
 		// if(lostGame())
@@ -84,19 +85,23 @@ void Controller::move(sf::Time deltatime)
 	for (; objPtr != m_movingObj.end(); objPtr++)
 	{
 		(*objPtr)->move(deltatime);
-		checkCollision(**objPtr);			//operates on this
+		checkCollision(**objPtr, deltatime);			//operates on this
 	}
 }
 
-void Controller::checkCollision(MovingObject& thisObj)
+void Controller::checkCollision(MovingObject& thisObj, sf::Time deltatime)
 {
+	//bool collided = false;
 	// check collision between player and enemies
 	for (auto& movable : m_movingObj)
 	{
 		if (thisObj.collidesWith(*movable))
-			thisObj.handleCollision(*movable);
+		{
+			thisObj.handleCollision(*movable, *this);
+		}
 	}
-	m_map.checkCollision(thisObj);
+	m_map.checkCollision(thisObj, *this, deltatime) ;
+
 }
 
 void Controller::draw()
@@ -106,8 +111,30 @@ void Controller::draw()
 	for (auto& movable : m_movingObj)
 		movable->draw(this->m_gameWindow);
 	
+	//draw captions : clock, score, life...
 }
 
+void Controller::eraseCoin(Coin& coin)
+{
+	m_map.eraseCoin(coin);
+}
+
+void Controller::increaseScore()
+{
+	this->m_score += COIN_VALUE * m_level;
+}
+
+void Controller::addEnemy()
+{
+	//random through the movingObj vector, and get respawnLocation
+	auto pos = (*m_movingObj[rand() % m_movingObj.size()]).getRespawnLocation();
+	auto newEnemy = selectEnemyType(pos, m_map.getWidth(), m_map.getHeight());
+	m_movingObj.push_back(std::move(newEnemy));
+}
+void Controller::addTime()
+{
+	m_stageTime += BONUS_TIME;
+}
 void Controller::createObject() 
 {
 	Elements symbol;

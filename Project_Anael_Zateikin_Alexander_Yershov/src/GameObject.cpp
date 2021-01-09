@@ -31,3 +31,8 @@ void GameObject::draw(sf::RenderWindow& window) const
 {
 	window.draw(m_icon);
 }
+
+sf::Vector2f GameObject::getPos() const
+{
+	return m_icon.getPosition() ;
+}

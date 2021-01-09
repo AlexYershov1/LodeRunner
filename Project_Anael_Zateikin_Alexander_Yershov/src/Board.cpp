@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "Controller.h"
 
 Board::Board() : m_height(0), m_width(0)
 {
@@ -47,14 +48,22 @@ std::unique_ptr<StaticObject> Board::createStaticObject(Elements type, sf::Vecto
 	return nullptr;
 }
 
-void Board::checkCollision(MovingObject& thisObj)
+void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Time& deltaTime)
 {
+	bool collided = false;
+
 	// check collision between moving objects and static objects
 	for (auto& unmovable : m_staticObj)
 	{
-		if (thisObj.collidesWith(*unmovable))
-			thisObj.handleCollision(*unmovable);
+		if ( unmovable != nullptr && thisObj.collidesWith(*unmovable))
+		{
+			thisObj.handleCollision(*unmovable, game);
+			collided = true;
+		}
 	}
+	if (!collided)
+		thisObj.fall(deltaTime);
+
 }
 
 std::unique_ptr<Bonus> selectBonusType(sf::Vector2f position, int mapW, int mapH)
@@ -128,6 +137,19 @@ void Board::draw(sf::RenderWindow& window)
 	//draw stastics
 	for (auto& unmovable : m_staticObj)
 		unmovable->draw(window);
+}
+
+void Board::eraseCoin(Coin& eatenCoin)
+{
+	auto staticPtr = this->m_staticObj.begin();
+	for (; staticPtr != m_staticObj.end(); staticPtr++)
+	{
+		if ((*staticPtr)->getPos() == eatenCoin.getPos())
+		{
+			m_staticObj.erase(staticPtr);
+			break;
+		}			
+	}
 }
 
 void Board::readLvlSize()
