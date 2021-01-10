@@ -15,10 +15,13 @@ public:
 	virtual void move(sf::Time&) = 0;
 	sf::Vector2f getRespawnLocation() const;
 
-	//virtual void handleCollision(GameObject&, Controller&) override {} ;
+	//virtual void handleCollision(GameObject&, Controller&) override;
 	//virtual void handleCollision(Floor&, Controller&) override;
+
 protected:
 	//float m_speed; //speed per second
 	sf::Vector2f m_respawnLocation;
 	sf::Vector2f m_prevPos;
+	const sf::Vector2f centerDown() const;
+	bool outOfBounds(const sf::Vector2f&) const;
 };

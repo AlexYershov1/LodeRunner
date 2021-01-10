@@ -22,4 +22,6 @@ public:
 	
 protected:
 	Direction m_direction = Direction::Left;	// direction of movement
+private:
+	void handleBlock();
 };

@@ -23,6 +23,7 @@ public:
 	void increaseScore();
 	void addEnemy(); 
 	void addTime();
+
 private:
 	void createObject();
 	std::unique_ptr<MovingObject> createMovingObject(Elements, sf::Vector2f, int, int);

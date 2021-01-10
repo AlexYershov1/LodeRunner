@@ -19,7 +19,7 @@ public:
 	virtual void handleCollision(Ladder&, Controller&) override {};
 	virtual void handleCollision(Coin&, Controller&) override {};
 	virtual void handleCollision(Bonus&, Controller&) override {};
-	
+	const sf::Vector2f Center() const;
 protected:
 
 private:

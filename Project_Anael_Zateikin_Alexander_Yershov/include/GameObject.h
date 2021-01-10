@@ -31,11 +31,10 @@ public:
 	
 	//virtual void draw(sf::RenderWindow&) const = 0;
 	void draw(sf::RenderWindow&) const ;
-	sf::Sprite m_icon;
-	
+	bool contains(const sf::Vector2f&) const;
 	sf::Vector2f getPos() const;
 protected:
-	
+	sf::Sprite m_icon;
 private:
 	
 };

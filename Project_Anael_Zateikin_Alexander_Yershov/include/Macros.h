@@ -16,6 +16,7 @@ const int NUM_OF_LIVES = 3;
 const int COIN_VALUE = 2, STAGE_VALUE = 50;
 const float STAGE_TIME = 90;
 const float BONUS_TIME = 30;
+const float SIGMA = 4.0;
 
 const int HEADER_SIZE = 60;
 const int REG_CHAR_SIZE = 100;

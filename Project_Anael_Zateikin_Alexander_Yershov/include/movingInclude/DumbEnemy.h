@@ -9,4 +9,5 @@ public:
 
 	virtual void move(sf::Time&) override;
 private:
+	sf::Clock m_changeDircectionAlarm;
 };

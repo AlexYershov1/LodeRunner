@@ -19,9 +19,11 @@ public:
 	virtual void handleCollision(Player&, Controller&) override {};
 	virtual void handleCollision(Enemy&, Controller&) override {};
 	virtual void handleCollision(Bar&, Controller&) override {};
-	virtual void handleCollision(Ladder&, Controller&) override {};
+	virtual void handleCollision(Ladder&, Controller&) override;
 	virtual void handleCollision(Coin&, Controller&) override {};
 	virtual void handleCollision(Bonus&, Controller&) override {};
+
+	static sf::Vector2f plyLocation;	// for smart enemy to follow player
 private:
 	sf::Vector2f getDirectionFromKey() const;
 	int m_life;
