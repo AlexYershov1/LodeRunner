@@ -2,6 +2,7 @@
 #include "Controller.h"
 //#include "Macros.h"
 
+
 Controller::Controller()
 	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game Window",
 									sf::Style::Titlebar | sf::Style::Close)), 
@@ -131,10 +132,12 @@ void Controller::addEnemy()
 	auto newEnemy = selectEnemyType(pos, m_map.getWidth(), m_map.getHeight());
 	m_movingObj.push_back(std::move(newEnemy));
 }
+
 void Controller::addTime()
 {
 	m_stageTime += BONUS_TIME;
 }
+
 void Controller::createObject() 
 {
 	Elements symbol;
@@ -182,7 +185,7 @@ std::unique_ptr<MovingObject> Controller::createMovingObject(Elements type, sf::
 std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f position, int mapW, int mapH)
 {
 	int choice = rand() % NUM_OF_ENEMIE_TYPES; //choose one of three enemy types
-
+	return std::make_unique<SmartEnemy>(Elements::enemy, position, mapW, mapH);
 	switch ((EnemyType)choice)
 	{
 	case EnemyType::dumb :

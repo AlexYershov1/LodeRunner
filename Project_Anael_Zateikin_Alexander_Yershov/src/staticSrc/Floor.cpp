@@ -13,3 +13,5 @@ void Floor::handleCollision(Enemy& enemy, Controller& game)
 {
 	enemy.handleCollision(*this, game);
 }
+
+

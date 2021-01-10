@@ -2,6 +2,8 @@
 #include "Macros.h"
 #include "Controller.h"
 
+sf::Vector2f Player::plyLocation;	// for smart enemy to follow player
+
 Player::Player(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
 	: MovingObject(symbol, position, mapW, mapH), m_life(NUM_OF_LIVES)
 {
@@ -25,10 +27,18 @@ void Player::increaseLife()
 void Player::move(sf::Time& deltaTime)
 {
 	//for further thought - where to ask if the action is "dig" ?
+    // get last position
     m_prevPos = m_icon.getPosition();
+    // set initial icon
+    m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
+    // make a move
 	auto direction = getDirectionFromKey();
 	m_icon.move(direction * BASE_SPEED * deltaTime.asSeconds());
-	
+
+    if(outOfBounds(this->getPos()))
+        m_icon.setPosition(m_prevPos);
+
+    plyLocation = this->getPos();   // for smart enemy to follow player
 }
 
 void Player::handleCollision(GameObject& obj, Controller& game)
@@ -38,13 +48,24 @@ void Player::handleCollision(GameObject& obj, Controller& game)
 
 void Player::handleCollision(Wall& wall, Controller& game)
 {
-
+    m_icon.setPosition(m_prevPos);
 }
 
-void Player::handleCollision(Floor&, Controller&)
+void Player::handleCollision(Floor& floor, Controller& game)
 {
-    //m_icon.setPosition(m_prevPos);
-    m_icon.move({ 0,-0.1 });
+    if (this->getPos().y > m_prevPos.y) // trying to go down
+    {
+        if(floor.contains(this->centerDown()))  // floor is underneath
+            m_icon.setPosition(m_prevPos);
+    }
+    if (this->contains(floor.Center()))
+        m_icon.setPosition(m_prevPos);
+}
+
+void Player::handleCollision(Ladder& ladder, Controller&)
+{
+    if (this->contains(ladder.Center()))
+        m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerClimbingIcon));
 }
 
 sf::Vector2f Player::getDirectionFromKey() const

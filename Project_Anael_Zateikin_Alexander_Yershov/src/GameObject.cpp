@@ -36,3 +36,10 @@ sf::Vector2f GameObject::getPos() const
 {
 	return m_icon.getPosition() ;
 }
+
+bool GameObject::contains(const sf::Vector2f& Location) const
+{
+	if (this->m_icon.getGlobalBounds().contains(Location))
+		return true;
+	return false;
+}
