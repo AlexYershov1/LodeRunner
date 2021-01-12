@@ -24,6 +24,8 @@ public:
 	virtual void handleCollision(Bonus&, Controller&) override {};
 
 	static sf::Vector2f plyLocation;	// for smart enemy to follow player
+
+	void changeToCorrectDisplay(const sf::Vector2f&);
 private:
 	sf::Vector2f getDirectionFromKey() const;
 	int m_life;
