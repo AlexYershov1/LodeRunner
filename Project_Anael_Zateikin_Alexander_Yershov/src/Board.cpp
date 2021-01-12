@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "Controller.h"
+#include <typeinfo>
 
 Board::Board() : m_height(0), m_width(0)
 {
@@ -57,12 +58,19 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 	{
 		if ( unmovable != nullptr && thisObj.collidesWith(*unmovable))
 		{
+			/*if (typeid(*unmovable) == typeid(Floor))			// *********move 
+			{
+				if (!checkFloorUnder(thisObj, *unmovable))
+					continue;
+			}
+				*/
 			thisObj.handleCollision(*unmovable, game);
+
 			collided = true;
 		}
 	}
 	if (!collided)
-		thisObj.fall(deltaTime);
+		thisObj.fall(deltaTime);  //fall if you can
 
 }
 
@@ -173,6 +181,11 @@ bool Board::checkIfFloorSymbol(int row, int col) const
 		return false;
 
 	return true; //is a floor
+}
+
+bool Board::checkFloorUnder(const MovingObject& movingObj, const StaticObject& floor) const
+{
+	return floor.contains(movingObj.centerDown())  ;
 }
 
 

@@ -56,6 +56,25 @@ void Player::handleCollision(Wall& wall, Controller& game)
 
 void Player::handleCollision(Floor& floor, Controller& game)
 {
+    if (floor.contains(this->centerDown()))  // floor is underneath
+        m_icon.setPosition(this->getPos().x , floor.getPos().y - m_icon.getGlobalBounds().height);
+    if (this->getPos().y + this->getIconHeight() <= floor.getIconHeight())
+        return;
+
+    else if (floor.getPos().x + floor.getIconWidth() > this->getPos().x)     //if collides with right side
+        m_icon.setPosition(floor.getPos().x + floor.getIconWidth(), this->getPos().y);
+
+    else if (floor.getPos().x  < this->getPos().x)            //if collides with left side
+        m_icon.setPosition(floor.getPos().x - this->getIconWidth(), this->getPos().y);
+
+
+
+    /*
+    if (floor.contains(this->getPos() ))  // floor is underneath
+        m_icon.setPosition(this->getPos().x, floor.getPos().y - m_icon.getGlobalBounds().height);
+
+    //if (!floor.contains(this->centerDown()))
+     
     if (this->getPos().y > m_prevPos.y) // trying to go down
     {
         if(floor.contains(this->centerDown()))  // floor is underneath
@@ -63,6 +82,8 @@ void Player::handleCollision(Floor& floor, Controller& game)
     }
     if (this->contains(floor.Center()))
         m_icon.setPosition(m_prevPos);
+    //if (this->contains(floor.Center()))
+    */
 }
 
 void Player::handleCollision(Ladder& ladder, Controller&)
@@ -74,10 +95,18 @@ void Player::handleCollision(Ladder& ladder, Controller&)
 void Player::changeToCorrectDisplay(const sf::Vector2f& direction)  //move this to MovingObject and use maybe Type_def
 {
     if (direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
-        m_icon.scale(-1, 1);                         
+    {
+        m_icon.scale(-1, 1);
+        m_icon.move(m_icon.getGlobalBounds().width, 0);
+    }
+                               
     
     else if (direction == DirectionVec[(int)Direction::Right] && (m_icon.getScale().x < 0))
-        m_icon.scale(-1, 1);    // -1,1 ?
+    {
+        m_icon.scale(-1, 1);
+        m_icon.move(-m_icon.getGlobalBounds().width, 0);
+    }
+          // -1,1 ?
     
     //else if (direction == DirectionVec[(int)Direction::Down])
         //m_icon.scale(1, 1);

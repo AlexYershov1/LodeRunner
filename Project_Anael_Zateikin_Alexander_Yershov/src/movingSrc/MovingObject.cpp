@@ -16,12 +16,15 @@ MovingObject::~MovingObject()
 
 void MovingObject::fall(const sf::Time& clock)
 {
-	//auto checkPos = this->getPos();
-	//checkPos.y += 2.0f;
-	//if()
+	//save prevoius
 	m_prevPos = m_icon.getPosition();
+
+	//move down
 	//this->m_icon.move(DirectionVec[(int)Direction::Down] * BASE_SPEED * clock.asSeconds());
 	this->m_icon.move(DirectionVec[(int)Direction::Down] );
+
+	//check if reched floor
+	//check if contains
 }
 
 sf::Vector2f MovingObject::getRespawnLocation() const
