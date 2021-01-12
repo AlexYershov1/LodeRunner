@@ -35,9 +35,10 @@ const sf::Vector2f MovingObject::centerDown() const
 	sf::Vector2f Location = { this->getPos().x + rect.width / 2, this->getPos().y + rect.height };
 	return Location;
 }
-bool MovingObject::outOfBounds(const sf::Vector2f& Location) const
+bool MovingObject::outOfBounds(const sf::Vector2f& Location) const	//shouldn't receive a location
 {
-	if (Location.x < 0 || Location.x > WINDOW_WIDTH ||
+	//needs to be changed - needs to receive the icon to know the width
+	if (Location.x < 0 || (Location.x + m_icon.getGlobalBounds().width) > WINDOW_WIDTH ||	 //one possible soution 
 		Location.y < 0 || Location.y > WINDOW_HEIGHT)
 		return true;
 	return false;

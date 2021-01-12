@@ -34,8 +34,11 @@ void Player::move(sf::Time& deltaTime)
     // make a move
 	auto direction = getDirectionFromKey();
 	m_icon.move(direction * BASE_SPEED * deltaTime.asSeconds());
+    
+    changeToCorrectDisplay(direction);  //change the scale to face the right direction
+   
 
-    if(outOfBounds(this->getPos()))
+    if(outOfBounds(m_icon.getPosition())) //shouln't send anything - works on this object
         m_icon.setPosition(m_prevPos);
 
     plyLocation = this->getPos();   // for smart enemy to follow player
@@ -66,6 +69,18 @@ void Player::handleCollision(Ladder& ladder, Controller&)
 {
     if (this->contains(ladder.Center()))
         m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerClimbingIcon));
+}
+
+void Player::changeToCorrectDisplay(const sf::Vector2f& direction)  //move this to MovingObject and use maybe Type_def
+{
+    if (direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
+        m_icon.scale(-1, 1);                         
+    
+    else if (direction == DirectionVec[(int)Direction::Right] && (m_icon.getScale().x < 0))
+        m_icon.scale(-1, 1);    // -1,1 ?
+    
+    //else if (direction == DirectionVec[(int)Direction::Down])
+        //m_icon.scale(1, 1);
 }
 
 sf::Vector2f Player::getDirectionFromKey() const
