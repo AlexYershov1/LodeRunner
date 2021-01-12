@@ -39,5 +39,6 @@ private:
 
 	void readLvlSize();
 	bool checkIfFloorSymbol(int, int) const;
+	bool checkFloorUnder(const MovingObject&, const StaticObject&) const;
 };
 static std::unique_ptr<Bonus> selectBonusType(sf::Vector2f, int, int);

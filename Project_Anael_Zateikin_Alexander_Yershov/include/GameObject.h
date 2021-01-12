@@ -33,6 +33,10 @@ public:
 	void draw(sf::RenderWindow&) const ;
 	bool contains(const sf::Vector2f&) const;
 	sf::Vector2f getPos() const;
+
+	float getIconWidth() const;
+	float getIconHeight() const;
+
 protected:
 	sf::Sprite m_icon;
 private:
