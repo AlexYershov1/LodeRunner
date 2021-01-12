@@ -33,6 +33,7 @@ public:
 	void draw(sf::RenderWindow&) const ;
 	bool contains(const sf::Vector2f&) const;
 	sf::Vector2f getPos() const;
+	void setPos(const sf::Vector2f&);
 
 	float getIconWidth() const;
 	float getIconHeight() const;

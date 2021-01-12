@@ -18,6 +18,7 @@ public:
 	//virtual void handleCollision(GameObject&, Controller&) override;
 	//virtual void handleCollision(Floor&, Controller&) override;
 	const sf::Vector2f centerDown() const;
+	void moveToPrevPos();
 
 protected:
 	//float m_speed; //speed per second
