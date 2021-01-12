@@ -26,20 +26,25 @@ void Player::increaseLife()
 
 void Player::move(sf::Time& deltaTime)
 {
-	//for further thought - where to ask if the action is "dig" ?
-    // get last position
+    //save the last position
     m_prevPos = m_icon.getPosition();
+
     // set initial icon
     m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
-    // make a move
+
+    //get direction of movement
 	auto direction = getDirectionFromKey();
+
+    //change the scale to face the right direction
+    changeToCorrectDisplay(direction); 
+
+    //move the sprite
 	m_icon.move(direction * BASE_SPEED * deltaTime.asSeconds());
     
-    changeToCorrectDisplay(direction);  //change the scale to face the right direction
-   
-
-    if(outOfBounds(m_icon.getPosition())) //shouln't send anything - works on this object
+    //check bounds
+    if (outOfBounds(m_icon.getPosition())) //shouln't send anything - works on this object
         m_icon.setPosition(m_prevPos);
+        
 
     plyLocation = this->getPos();   // for smart enemy to follow player
 }
@@ -49,41 +54,21 @@ void Player::handleCollision(GameObject& obj, Controller& game)
     obj.handleCollision(*this, game);
 }
 
-void Player::handleCollision(Wall& wall, Controller& game)
+void Player::handleCollision(Wall& , Controller& )
 {
-    m_icon.setPosition(m_prevPos);
+    this->moveToPrevPos(); //move back
 }
 
-void Player::handleCollision(Floor& floor, Controller& game)
+void Player::handleCollision(Floor& floor, Controller& )
 {
-    if (floor.contains(this->centerDown()))  // floor is underneath
-        m_icon.setPosition(this->getPos().x , floor.getPos().y - m_icon.getGlobalBounds().height);
-    if (this->getPos().y + this->getIconHeight() <= floor.getIconHeight())
-        return;
-
-    else if (floor.getPos().x + floor.getIconWidth() > this->getPos().x)     //if collides with right side
-        m_icon.setPosition(floor.getPos().x + floor.getIconWidth(), this->getPos().y);
-
-    else if (floor.getPos().x  < this->getPos().x)            //if collides with left side
-        m_icon.setPosition(floor.getPos().x - this->getIconWidth(), this->getPos().y);
-
-
-
-    /*
-    if (floor.contains(this->getPos() ))  // floor is underneath
-        m_icon.setPosition(this->getPos().x, floor.getPos().y - m_icon.getGlobalBounds().height);
-
-    //if (!floor.contains(this->centerDown()))
-     
-    if (this->getPos().y > m_prevPos.y) // trying to go down
+    
+    if (floor.contains(m_prevPos) && floor.getPos().y < m_prevPos.y ) //if the collision is underneath the floor
     {
-        if(floor.contains(this->centerDown()))  // floor is underneath
-            m_icon.setPosition(m_prevPos);
+        m_prevPos.y += 1.0f ; //to avoid getting stuck inside a floor
     }
-    if (this->contains(floor.Center()))
-        m_icon.setPosition(m_prevPos);
-    //if (this->contains(floor.Center()))
-    */
+
+    //go back to previous location
+    this->moveToPrevPos(); // <-----------> m_icon.setPosition(m_prevPos);
 }
 
 void Player::handleCollision(Ladder& ladder, Controller&)
@@ -94,22 +79,23 @@ void Player::handleCollision(Ladder& ladder, Controller&)
 
 void Player::changeToCorrectDisplay(const sf::Vector2f& direction)  //move this to MovingObject and use maybe Type_def
 {
+    //if direction is left but was right before
     if (direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
     {
         m_icon.scale(-1, 1);
+        m_prevPos.x += m_icon.getGlobalBounds().width;      //to correct the previous location after mirroring the sprite
         m_icon.move(m_icon.getGlobalBounds().width, 0);
     }
                                
-    
+    //if direction is right but was left before
     else if (direction == DirectionVec[(int)Direction::Right] && (m_icon.getScale().x < 0))
     {
         m_icon.scale(-1, 1);
+        m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
         m_icon.move(-m_icon.getGlobalBounds().width, 0);
+       
     }
-          // -1,1 ?
-    
-    //else if (direction == DirectionVec[(int)Direction::Down])
-        //m_icon.scale(1, 1);
+        
 }
 
 sf::Vector2f Player::getDirectionFromKey() const

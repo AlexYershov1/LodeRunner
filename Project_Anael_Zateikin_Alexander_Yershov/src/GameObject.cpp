@@ -37,6 +37,11 @@ sf::Vector2f GameObject::getPos() const
 	return m_icon.getPosition() ;
 }
 
+void GameObject::setPos(const sf::Vector2f& position)
+{
+	m_icon.setPosition(position);
+}
+
 float GameObject::getIconWidth() const
 {
 	return m_icon.getGlobalBounds().width;

@@ -58,19 +58,29 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 	{
 		if ( unmovable != nullptr && thisObj.collidesWith(*unmovable))
 		{
-			/*if (typeid(*unmovable) == typeid(Floor))			// *********move 
-			{
-				if (!checkFloorUnder(thisObj, *unmovable))
-					continue;
-			}
-				*/
 			thisObj.handleCollision(*unmovable, game);
 
 			collided = true;
 		}
 	}
 	if (!collided)
+	{
 		thisObj.fall(deltaTime);  //fall if you can
+		for (auto& unmovable : m_staticObj)
+		{
+			if (unmovable != nullptr && thisObj.collidesWith(*unmovable))
+			{
+				//if above ladder, let float above to be able to go to floor
+				if (typeid(*unmovable) == typeid(Ladder))			
+				{
+					thisObj.moveToPrevPos(); //
+				}
+					
+				thisObj.handleCollision(*unmovable, game);
+			}
+		}
+	}
+		
 
 }
 

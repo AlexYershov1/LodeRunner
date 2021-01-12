@@ -31,7 +31,7 @@ void TextureHolder::setImagesForObj()
 	newImage.loadFromFile("enemy.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("player.png");
+	newImage.loadFromFile("enemyMatan.png");
 	m_textures.push_back(newImage);
 
 	newImage.loadFromFile("wall.png");
@@ -62,10 +62,10 @@ void TextureHolder::createSwitchingIcons()
 	m_iconVec.push_back(this->m_textures[(int)Elements::player]);
 	m_iconVec.push_back(this->m_textures[(int)Elements::enemy]);
 
-	newImage.loadFromFile("climbingPlayer.png");
+	newImage.loadFromFile("enemyMatan.png");
 	m_iconVec.push_back(newImage);
 
-	newImage.loadFromFile("climbingLadder.png");
+	newImage.loadFromFile("enemyMatan.png");
 	m_iconVec.push_back(newImage);
 
 	newImage.loadFromFile("barClimbing.png");

@@ -35,6 +35,8 @@ void Enemy::handleCollision(Wall&, Controller&)
 
 void Enemy::handleCollision(Floor& floor, Controller&)
 {
+	//ALEX - maybe change to same as players collision with floor
+
 	if (this->getPos().y > m_prevPos.y) // trying to go down
 	{
 		if (floor.contains(this->centerDown()))  // floor is underneath
