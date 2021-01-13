@@ -6,6 +6,7 @@ Enemy::Enemy(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
 	: MovingObject(symbol, position, mapW, mapH), m_direction(Direction::Left)
 {
 	this->m_icon.scale(-1, 1);	// flipIcon();
+	m_icon.scale(1, 0.9f);
 }
 
 Enemy::~Enemy()
