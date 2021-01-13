@@ -12,6 +12,7 @@ public:
 	// get functions
 	sf::Texture* getIcon(const Elements);
 	sf::Texture* getChangingIcon(MovingObjTexture);
+	sf::Texture* getChangingIcon();
 private:
 	TextureHolder();
 	TextureHolder(const TextureHolder&) = default;
@@ -19,8 +20,13 @@ private:
 
 	void setImagesForObj();
 	void createSwitchingIcons();
+	void createEnemySwitchingIcons();
 	std::vector<sf::Texture> m_textures;
 	std::vector<sf::Texture> m_iconVec;
+
+	std::vector<sf::Texture> m_enemyAnime;
 	sf::Font m_font;
+
+	int m_enemySerialNumber;
 };
 

@@ -30,12 +30,18 @@ public:
 	Elements getSymbol(int, int);
 	void draw(sf::RenderWindow&);
 	void eraseCoin(Coin&);
+
+	float getStaticIconInfo(bool) const;
+
+	void dig(const sf::Vector2f&);
 private:
 	std::ifstream m_fRead;
 	std::vector<std::string> m_map;
 	std::vector<std::unique_ptr<StaticObject>> m_staticObj;
 	int m_height;
 	int m_width;
+
+
 
 	void readLvlSize();
 	bool checkIfFloorSymbol(int, int) const;

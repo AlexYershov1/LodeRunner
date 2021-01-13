@@ -30,7 +30,7 @@ public:
 	virtual void handleCollision(Bonus&, Controller&) = 0;
 	
 	//virtual void draw(sf::RenderWindow&) const = 0;
-	void draw(sf::RenderWindow&) const ;
+	virtual void draw(sf::RenderWindow&);
 	bool contains(const sf::Vector2f&) const;
 	sf::Vector2f getPos() const;
 	void setPos(const sf::Vector2f&);

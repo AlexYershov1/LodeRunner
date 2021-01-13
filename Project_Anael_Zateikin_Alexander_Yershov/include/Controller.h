@@ -25,6 +25,7 @@ public:
 	void addTime();
 
 private:
+	void dig(bool);
 	void createObject();
 	std::unique_ptr<MovingObject> createMovingObject(Elements, sf::Vector2f, int, int);
 
