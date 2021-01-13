@@ -37,13 +37,21 @@ void Enemy::handleCollision(Floor& floor, Controller&)
 {
 	//ALEX - maybe change to same as players collision with floor
 
-	if (this->getPos().y > m_prevPos.y) // trying to go down
+	//if (this->getPos().y > m_prevPos.y) // trying to go down
+	//{
+	//	if (floor.contains(this->centerDown()))  // floor is underneath
+	//		m_icon.setPosition(m_prevPos);
+	//}
+	//if (this->contains(floor.Center()))
+	//	m_icon.setPosition(m_prevPos);
+
+	if (floor.contains(m_prevPos) && floor.getPos().y < m_prevPos.y) //if the collision is underneath the floor
 	{
-		if (floor.contains(this->centerDown()))  // floor is underneath
-			m_icon.setPosition(m_prevPos);
+		m_prevPos.y += 1.0f; //to avoid getting stuck inside a floor
 	}
-	if (this->contains(floor.Center()))
-		m_icon.setPosition(m_prevPos);
+
+	//go back to previous location
+	this->moveToPrevPos(); // <-----------> m_icon.setPosition(m_prevPos);
 }
 
 void Enemy::handleCollision(Player& ply, Controller& game)
@@ -55,6 +63,8 @@ void Enemy::handleCollision(Player& ply, Controller& game)
 void Enemy::handleCollision(Bar&, Controller&)
 {
 	m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::charOnBarIcon));
+	if(m_direction == Direction::Up || m_direction == Direction::Down)
+		this->m_icon.move(0, this->getIconHeight());
 }
 
 void Enemy::handleCollision(Ladder& ladder, Controller& game)
@@ -63,7 +73,7 @@ void Enemy::handleCollision(Ladder& ladder, Controller& game)
 		m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
 }
 
-void Enemy::handleBlock()
+void Enemy::handleBlock() 
 {
 	m_icon.setPosition(m_prevPos);
 	if (m_direction == Direction::Left)

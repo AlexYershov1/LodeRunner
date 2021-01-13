@@ -33,13 +33,13 @@ void Player::move(sf::Time& deltaTime)
     m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
 
     //get direction of movement
-	auto direction = getDirectionFromKey();
-
+	m_direction = getDirectionFromKey();
+    
     //change the scale to face the right direction
-    changeToCorrectDisplay(direction); 
+    changeToCorrectDisplay(); 
 
     //move the sprite
-	m_icon.move(direction * BASE_SPEED * deltaTime.asSeconds());
+	m_icon.move(m_direction * BASE_SPEED * deltaTime.asSeconds());
     
     //check bounds
     if (outOfBounds(m_icon.getPosition())) //shouln't send anything - works on this object
@@ -61,7 +61,6 @@ void Player::handleCollision(Wall& , Controller& )
 
 void Player::handleCollision(Floor& floor, Controller& )
 {
-    
     if (floor.contains(m_prevPos) && floor.getPos().y < m_prevPos.y ) //if the collision is underneath the floor
     {
         m_prevPos.y += 1.0f ; //to avoid getting stuck inside a floor
@@ -71,24 +70,34 @@ void Player::handleCollision(Floor& floor, Controller& )
     this->moveToPrevPos(); // <-----------> m_icon.setPosition(m_prevPos);
 }
 
+void Player::handleCollision(Bar& bar, Controller&)
+{
+    m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::charOnBarIcon));
+
+    if (m_direction == DirectionVec[(int)Direction::Up])
+        this->m_icon.setPosition(m_prevPos);
+    if (m_direction == DirectionVec[(int)Direction::Down])
+        this->m_icon.move(0, this->getIconHeight());
+}
+
 void Player::handleCollision(Ladder& ladder, Controller&)
 {
     if (this->contains(ladder.Center()))
         m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerClimbingIcon));
 }
 
-void Player::changeToCorrectDisplay(const sf::Vector2f& direction)  //move this to MovingObject and use maybe Type_def
+void Player::changeToCorrectDisplay()  //move this to MovingObject and use maybe Type_def
 {
     //if direction is left but was right before
-    if (direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
+    if (m_direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
     {
         m_icon.scale(-1, 1);
         m_prevPos.x += m_icon.getGlobalBounds().width;      //to correct the previous location after mirroring the sprite
         m_icon.move(m_icon.getGlobalBounds().width, 0);
     }
-                               
+    
     //if direction is right but was left before
-    else if (direction == DirectionVec[(int)Direction::Right] && (m_icon.getScale().x < 0))
+    else if (m_direction == DirectionVec[(int)Direction::Right] && (m_icon.getScale().x < 0))
     {
         m_icon.scale(-1, 1);
         m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
