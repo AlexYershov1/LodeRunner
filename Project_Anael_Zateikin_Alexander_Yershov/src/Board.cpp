@@ -170,6 +170,36 @@ void Board::eraseCoin(Coin& eatenCoin)
 	}
 }
 
+float Board::getStaticIconInfo(bool isWidth) const
+{
+	if (this->m_staticObj.size() != 0)
+	{
+		auto it = this->m_staticObj.begin();
+		while (*it == nullptr)
+		{
+			if (it == this->m_staticObj.end())
+				return 0;
+			it++;
+		}
+		if (isWidth)
+			return (**it).getIconWidth();
+		else
+			return (**it).getIconHeight();
+	}
+}
+
+void Board::dig(const sf::Vector2f& Location)
+{
+	for (auto& unmovable : m_staticObj)
+	{
+		if ((*unmovable).contains(Location))
+		{
+			StaticObject* ptr = unmovable.get(); //get pointer to object
+			dynamic_cast<Floor*>(ptr)->dig();
+		}
+	}
+}
+
 void Board::readLvlSize()
 {
 	std::string number;

@@ -10,7 +10,7 @@ MovingObject::MovingObject(Elements symbol, const sf::Vector2f& position, int ma
 	m_respawnLocation = m_icon.getPosition();
 
 	//making the moving objects smaller than static objects
-	m_icon.scale(1.0f, 1.2f);	//specific adjustment for the texture "enemyMatan.png". for different texture might be different
+	//m_icon.scale(1.0f, 1.2f);	//specific adjustment for the texture "enemyMatan.png". for different texture might be different
 }
 
 MovingObject::~MovingObject()

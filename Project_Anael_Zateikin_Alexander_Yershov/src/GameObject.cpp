@@ -27,7 +27,7 @@ bool GameObject::collidesWith(const GameObject& obj) const
 	return m_icon.getGlobalBounds().intersects(obj.m_icon.getGlobalBounds());
 }
 
-void GameObject::draw(sf::RenderWindow& window) const
+void GameObject::draw(sf::RenderWindow& window)
 {
 	window.draw(m_icon);
 }

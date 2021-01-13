@@ -46,6 +46,16 @@ void Controller::run()
 			case sf::Event::Closed:
 				m_gameWindow.close();
 				break;
+			case sf::Event::KeyPressed:
+				if (evnt.key.code == sf::Keyboard::X) // dig right
+				{
+					dig(true);
+				}
+				else if (evnt.key.code == sf::Keyboard::Z) // dig left
+				{
+					dig(false);
+				}
+
 			default:
 				break;
 			}
@@ -138,7 +148,28 @@ void Controller::addTime()
 	m_stageTime += BONUS_TIME;
 }
 
-void Controller::createObject() 
+void Controller::dig(bool direction)
+{
+	for (auto& movable : m_movingObj)
+	{
+		if (typeid(*movable) == typeid(Player))
+		{
+			auto digLocation = (*movable).centerDown();
+			if (direction)
+				digLocation.x += m_map.getStaticIconInfo(true);
+			else
+				digLocation.x -= m_map.getStaticIconInfo(true);
+			digLocation.y += m_map.getStaticIconInfo(false) / 2;
+
+			m_map.dig(digLocation);
+			break;
+		}
+			
+	}
+	
+}
+
+void Controller::createObject()
 {
 	Elements symbol;
 	//sf::Texture* icon;

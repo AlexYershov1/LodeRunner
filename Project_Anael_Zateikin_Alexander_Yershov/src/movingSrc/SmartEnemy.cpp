@@ -29,7 +29,7 @@ void SmartEnemy::move(sf::Time& clock)
 void SmartEnemy::handleCollision(Ladder& ladder, Controller&)
 {
 	if (this->contains(ladder.Center()))
-		m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerClimbingIcon));
+		m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
 	
 	if (m_direction != Direction::Down && m_direction != Direction::Up)
 		m_prevDirection = m_direction;

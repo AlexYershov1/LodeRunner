@@ -1,10 +1,11 @@
 #pragma once
 #include "TextureHolder.h"
 
-TextureHolder::TextureHolder()
+TextureHolder::TextureHolder() : m_enemySerialNumber(0)
 {
 	setImagesForObj();
 	createSwitchingIcons();
+	createEnemySwitchingIcons();
 }
 
 TextureHolder::~TextureHolder()
@@ -65,14 +66,65 @@ void TextureHolder::createSwitchingIcons()
 	newImage.loadFromFile("climbingPlayer.png");
 	m_iconVec.push_back(newImage);
 
-	newImage.loadFromFile("climbingLadder.png");
+	newImage.loadFromFile("enemyBack.png");
 	m_iconVec.push_back(newImage);
 
 	newImage.loadFromFile("barClimbing.png");
 	m_iconVec.push_back(newImage);
 }
 
+void TextureHolder::createEnemySwitchingIcons()
+{
+	sf::Texture newImage;
+
+	newImage.loadFromFile("0_Citizen_Walk_013.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_014.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_015.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_016.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_017.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_018.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_019.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_020.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_021.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_022.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_023.png");
+	m_enemyAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Citizen_Walk_024.png");
+	m_enemyAnime.push_back(newImage);
+
+}
+
 sf::Texture* TextureHolder::getChangingIcon(const MovingObjTexture symbol)
 {
 	return &this->m_iconVec[(int)symbol];
 }
+
+sf::Texture* TextureHolder::getChangingIcon()
+{
+	if (m_enemySerialNumber >= 11)
+		m_enemySerialNumber = 0;
+	m_enemySerialNumber++;
+	return &this->m_enemyAnime[m_enemySerialNumber];
+}
+

@@ -16,7 +16,7 @@ void Enemy::move(sf::Time& clock)
 {
 	m_prevPos = m_icon.getPosition();
 	// set to default icon
-	m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyDefaultIcon));
+	m_icon.setTexture(*TextureHolder::instance().getChangingIcon());
 	// set new position
 	this->m_icon.move(DirectionVec[(int)this->m_direction] * BASE_SPEED * clock.asSeconds());
 	if(outOfBounds(this->getPos()))
@@ -44,7 +44,7 @@ void Enemy::handleCollision(Floor& floor, Controller&)
 	//}
 	//if (this->contains(floor.Center()))
 	//	m_icon.setPosition(m_prevPos);
-
+	
 	if (floor.contains(m_prevPos) && floor.getPos().y < m_prevPos.y) //if the collision is underneath the floor
 	{
 		m_prevPos.y += 1.0f; //to avoid getting stuck inside a floor
@@ -52,6 +52,7 @@ void Enemy::handleCollision(Floor& floor, Controller&)
 
 	//go back to previous location
 	this->moveToPrevPos(); // <-----------> m_icon.setPosition(m_prevPos);
+	
 }
 
 void Enemy::handleCollision(Player& ply, Controller& game)
