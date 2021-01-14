@@ -120,11 +120,15 @@ sf::Texture* TextureHolder::getChangingIcon(const MovingObjTexture symbol)
 	return &this->m_iconVec[(int)symbol];
 }
 
-sf::Texture* TextureHolder::getChangingIcon()
+sf::Texture* TextureHolder::getEnemyChangingIcon()
 {
-	if (m_enemySerialNumber >= 11)
-		m_enemySerialNumber = 0;
-	m_enemySerialNumber++;
+	if (this->enemyAnimetionTimer.getElapsedTime().asMilliseconds() >= 20)
+	{
+		if (m_enemySerialNumber >= 11)
+			m_enemySerialNumber = 0;
+		m_enemySerialNumber++;
+		enemyAnimetionTimer.restart();
+	}
 	return &this->m_enemyAnime[m_enemySerialNumber];
 }
 

@@ -28,14 +28,35 @@ void SmartEnemy::move(sf::Time& clock)
 
 void SmartEnemy::handleCollision(Ladder& ladder, Controller&)
 {
-	if (this->contains(ladder.Center()))
-		m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
-	
-	if (m_direction != Direction::Down && m_direction != Direction::Up)
-		m_prevDirection = m_direction;
+	if (std::abs(ladder.Center().x - this->centerDown().x) < SIGMA + 50)
+	{
+		if (std::abs(Player::plyLocation.y - this->getPos().y) > SIGMA)
+		{
+			if (m_direction != Direction::Down && m_direction != Direction::Up)
+				m_prevDirection = m_direction;
+			m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
+			if (Player::plyLocation.y > this->getPos().y) // player is underneath me
+				this->m_direction = Direction::Down;
+			else if (Player::plyLocation.y < this->getPos().y) // player is above me
+				this->m_direction = Direction::Up;
 
-	if (Player::plyLocation.y > this->getPos().y) // player is underneath me
-		this->m_direction = Direction::Down;
-	else if (Player::plyLocation.y < this->getPos().y) // player is above me
-		this->m_direction = Direction::Up;
+			if (this->getPos() == this->m_prevPos)	// stuck in ladder
+			{
+				this->m_direction = this->m_prevDirection;
+			}
+		}
+	}
+
+	//if (this->contains(ladder.Center()))
+	//	m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
+	//
+	//if (m_direction != Direction::Down && m_direction != Direction::Up)
+	//	m_prevDirection = m_direction;
+
+	//if (Player::plyLocation.y > this->getPos().y) // player is underneath me
+	//	this->m_direction = Direction::Down;
+
+	//	
+	//else if (Player::plyLocation.y < this->getPos().y) // player is above me
+	//	this->m_direction = Direction::Up;
 }

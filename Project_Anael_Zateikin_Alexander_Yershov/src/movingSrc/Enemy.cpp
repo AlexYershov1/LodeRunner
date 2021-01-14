@@ -6,7 +6,10 @@ Enemy::Enemy(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
 	: MovingObject(symbol, position, mapW, mapH), m_direction(Direction::Left)
 {
 	this->m_icon.scale(-1, 1);	// flipIcon();
-	m_icon.scale(1, 0.9f);
+	m_icon.scale(0.9f, 0.9f);
+
+	m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
+	m_icon.move(-m_icon.getGlobalBounds().width, 0);
 }
 
 Enemy::~Enemy()
@@ -17,7 +20,7 @@ void Enemy::move(sf::Time& clock)
 {
 	m_prevPos = m_icon.getPosition();
 	// set to default icon
-	m_icon.setTexture(*TextureHolder::instance().getChangingIcon());
+	m_icon.setTexture(*TextureHolder::instance().getEnemyChangingIcon());
 	// set new position
 	this->m_icon.move(DirectionVec[(int)this->m_direction] * BASE_SPEED * clock.asSeconds());
 	if(outOfBounds(this->getPos()))
@@ -40,7 +43,9 @@ void Enemy::handleCollision(Floor& floor, Controller&)
 
 	//if (this->getPos().y > m_prevPos.y) // trying to go down
 	//{
-	//	if (floor.contains(this->centerDown()))  // floor is underneath
+	//	auto leftVertice = sf::Vector2f(this->centerDown().x - this->getIconWidth() / 2, this->centerDown().y);
+	//	auto rightVertice = sf::Vector2f(leftVertice.x + this->getIconWidth(), leftVertice.y);
+	//	if (floor.contains(leftVertice) || floor.contains(rightVertice))  // floor is underneath
 	//		m_icon.setPosition(m_prevPos);
 	//}
 	//if (this->contains(floor.Center()))
