@@ -12,7 +12,7 @@ public:
 	// get functions
 	sf::Texture* getIcon(const Elements);
 	sf::Texture* getChangingIcon(MovingObjTexture);
-	sf::Texture* getChangingIcon();
+	sf::Texture* getEnemyChangingIcon();
 private:
 	TextureHolder();
 	TextureHolder(const TextureHolder&) = default;
@@ -28,5 +28,6 @@ private:
 	sf::Font m_font;
 
 	int m_enemySerialNumber;
+	sf::Clock enemyAnimetionTimer;
 };
 
