@@ -21,7 +21,7 @@ public:
 	virtual void handleCollision(Bonus&, Controller&) override {};
 	
 protected:
-	Direction m_direction = Direction::Left;	// direction of movement
+	//sf::Vector2f m_direction = DirectionVec[(int)Direction::Left];	// direction of movement
 	void handleBlock();
 private:
 	

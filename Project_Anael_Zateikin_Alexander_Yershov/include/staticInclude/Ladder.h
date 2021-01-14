@@ -4,7 +4,8 @@
 class Ladder : public StaticObject
 {
 public:
-	using StaticObject::StaticObject;
+	//using StaticObject::StaticObject;
+	Ladder(Elements, const sf::Vector2f&, int, int);
 	~Ladder();
 
 	virtual void handleCollision(Player&, Controller&) override;

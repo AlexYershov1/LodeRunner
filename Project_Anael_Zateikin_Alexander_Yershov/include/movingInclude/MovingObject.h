@@ -19,11 +19,11 @@ public:
 	//virtual void handleCollision(Floor&, Controller&) override;
 	const sf::Vector2f centerDown() const;
 	void moveToPrevPos();
-
+	void changeToCorrectDisplay();
 protected:
 	//float m_speed; //speed per second
 	sf::Vector2f m_respawnLocation;
 	sf::Vector2f m_prevPos;
-	
+	sf::Vector2f m_direction;	// direction of movement
 	bool outOfBounds(const sf::Vector2f&) const;
 };

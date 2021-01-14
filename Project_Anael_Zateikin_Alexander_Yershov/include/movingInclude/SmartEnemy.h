@@ -9,5 +9,5 @@ public:
 	virtual void move(sf::Time&) override;
 	virtual void handleCollision(Ladder&, Controller&) override;
 private:
-	Direction m_prevDirection = Direction::Left;
+	sf::Vector2f m_prevDirection = DirectionVec[(int)Direction::Left];
 };

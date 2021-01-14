@@ -25,10 +25,10 @@ public:
 
 	static sf::Vector2f plyLocation;	// for smart enemy to follow player
 
-	void changeToCorrectDisplay();
+protected:
+	//sf::Vector2f m_direction = DirectionVec[(int)Direction::Left];	// direction of movement
 private:
 	sf::Vector2f getDirectionFromKey() const;
 	int m_life;
-	sf::Vector2f m_direction;
 };
 
