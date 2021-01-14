@@ -87,26 +87,7 @@ void Player::handleCollision(Ladder& ladder, Controller&)
         m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerClimbingIcon));
 }
 
-void Player::changeToCorrectDisplay()  //move this to MovingObject and use maybe Type_def
-{
-    //if direction is left but was right before
-    if (m_direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
-    {
-        m_icon.scale(-1, 1);
-        m_prevPos.x += m_icon.getGlobalBounds().width;      //to correct the previous location after mirroring the sprite
-        m_icon.move(m_icon.getGlobalBounds().width, 0);
-    }
-    
-    //if direction is right but was left before
-    else if (m_direction == DirectionVec[(int)Direction::Right] && (m_icon.getScale().x < 0))
-    {
-        m_icon.scale(-1, 1);
-        m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
-        m_icon.move(-m_icon.getGlobalBounds().width, 0);
-       
-    }
-        
-}
+
 
 sf::Vector2f Player::getDirectionFromKey() const
 {

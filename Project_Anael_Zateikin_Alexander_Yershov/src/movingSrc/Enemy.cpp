@@ -3,8 +3,9 @@
 #include "Controller.h"
 
 Enemy::Enemy(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
-	: MovingObject(symbol, position, mapW, mapH), m_direction(Direction::Left)
+	: MovingObject(symbol, position, mapW, mapH)	
 {
+	m_direction = DirectionVec[(int)Direction::Left];	// direction of movement)
 	this->m_icon.scale(-1, 1);	// flipIcon();
 	m_icon.scale(0.9f, 0.9f);
 
@@ -21,8 +22,10 @@ void Enemy::move(sf::Time& clock)
 	m_prevPos = m_icon.getPosition();
 	// set to default icon
 	m_icon.setTexture(*TextureHolder::instance().getEnemyChangingIcon());
+	//change the scale to face the right direction
+	changeToCorrectDisplay();
 	// set new position
-	this->m_icon.move(DirectionVec[(int)this->m_direction] * BASE_SPEED * clock.asSeconds());
+	this->m_icon.move(this->m_direction * BASE_SPEED * clock.asSeconds());
 	if(outOfBounds(this->getPos()))
 		handleBlock();
 }
@@ -70,7 +73,7 @@ void Enemy::handleCollision(Player& ply, Controller& game)
 void Enemy::handleCollision(Bar&, Controller&)
 {
 	m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::charOnBarIcon));
-	if(m_direction == Direction::Up || m_direction == Direction::Down)
+	if(m_direction == DirectionVec[(int)Direction::Up] || m_direction == DirectionVec[(int)Direction::Down])
 		this->m_icon.move(0, this->getIconHeight());
 }
 
@@ -83,10 +86,10 @@ void Enemy::handleCollision(Ladder& ladder, Controller& game)
 void Enemy::handleBlock() 
 {
 	m_icon.setPosition(m_prevPos);
-	if (m_direction == Direction::Left)
-		m_direction = Direction::Right;
+	if (m_direction == DirectionVec[(int)Direction::Left])
+		m_direction = DirectionVec[(int)Direction::Right];
 	else
-		m_direction = Direction::Left;
+		m_direction = DirectionVec[(int)Direction::Left];
 
-	this->m_icon.scale(-1, 1);	// flipIcon();
+	//this->m_icon.scale(-1, 1);	// flipIcon();
 }

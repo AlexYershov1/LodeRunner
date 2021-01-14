@@ -42,6 +42,26 @@ void MovingObject::moveToPrevPos()
 {
 	m_icon.setPosition(m_prevPos);
 }
+
+void MovingObject::changeToCorrectDisplay()
+{
+	//if direction is left but was right before
+	if (m_direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
+	{
+		m_icon.scale(-1, 1);
+		m_prevPos.x += m_icon.getGlobalBounds().width;      //to correct the previous location after mirroring the sprite
+		m_icon.move(m_icon.getGlobalBounds().width, 0);
+	}
+
+	//if direction is right but was left before
+	else if (m_direction == DirectionVec[(int)Direction::Right] && (m_icon.getScale().x < 0))
+	{
+		m_icon.scale(-1, 1);
+		m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
+		m_icon.move(-m_icon.getGlobalBounds().width, 0);
+		}
+}
+
 bool MovingObject::outOfBounds(const sf::Vector2f& Location) const	//shouldn't receive a location
 {
 	if (this->m_icon.getGlobalBounds().left < 0 ||
