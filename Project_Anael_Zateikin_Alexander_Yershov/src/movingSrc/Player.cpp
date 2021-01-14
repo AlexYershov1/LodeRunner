@@ -7,6 +7,7 @@ sf::Vector2f Player::plyLocation;	// for smart enemy to follow player
 Player::Player(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
 	: MovingObject(symbol, position, mapW, mapH), m_life(NUM_OF_LIVES)
 {
+    m_icon.scale(0.9f, 0.9f);
 }
 
 

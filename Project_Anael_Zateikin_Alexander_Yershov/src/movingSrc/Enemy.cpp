@@ -8,8 +8,8 @@ Enemy::Enemy(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
 	this->m_icon.scale(-1, 1);	// flipIcon();
 	m_icon.scale(0.9f, 0.9f);
 
-	m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
-	m_icon.move(-m_icon.getGlobalBounds().width, 0);
+	//m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
+	//m_icon.move(-m_icon.getGlobalBounds().width, 0);
 }
 
 Enemy::~Enemy()

@@ -19,9 +19,28 @@ void SmartEnemy::move(sf::Time& clock)
 	else
 	{
 		if (Player::plyLocation.x < this->getPos().x)	// player is to the left of me
+		{
+			if (m_direction != Direction::Left)
+			{
+				//m_icon.scale(-1, 1);
+				//m_prevPos.x += m_icon.getGlobalBounds().width;      //to correct the previous location after mirroring the sprite
+				//m_icon.move(m_icon.getGlobalBounds().width, 0);
+			}
+				
 			m_direction = Direction::Left;
+		}
 		else
+		{
+			if (m_direction != Direction::Right)
+			{
+				//m_icon.scale(-1, 1);
+				//m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
+				//m_icon.move(-m_icon.getGlobalBounds().width, 0);
+			}
+			
 			m_direction = Direction::Right;
+		}
+			
 	}
 	Enemy::move(clock);
 }
@@ -39,24 +58,27 @@ void SmartEnemy::handleCollision(Ladder& ladder, Controller&)
 				this->m_direction = Direction::Down;
 			else if (Player::plyLocation.y < this->getPos().y) // player is above me
 				this->m_direction = Direction::Up;
-
-			if (this->getPos() == this->m_prevPos)	// stuck in ladder
-			{
-				this->m_direction = this->m_prevDirection;
-			}
+		}
+		if (this->getPos() == this->m_prevPos)	// stuck in ladder
+		{
+			this->m_icon.move(0, -1);
+			this->m_direction = this->m_prevDirection;
 		}
 	}
 
-	//if (this->contains(ladder.Center()))
+	//if (std::abs(ladder.Center().x - this->centerDown().x) < SIGMA + 50)
+	//{
 	//	m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
-	//
-	//if (m_direction != Direction::Down && m_direction != Direction::Up)
-	//	m_prevDirection = m_direction;
 
-	//if (Player::plyLocation.y > this->getPos().y) // player is underneath me
-	//	this->m_direction = Direction::Down;
+	//	if (m_direction != Direction::Down && m_direction != Direction::Up)
+	//		m_prevDirection = m_direction;
 
-	//	
-	//else if (Player::plyLocation.y < this->getPos().y) // player is above me
-	//	this->m_direction = Direction::Up;
+	//	if (Player::plyLocation.y > this->getPos().y) // player is underneath me
+	//		this->m_direction = Direction::Down;
+
+	//	else if (Player::plyLocation.y < this->getPos().y) // player is above me
+	//		this->m_direction = Direction::Up;
+
+	//	this->m_icon.setPosition(ladder.getPos().x, this->getPos().y);
+	//}
 }

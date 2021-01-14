@@ -73,7 +73,7 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 				//if above ladder, let float above to be able to go to floor
 				if (typeid(*unmovable) == typeid(Ladder))			
 				{
-					thisObj.moveToPrevPos(); //
+					//thisObj.moveToPrevPos(); //
 				}
 					
 				thisObj.handleCollision(*unmovable, game);
