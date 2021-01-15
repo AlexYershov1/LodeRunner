@@ -7,6 +7,7 @@
 #include "movingInclude/MediocreEnemy.h"
 #include "movingInclude/SmartEnemy.h"
 #include "StartScreen.h"
+#include "Caption.h"
 
 
 class Controller
@@ -35,9 +36,7 @@ private:
 	//TextureHolder m_textures;
 	sf::RenderWindow m_gameWindow;
 	sf::Clock m_timer;
-	float m_stageTime;
 	StartScreen m_menu;
-	int m_level;
-	int m_score;
+	Caption m_caption;
 };
 static std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f, int, int);

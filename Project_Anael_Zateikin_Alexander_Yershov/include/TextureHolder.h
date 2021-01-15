@@ -13,6 +13,7 @@ public:
 	sf::Texture* getIcon(const Elements);
 	sf::Texture* getChangingIcon(MovingObjTexture);
 	sf::Texture* getEnemyChangingIcon();
+	sf::Font* getFont();
 private:
 	TextureHolder();
 	TextureHolder(const TextureHolder&) = default;

@@ -6,7 +6,7 @@ class StartScreen
 public:
 	StartScreen();
 	~StartScreen();
-	void activateStartScreen(sf::RenderWindow& window);
+	void activateStartScreen(sf::RenderWindow&);
 private:
 	sf::Font m_font;
 
