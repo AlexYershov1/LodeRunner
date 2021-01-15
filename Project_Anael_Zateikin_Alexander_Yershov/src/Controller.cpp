@@ -4,7 +4,7 @@
 
 
 Controller::Controller()
-	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game Window",
+	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT /* caption size*/ ), "Game Window",
 									sf::Style::Titlebar | sf::Style::Close)), 
 	  m_level(1), m_score(0), m_stageTime(STAGE_TIME)
 {

@@ -73,12 +73,14 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 				//if above ladder, let float above to be able to go to floor
 				if (typeid(*unmovable) == typeid(Ladder))			
 				{
-					//thisObj.moveToPrevPos(); //
+					thisObj.moveToPrevPos(); //
 				}
 					
 				thisObj.handleCollision(*unmovable, game);
 			}
 		}
+		if (thisObj.outOfBounds())
+			thisObj.moveToPrevPos();
 	}
 		
 
@@ -195,7 +197,10 @@ void Board::dig(const sf::Vector2f& Location)
 		if ((*unmovable).contains(Location))
 		{
 			StaticObject* ptr = unmovable.get(); //get pointer to object
-			dynamic_cast<Floor*>(ptr)->dig();
+			if (dynamic_cast<Floor*>(ptr))
+			{
+				dynamic_cast<Floor*>(ptr)->dig();
+			}
 		}
 	}
 }

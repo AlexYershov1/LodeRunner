@@ -43,8 +43,8 @@ void Player::move(sf::Time& deltaTime)
 	m_icon.move(m_direction * BASE_SPEED * deltaTime.asSeconds());
     
     //check bounds
-    if (outOfBounds(m_icon.getPosition())) //shouln't send anything - works on this object
-        m_icon.setPosition(m_prevPos);
+    if (outOfBounds()) //shouln't send anything - works on this object
+        this->moveToPrevPos();
         
 
     plyLocation = this->getPos();   // for smart enemy to follow player

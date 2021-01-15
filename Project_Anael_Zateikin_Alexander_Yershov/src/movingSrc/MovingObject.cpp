@@ -62,7 +62,7 @@ void MovingObject::changeToCorrectDisplay()
 		}
 }
 
-bool MovingObject::outOfBounds(const sf::Vector2f& Location) const	//shouldn't receive a location
+bool MovingObject::outOfBounds() const	//shouldn't receive a location
 {
 	if (this->m_icon.getGlobalBounds().left < 0 ||
 		this->m_icon.getGlobalBounds().left + this->m_icon.getGlobalBounds().width > WINDOW_WIDTH ||

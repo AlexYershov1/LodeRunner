@@ -6,7 +6,7 @@ Enemy::Enemy(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
 	: MovingObject(symbol, position, mapW, mapH)	
 {
 	m_direction = DirectionVec[(int)Direction::Left];	// direction of movement)
-	this->m_icon.scale(-1, 1);	// flipIcon();
+	//this->m_icon.scale(-1, 1);	// flipIcon();
 	m_icon.scale(0.9f, 0.9f);
 
 	//m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
@@ -26,7 +26,7 @@ void Enemy::move(sf::Time& clock)
 	changeToCorrectDisplay();
 	// set new position
 	this->m_icon.move(this->m_direction * BASE_SPEED * clock.asSeconds());
-	if(outOfBounds(this->getPos()))
+	if(outOfBounds())
 		handleBlock();
 }
 
@@ -42,8 +42,6 @@ void Enemy::handleCollision(Wall&, Controller&)
 
 void Enemy::handleCollision(Floor& floor, Controller&)
 {
-	//ALEX - maybe change to same as players collision with floor
-
 	//if (this->getPos().y > m_prevPos.y) // trying to go down
 	//{
 	//	auto leftVertice = sf::Vector2f(this->centerDown().x - this->getIconWidth() / 2, this->centerDown().y);
@@ -53,15 +51,23 @@ void Enemy::handleCollision(Floor& floor, Controller&)
 	//}
 	//if (this->contains(floor.Center()))
 	//	m_icon.setPosition(m_prevPos);
+	/*
+	
 	
 	if (floor.contains(m_prevPos) && floor.getPos().y < m_prevPos.y) //if the collision is underneath the floor
 	{
-		m_prevPos.y += 1.0f; //to avoid getting stuck inside a floor
-	}
+		//if left to floor - move left
+		//if right to floor - move right
 
-	//go back to previous location
-	this->moveToPrevPos(); // <-----------> m_icon.setPosition(m_prevPos);
+
+		//move to center of ladder
+	}
+	*/
 	
+		//std::abs(Player::plyLocation.y - this->getPos().y) > SIGMA)	// not on same level
+	this->moveToPrevPos();
+	//we need to add a function that will teleport a moving object above floor ==> move to top coordinate of floor + a pixel (const)
+
 }
 
 void Enemy::handleCollision(Player& ply, Controller& game)
