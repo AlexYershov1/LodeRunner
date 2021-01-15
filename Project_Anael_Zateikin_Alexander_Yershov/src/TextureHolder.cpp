@@ -132,3 +132,8 @@ sf::Texture* TextureHolder::getEnemyChangingIcon()
 	return &this->m_enemyAnime[m_enemySerialNumber];
 }
 
+sf::Font* TextureHolder::getFont()
+{
+	return &this->m_font;
+}
+

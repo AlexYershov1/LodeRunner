@@ -21,4 +21,5 @@ target_sources (Project_Anael_Zateikin_Alexander_Yershov PRIVATE "main.cpp"
                                                                  "staticSrc/Bar.cpp"
                                                                  "staticSrc/Floor.cpp"
                                                                  "staticSrc/Coin.cpp"
-                                                                 "Macros.cpp")
+                                                                 "Macros.cpp"
+                                                                 "Caption.cpp")

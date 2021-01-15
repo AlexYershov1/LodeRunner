@@ -4,15 +4,10 @@
 
 
 Controller::Controller()
-	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT /* caption size*/ ), "Game Window",
-									sf::Style::Titlebar | sf::Style::Close)), 
-	  m_level(1), m_score(0), m_stageTime(STAGE_TIME)
+	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT + CAPTION_HEIGHT), "Game Window",
+									sf::Style::Titlebar | sf::Style::Close))
 {
 	srand(SEED);
-	//m_map.get_size();
-	//create icons
-	//createIcons(); //CHANGE THE NAME TO CREATE OBJECT
-	
 }
 
 Controller::~Controller()
@@ -29,6 +24,7 @@ void Controller::run()
 	m_menu.activateStartScreen(this->m_gameWindow);
 	m_map.readLvlMap();
 	createObject();
+	this->m_caption.newLevel(STAGE_TIME);
 
     while(this->m_gameWindow.isOpen())
 	{
@@ -55,7 +51,7 @@ void Controller::run()
 				{
 					dig(false);
 				}
-
+				break;
 			default:
 				break;
 			}
@@ -123,6 +119,7 @@ void Controller::draw()
 		movable->draw(this->m_gameWindow);
 	
 	//draw captions : clock, score, life...
+	this->m_caption.draw(this->m_gameWindow);
 }
 
 void Controller::eraseCoin(Coin& coin)
@@ -132,7 +129,7 @@ void Controller::eraseCoin(Coin& coin)
 
 void Controller::increaseScore()
 {
-	this->m_score += COIN_VALUE * m_level;
+	this->m_caption.updateScore(COIN_VALUE * this->m_caption.getLvl());
 }
 
 void Controller::addEnemy()
@@ -145,7 +142,7 @@ void Controller::addEnemy()
 
 void Controller::addTime()
 {
-	m_stageTime += BONUS_TIME;
+	this->m_caption.updateTime(BONUS_TIME);
 }
 
 void Controller::dig(bool direction)
