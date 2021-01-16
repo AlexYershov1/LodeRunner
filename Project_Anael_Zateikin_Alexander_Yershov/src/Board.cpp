@@ -65,6 +65,8 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 	}
 	if (!collided)
 	{
+	
+
 		thisObj.fall(deltaTime);  //fall if you can
 		for (auto& unmovable : m_staticObj)
 		{
@@ -82,7 +84,9 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 		if (thisObj.outOfBounds())
 			thisObj.moveToPrevPos();
 	}
-		
+	/*
+	add a bool member to save if we are falling (didn't collide with floor AFTER gravity/ fall)
+	*/
 
 }
 
