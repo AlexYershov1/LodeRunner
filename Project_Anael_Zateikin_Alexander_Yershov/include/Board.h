@@ -27,9 +27,10 @@ public:
 	// get functions
 	int getWidth() const;
 	int getHeight() const;
+	int getInitLevelTime() const;
 	Elements getSymbol(int, int);
 	void draw(sf::RenderWindow&);
-	void eraseCoin(Coin&);
+	void eraseObject(StaticObject&);
 
 	float getStaticIconInfo(bool) const;
 	bool LvlWon();
@@ -42,7 +43,7 @@ private:
 	std::vector<std::unique_ptr<StaticObject>> m_staticObj;
 	int m_height;
 	int m_width;
-
+	int m_initLevelTime;
 
 
 	void readLvlSize();

@@ -20,12 +20,13 @@ public:
 	void checkCollision(MovingObject&, sf::Time);
 	void draw();
 	//erase coin
-	void eraseCoin(Coin&);
+	void eraseObject(StaticObject&);
 	void increaseScore();
 	void addEnemy(); 
 	void addTime();
 	void strike();
 private:
+	void newGame();
 	void dig(bool);
 	void createObject();
 	void newLvl();
@@ -42,5 +43,6 @@ private:
 	sf::Clock m_timer;
 	StartScreen m_menu;
 	Caption m_caption;
+	bool m_isStrike;
 };
 static std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f, int, int);
