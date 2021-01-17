@@ -2,7 +2,7 @@
 #include "Controller.h"
 #include <typeinfo>
 
-Board::Board() : m_height(0), m_width(0)
+Board::Board() : m_height(0), m_width(0) , m_initLevelTime(0)
 {
 	this->m_fRead.open("board.txt", std::ios_base::in);
 	// maybe call read size and read map
@@ -15,7 +15,7 @@ Board::~Board()
 bool Board::readLvlMap()
 {
 	readLvlSize();
-	if (this->m_height == 0)
+	if (this->m_fRead.eof())
 		return false;
 	auto line = std::string();
 	for (int row = 0; row < m_height; row++)
@@ -95,6 +95,10 @@ std::unique_ptr<Bonus> selectBonusType(sf::Vector2f position, int mapW, int mapH
 {
 	int choice = rand() % NUM_OF_BONUS_TYPES; //choose one of three enemy types
 
+	//
+	//return std::make_unique<BadBonus>(Elements::bonus, position, mapW, mapH);
+	//
+
 	switch ((BonusType)choice)
 	{
 	case BonusType::life:
@@ -108,6 +112,7 @@ std::unique_ptr<Bonus> selectBonusType(sf::Vector2f position, int mapW, int mapH
 	}
 	return nullptr;
 }
+
 int Board::getWidth() const
 {
 	return this->m_width;
@@ -116,6 +121,11 @@ int Board::getWidth() const
 int Board::getHeight() const
 {
 	return this->m_height;
+}
+
+int Board::getInitLevelTime() const
+{
+	return m_initLevelTime;
 }
 
 Elements Board::getSymbol(int row, int col)
@@ -164,12 +174,12 @@ void Board::draw(sf::RenderWindow& window)
 		unmovable->draw(window);
 }
 
-void Board::eraseCoin(Coin& eatenCoin)
+void Board::eraseObject(StaticObject& staticObj)
 {
 	auto staticPtr = this->m_staticObj.begin();
 	for (; staticPtr != m_staticObj.end(); staticPtr++)
 	{
-		if ((*staticPtr)->getPos() == eatenCoin.getPos())
+		if ((*staticPtr)->getPos() == staticObj.getPos())
 		{
 			m_staticObj.erase(staticPtr);
 			break;
@@ -230,7 +240,10 @@ void Board::dig(const sf::Vector2f& Location)
 
 void Board::resetStreamPtr()
 {
+	//std::string line;
+	this->m_fRead.clear();
 	this->m_fRead.seekg(std::ios_base::beg);
+	//getline(m_fRead, line);
 }
 
 void Board::readLvlSize()
@@ -239,10 +252,15 @@ void Board::readLvlSize()
 
 	// first number - height
 	this->m_fRead >> number;
+	if (m_fRead.eof())
+		return;
 	this->m_height = std::stoi(number, nullptr);
 	// second number - width
 	this->m_fRead >> number;
 	this->m_width = std::stoi(number, nullptr);
+	// third number - level time
+	this->m_fRead >> number;
+	this->m_initLevelTime = std::stoi(number, nullptr);
 	this->m_fRead.ignore();
 }
 

@@ -16,7 +16,7 @@ Coin::~Coin()
 
 void Coin::handleCollision(Player& ply, Controller& game)
 {
-	game.eraseCoin(*this);
+	game.eraseObject(*this);
 	game.increaseScore();
 }
 //returns true if at least one coin still exists

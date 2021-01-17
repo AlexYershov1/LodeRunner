@@ -5,7 +5,8 @@
 
 Controller::Controller()
 	: m_gameWindow(sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT + CAPTION_HEIGHT), "Game Window",
-									sf::Style::Titlebar | sf::Style::Close))
+		sf::Style::Titlebar | sf::Style::Close)),
+	m_isStrike(false)
 {
 	srand(SEED);
 }
@@ -17,13 +18,12 @@ Controller::~Controller()
 void Controller::run()
 {
 	// game loop
-	sf::Clock clock;
-
-	
 	m_menu.activateStartScreen(this->m_gameWindow);
+
+	m_timer.restart();
 	m_map.readLvlMap();
 	createObject();
-	this->m_caption.updateLevel(STAGE_TIME);	// param to be changed
+	this->m_caption.updateLevel(m_map.getInitLevelTime());	// param to be changed
 
     while(this->m_gameWindow.isOpen())
 	{
@@ -56,8 +56,15 @@ void Controller::run()
 			}
 		}
 
-		move(clock.restart());	 //send deltaTime to move function
+		move(m_timer.restart());	 //send deltaTime to move function
 		
+		if (m_isStrike)
+		{
+			m_isStrike = false;
+			continue;
+		}
+		//continue
+
 		if (m_map.LvlWon())
 			newLvl();
 
@@ -69,13 +76,64 @@ void Controller::run()
 	}
 }
 
+
+void Controller::newLvl()
+{
+	m_caption.updateScore(STAGE_VALUE * m_caption.getLvl());
+	
+	m_caption.setTimelessOff();
+	int updatedLife = resetLvl(); //removes all movables and saves the players lives
+	m_map.resetLvlMap();		  //removes all the static objects and frees map vectors
+	
+
+	if (!m_map.readLvlMap()) //if reached last level
+	{
+		newGame();
+		
+		//this->m_caption.updateLevel(STAGE_TIME);	// param to be changed
+		//run();	// game over
+	}
+	m_caption.updateLevel(m_map.getInitLevelTime());	// param to be changed
+	createObject();
+	updatePlayerLife(updatedLife);
+}
+
+void Controller::strike()	// player lost a life, level resets
+{
+	if (!updatePlayerLife())	// no more strikes left
+	{
+		m_isStrike = true;
+		resetLvl();
+		m_map.resetLvlMap();
+		m_map.resetStreamPtr();
+
+		//
+		m_menu.activateStartScreen(this->m_gameWindow);
+		m_timer.restart();
+		m_map.readLvlMap();
+		createObject();
+		this->m_caption.resetLevel(m_map.getInitLevelTime());
+		//this->m_caption.updateLevel(STAGE_TIME);	// param to be changed
+		//run();	// game over
+	}
+	else
+		moveBackToRespawnLoc();	// move all the movable objects to respawn location
+
+}
+
 void Controller::move(sf::Time deltatime)
 {
-	auto objPtr = m_movingObj.begin();
-	for (; objPtr != m_movingObj.end() && m_movingObj.size() != 0; objPtr++)
+	auto size = m_movingObj.size();
+	for (auto& movable : m_movingObj)
 	{
-		(*objPtr)->move(deltatime);
-		checkCollision(**objPtr, deltatime);			//operates on this
+		movable->move(deltatime);
+		checkCollision(*movable, deltatime);			//operates on this
+
+		
+		if (m_isStrike)
+			break;
+		if (size < m_movingObj.size())
+			break;
 	}
 }
 
@@ -88,10 +146,14 @@ void Controller::checkCollision(MovingObject& thisObj, sf::Time deltatime)
 		if (thisObj.collidesWith(*movable))
 		{
 			thisObj.handleCollision(*movable, *this);
+
+			//might reach strike
+			if (m_isStrike)
+				return;
+		
 		}
 	}
 	m_map.checkCollision(thisObj, *this, deltatime) ;
-
 }
 
 void Controller::draw()
@@ -105,9 +167,9 @@ void Controller::draw()
 	this->m_caption.draw(this->m_gameWindow);
 }
 
-void Controller::eraseCoin(Coin& coin)
+void Controller::eraseObject(StaticObject& staticObj)
 {
-	m_map.eraseCoin(coin);
+	m_map.eraseObject(staticObj);
 }
 
 void Controller::increaseScore()
@@ -126,6 +188,19 @@ void Controller::addEnemy()
 void Controller::addTime()
 {
 	this->m_caption.updateTime(BONUS_TIME);
+}
+
+void Controller::newGame()
+{
+
+	m_menu.activateStartScreen(this->m_gameWindow);
+	//reset score 
+	m_caption.resetScore();
+	m_timer.restart();
+	m_map.resetStreamPtr();
+	m_map.readLvlMap();
+	this->m_caption.resetLevel(m_map.getInitLevelTime());
+	createObject();
 }
 
 void Controller::dig(bool direction)
@@ -178,38 +253,6 @@ void Controller::createObject()
 			}
 		}
 	}
-}
-
-void Controller::newLvl()
-{
-	m_caption.updateScore(STAGE_VALUE * m_caption.getLvl());
-	m_caption.updateLevel(STAGE_TIME);	// param to be changed
-
-	int updatedLife = resetLvl();
-	m_map.resetLvlMap();
-
-	if (!m_map.readLvlMap())
-	{
-		m_map.resetStreamPtr();
-		run();	// game over
-	}
-
-	createObject();
-	updatePlayerLife(updatedLife);
-}
-
-void Controller::strike()	// player lost a life, level resets
-{
-	if (!updatePlayerLife())	// no more strikes left
-	{
-		resetLvl();
-		m_map.resetLvlMap();
-		m_map.resetStreamPtr();
-		run();	// game over
-	}
-	else
-		moveBackToRespawnLoc();	// move all the movable objects to respawn location
-	
 }
 
 bool Controller::updatePlayerLife(int update)
@@ -267,7 +310,7 @@ std::unique_ptr<MovingObject> Controller::createMovingObject(Elements type, sf::
 std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f position, int mapW, int mapH)
 {
 	int choice = rand() % NUM_OF_ENEMIE_TYPES; //choose one of three enemy types
-	return std::make_unique<SmartEnemy>(Elements::enemy, position, mapW, mapH);
+	//return std::make_unique<SmartEnemy>(Elements::enemy, position, mapW, mapH);
 	switch ((EnemyType)choice)
 	{
 	case EnemyType::dumb :
