@@ -8,16 +8,18 @@ public:
 	//using MovingObject::MovingObject;
 	Player(Elements, const sf::Vector2f& , int , int);
 	~Player();
-	void decreaseLife();	// decreases players' life by 1
+	bool decreaseLife();	// decreases players' life by 1
 	void increaseLife();
 	virtual void move(sf::Time&) override;
+	int getLife() const;
+	void setLife(int);
 
 	
 	void handleCollision(GameObject&, Controller&) override ;
 	void handleCollision(Wall&, Controller&) override ;
 	virtual void handleCollision(Floor&, Controller&) override;	
 	virtual void handleCollision(Player&, Controller&) override {};
-	virtual void handleCollision(Enemy&, Controller&) override {};
+	virtual void handleCollision(Enemy&, Controller&) override;
 	virtual void handleCollision(Bar&, Controller&) override;
 	virtual void handleCollision(Ladder&, Controller&) override;
 	virtual void handleCollision(Coin&, Controller&) override {};

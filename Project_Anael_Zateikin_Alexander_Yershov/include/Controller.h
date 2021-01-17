@@ -24,10 +24,14 @@ public:
 	void increaseScore();
 	void addEnemy(); 
 	void addTime();
-
+	void strike();
 private:
 	void dig(bool);
 	void createObject();
+	void newLvl();
+	bool updatePlayerLife(int update = 0);
+	int resetLvl();
+	void moveBackToRespawnLoc();
 	std::unique_ptr<MovingObject> createMovingObject(Elements, sf::Vector2f, int, int);
 
 	Board m_map;

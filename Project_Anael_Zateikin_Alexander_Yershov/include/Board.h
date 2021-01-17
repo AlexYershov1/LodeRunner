@@ -21,7 +21,7 @@ public:
 	Board();
 	~Board();
 	
-	void readLvlMap();
+	bool readLvlMap();
 	std::unique_ptr<StaticObject> createStaticObject(Elements, sf::Vector2f);
 	void checkCollision(MovingObject&, Controller&, const sf::Time& );
 	// get functions
@@ -32,8 +32,10 @@ public:
 	void eraseCoin(Coin&);
 
 	float getStaticIconInfo(bool) const;
-
+	bool LvlWon();
+	void resetLvlMap();
 	void dig(const sf::Vector2f&);
+	void resetStreamPtr();
 private:
 	std::ifstream m_fRead;
 	std::vector<std::string> m_map;

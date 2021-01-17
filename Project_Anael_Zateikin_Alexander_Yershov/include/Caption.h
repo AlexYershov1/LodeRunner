@@ -8,11 +8,11 @@ public:
 	Caption();
 	~Caption();
 	void updateTime(float);
-	void updateLevel();
+	void updateLevel(float);
 	void updateScore(int);
 	int getLvl() const;
+	float getTime() const;
 	void resetLvl();
-	void newLevel(float);
 	void draw(sf::RenderWindow&);
 private:
 	sf::Clock m_Timer;
