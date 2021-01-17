@@ -4,13 +4,6 @@
 
 int main()
 {
-	/*
-	TO-DO:
-	
-
-	*/
-
-
 	Controller A;
 	A.run();
 	return 0;

@@ -93,11 +93,9 @@ void SmartEnemy::handleCollision(Floor& floor, Controller&)
 			this->moveToPrevPos();			//check this!
 		}
 	}
-	//add here case of : contains centerDown and prevPos == getPos
-	//in that case lift above the floor
 	else if (floor.contains(this->centerDown()) && (m_prevPos.y == getPos().y))
 	{
-		m_icon.move(0, floor.getPos().y - 1.0f);//move above floor
+		m_icon.setPosition(this->getPos().x, floor.getPos().y - 1.0f - this->getIconHeight()); //move above floor
 	}
 	else 
 		this->moveToPrevPos(); //case of after falling

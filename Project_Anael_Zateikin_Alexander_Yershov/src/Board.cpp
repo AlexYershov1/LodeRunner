@@ -12,15 +12,18 @@ Board::~Board()
 {
 }
 
-void Board::readLvlMap()
+bool Board::readLvlMap()
 {
 	readLvlSize();
+	if (this->m_height == 0)
+		return false;
 	auto line = std::string();
 	for (int row = 0; row < m_height; row++)
 	{
 		getline(m_fRead, line);
 		m_map.push_back(line);
 	}
+	return true;
 }
 
 std::unique_ptr<StaticObject> Board::createStaticObject(Elements type, sf::Vector2f position)
@@ -65,17 +68,16 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 	}
 	if (!collided)
 	{
-	
-
 		thisObj.fall(deltaTime);  //fall if you can
 		for (auto& unmovable : m_staticObj)
 		{
 			if (unmovable != nullptr && thisObj.collidesWith(*unmovable))
 			{
+				collided = true;
 				//if above ladder, let float above to be able to go to floor
-				if (typeid(*unmovable) == typeid(Ladder))			
+				if (typeid(*unmovable) == typeid(Ladder))
 				{
-					thisObj.moveToPrevPos(); //
+					thisObj.moveToPrevPos(); 
 				}
 					
 				thisObj.handleCollision(*unmovable, game);
@@ -83,11 +85,10 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 		}
 		if (thisObj.outOfBounds())
 			thisObj.moveToPrevPos();
-	}
-	/*
-	add a bool member to save if we are falling (didn't collide with floor AFTER gravity/ fall)
-	*/
 
+		if (!collided)
+			thisObj.setFall(true);
+	}
 }
 
 std::unique_ptr<Bonus> selectBonusType(sf::Vector2f position, int mapW, int mapH)
@@ -194,6 +195,24 @@ float Board::getStaticIconInfo(bool isWidth) const
 	}
 }
 
+bool Board::LvlWon()
+{
+	for (auto& unmoveble : m_staticObj)
+	{
+		if (typeid(*unmoveble) == typeid(Coin))
+			return false;
+	}
+	return true;
+}
+
+void Board::resetLvlMap()
+{
+	m_staticObj.clear();
+
+	for (int row = m_height - 1; row >= 0; row--)
+		m_map.pop_back();
+}
+
 void Board::dig(const sf::Vector2f& Location)
 {
 	for (auto& unmovable : m_staticObj)
@@ -207,6 +226,11 @@ void Board::dig(const sf::Vector2f& Location)
 			}
 		}
 	}
+}
+
+void Board::resetStreamPtr()
+{
+	this->m_fRead.seekg(std::ios_base::beg);
 }
 
 void Board::readLvlSize()

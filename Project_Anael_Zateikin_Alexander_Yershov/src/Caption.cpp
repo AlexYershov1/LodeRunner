@@ -19,7 +19,6 @@ Caption::Caption() : m_level(0), m_score(0), m_stageTime(0)
 	this->m_levelText.setColor(sf::Color::Green);
 	this->m_levelText.setOutlineColor(sf::Color::Magenta);
 	this->m_levelText.setOutlineThickness(CAP_OUTLINE_THICKNESS);
-	updateLevel();
 
 	this->m_stageTimeText.setFont(*TextureHolder::instance().getFont());
 	this->m_stageTimeText.setCharacterSize(CAP_CHAR_SIZE);
@@ -43,10 +42,12 @@ void Caption::updateTime(float time)
 	this->m_Timer.restart();
 }
 
-void Caption::updateLevel()
+void Caption::updateLevel(float time)
 {
 	this->m_level++;
 	this->m_levelText.setString("Level:" + std::to_string(this->m_level));
+	m_stageTime = time;
+	this->m_Timer.restart();
 }
 
 void Caption::updateScore(int addedScore)
@@ -60,16 +61,16 @@ int Caption::getLvl() const
 	return this->m_level;
 }
 
+float Caption::getTime() const
+{
+	return this->m_stageTime;
+}
+
 void Caption::resetLvl()
 {
 	m_Timer.restart();
 }
 
-void Caption::newLevel(float time)
-{
-	this->m_level++;
-	m_stageTime = time;
-}
 
 void Caption::draw(sf::RenderWindow& window)
 {

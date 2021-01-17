@@ -4,7 +4,7 @@
 
 MovingObject::MovingObject(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
 	: GameObject(symbol, position , mapW, mapH),/* m_speed(BASE_SPEED),*/ m_respawnLocation(position),
-	  m_prevPos(position)
+	  m_prevPos(position), m_falling(false)
 {
 	m_icon.move(DirectionVec[(int)Direction::Up] * 2.2f);
 	m_respawnLocation = m_icon.getPosition();
@@ -71,9 +71,19 @@ bool MovingObject::outOfBounds() const	//shouldn't receive a location
 		return true;
 	return false;
 }
-/*
-void MovingObject::handleCollision(Floor&, Controller&)
+
+bool MovingObject::getFall() const
 {
-	m_icon.setPosition(m_prevPos);
+	return this->m_falling;
 }
-*/
+
+void MovingObject::setFall(bool update)
+{
+	this->m_falling = update;
+}
+
+void MovingObject::respawn()
+{
+	this->m_icon.setPosition(this->m_respawnLocation);
+}
+

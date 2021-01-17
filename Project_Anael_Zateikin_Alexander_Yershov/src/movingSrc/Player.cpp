@@ -15,9 +15,12 @@ Player::~Player()
 {
 }
 
-void Player::decreaseLife()
+bool Player::decreaseLife()
 {
 	this->m_life--;
+    if (this->m_life == 0)
+        return false;
+    return true;
 }
 
 void Player::increaseLife()
@@ -39,15 +42,28 @@ void Player::move(sf::Time& deltaTime)
     //change the scale to face the right direction
     changeToCorrectDisplay(); 
 
+    if (this->getFall())
+        m_direction = DirectionVec[(int)Direction::Down];
     //move the sprite
 	m_icon.move(m_direction * BASE_SPEED * deltaTime.asSeconds());
     
     //check bounds
     if (outOfBounds()) //shouln't send anything - works on this object
         this->moveToPrevPos();
-        
+    
+    this->setFall(false);
 
     plyLocation = this->getPos();   // for smart enemy to follow player
+}
+
+int Player::getLife() const
+{
+    return this->m_life;
+}
+
+void Player::setLife(int update)
+{
+    this->m_life = update;
 }
 
 void Player::handleCollision(GameObject& obj, Controller& game)
@@ -64,11 +80,19 @@ void Player::handleCollision(Floor& floor, Controller& )
 {
     if (floor.contains(m_prevPos) && floor.getPos().y < m_prevPos.y ) //if the collision is underneath the floor
     {
-        m_prevPos.y += 1.0f ; //to avoid getting stuck inside a floor
+        m_prevPos.y -= 1.0f ; //to avoid getting stuck inside a floor
     }
+    if (floor.contains(this->centerDown()) && (m_prevPos.y == getPos().y))
+    {
+        m_icon.setPosition(this->getPos().x, floor.getPos().y - 1.0f - this->getIconHeight()); //move above floor
+    }
+    else
+        this->moveToPrevPos(); //case of after falling
+}
 
-    //go back to previous location
-    this->moveToPrevPos(); // <-----------> m_icon.setPosition(m_prevPos);
+void Player::handleCollision(Enemy& enemy, Controller& game)
+{
+    enemy.handleCollision(*this, game);
 }
 
 void Player::handleCollision(Bar& bar, Controller&)

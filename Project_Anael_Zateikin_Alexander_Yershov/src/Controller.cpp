@@ -17,14 +17,13 @@ Controller::~Controller()
 void Controller::run()
 {
 	// game loop
-	//sf::Event ev;
 	sf::Clock clock;
 
 	
 	m_menu.activateStartScreen(this->m_gameWindow);
 	m_map.readLvlMap();
 	createObject();
-	this->m_caption.newLevel(STAGE_TIME);
+	this->m_caption.updateLevel(STAGE_TIME);	// param to be changed
 
     while(this->m_gameWindow.isOpen())
 	{
@@ -56,40 +55,24 @@ void Controller::run()
 				break;
 			}
 		}
-			/*
-		for (this->m_gameWindow.pollEvent(ev))
-		{
-			switch (ev.type)
-			{
-			default:
-				break;
-			}
-		}
 
-		*/
-		//start clock
-		
-		//while stage is not over 
-		//restart clock and save deltaTime 
-
-		// if(isWon())
-			//m_score += STAGE_VALUE * m_level ;
-			// m_map.LoadLvlMap();
-			// update data in controller
-		// if(lostGame())
-			// update data in contoller
-			// activateStartScreen(this->m_window);
 		move(clock.restart());	 //send deltaTime to move function
 		
+		if (m_map.LvlWon())
+			newLvl();
 
-		//check life ...
+		if (m_caption.getTime() <= 0)	// level time is up
+			strike();
+
+		// if(gameOver())
+			// activateStartScreen(this->m_window);
 	}
 }
 
 void Controller::move(sf::Time deltatime)
 {
 	auto objPtr = m_movingObj.begin();
-	for (; objPtr != m_movingObj.end(); objPtr++)
+	for (; objPtr != m_movingObj.end() && m_movingObj.size() != 0; objPtr++)
 	{
 		(*objPtr)->move(deltatime);
 		checkCollision(**objPtr, deltatime);			//operates on this
@@ -195,6 +178,77 @@ void Controller::createObject()
 			}
 		}
 	}
+}
+
+void Controller::newLvl()
+{
+	m_caption.updateScore(STAGE_VALUE * m_caption.getLvl());
+	m_caption.updateLevel(STAGE_TIME);	// param to be changed
+
+	int updatedLife = resetLvl();
+	m_map.resetLvlMap();
+
+	if (!m_map.readLvlMap())
+	{
+		m_map.resetStreamPtr();
+		run();	// game over
+	}
+
+	createObject();
+	updatePlayerLife(updatedLife);
+}
+
+void Controller::strike()	// player lost a life, level resets
+{
+	if (!updatePlayerLife())	// no more strikes left
+	{
+		resetLvl();
+		m_map.resetLvlMap();
+		m_map.resetStreamPtr();
+		run();	// game over
+	}
+	else
+		moveBackToRespawnLoc();	// move all the movable objects to respawn location
+	
+}
+
+bool Controller::updatePlayerLife(int update)
+{
+	for (auto& movable : m_movingObj)
+	{
+		auto plyPtr = movable.get();
+		if (dynamic_cast<Player*>(plyPtr))
+		{
+			if (update == 0)
+				return dynamic_cast<Player*>(plyPtr)->decreaseLife();
+			else
+				dynamic_cast<Player*>(plyPtr)->setLife(update);
+		}
+			
+	}
+	return true;
+}
+
+int Controller::resetLvl()
+{
+	int updatedLife = 0;
+
+	while (!m_movingObj.empty())
+	{
+		auto movingPtr = m_movingObj.begin();
+		if (auto plyPtr = dynamic_cast<Player*>((*movingPtr).get()))
+			updatedLife = plyPtr->getLife();	// extract the life member from player before deleting it
+
+		m_movingObj.erase(movingPtr);
+	}
+
+	return updatedLife;
+}
+
+void Controller::moveBackToRespawnLoc()
+{
+	for (auto& movable : m_movingObj)
+		(*movable).respawn();
 }
 
 std::unique_ptr<MovingObject> Controller::createMovingObject(Elements type, sf::Vector2f position, int mapW, int mapH)
