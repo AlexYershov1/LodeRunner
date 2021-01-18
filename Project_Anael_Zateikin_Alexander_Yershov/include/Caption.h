@@ -17,6 +17,8 @@ public:
 	void resetLevel(float);
 	void setTimelessOff();
 	void resetScore();
+	bool MusicIconContains(const sf::Event&) const;
+	void setMusicIcon(bool);
 private:
 	sf::Clock m_Timer;
 	float m_stageTime;
@@ -27,4 +29,6 @@ private:
 	sf::Text m_scoreText;
 	sf::Text m_stageTimeText;
 	sf::Text m_levelText;
+
+	sf::Sprite m_musicIcon;
 };

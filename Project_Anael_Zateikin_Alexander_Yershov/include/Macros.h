@@ -29,6 +29,7 @@ const float BOLD_OUTLINE = 10.0;
 const int CAP_CHAR_SIZE = 30;
 const float CAP_OUTLINE_THICKNESS = 3.0;
 const int BUFF_DISTANCE = 10;
+const int MUSIC_ICON_POS = 40;
 
 const char WALL_C = '#', EMPTY_C = ' ', BAR_C = '-', PLAYER_C = '@',
 ENEMY_C = '%', LADDER_C = 'H', COIN_C = '*', BONUS_C = '?' ;
@@ -59,6 +60,11 @@ enum class MovingObjTexture
 	playerDefaultIcon, enemyDefaultIcon,
 	playerClimbingIcon, enemyClimbingIcon, 
 	charOnBarIcon
+};
+
+enum class Recording
+{
+	bonus, strike, win, background
 };
 
 bool isStaticObj(const Elements);
