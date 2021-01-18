@@ -33,7 +33,7 @@ void resourcesManager::setImagesForObj()
 	newImage.loadFromFile("coin.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("enemy.png");
+	newImage.loadFromFile("0_Citizen_Walk_013.png");
 	m_textures.push_back(newImage);
 
 	newImage.loadFromFile("playerFront.png"); //change to player stand
@@ -117,6 +117,9 @@ void resourcesManager::createEnemySwitchingIcons()
 	newImage.loadFromFile("0_Citizen_Walk_024.png");
 	m_enemyAnime.push_back(newImage);
 
+	newImage.loadFromFile("0_Citizen_Walk_025.png");
+	m_enemyAnime.push_back(newImage);
+
 }
 
 void resourcesManager::createPlayerSwitchingIcons()
@@ -157,6 +160,9 @@ void resourcesManager::createPlayerSwitchingIcons()
 	m_playerAnime.push_back(newImage);
 
 	newImage.loadFromFile("0_Warrior_Run_011.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_012.png");
 	m_playerAnime.push_back(newImage);
 }
 
@@ -208,7 +214,7 @@ sf::Texture* resourcesManager::getEnemyChangingIcon()
 {
 	if (this->enemyAnimetionTimer.getElapsedTime().asMilliseconds() >= 20)
 	{
-		if (m_enemySerialNumber >= 11)
+		if (m_enemySerialNumber >= 12)
 			m_enemySerialNumber = 0;
 		m_enemySerialNumber++;
 		enemyAnimetionTimer.restart();
@@ -220,7 +226,7 @@ sf::Texture* resourcesManager::getPlayerRunningIcon()
 {
 	if (this->playerAnimationTimer.getElapsedTime().asMilliseconds() >= 20)
 	{
-		if (m_playerIconSerialNum >= 11)
+		if (m_playerIconSerialNum >= 12)
 			m_playerIconSerialNum = 0;
 		m_playerIconSerialNum++;
 		playerAnimationTimer.restart();
