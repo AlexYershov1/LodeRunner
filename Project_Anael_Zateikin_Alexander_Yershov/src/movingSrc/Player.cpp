@@ -1,3 +1,4 @@
+#pragma warning (disable : 26812)
 #include "movingInclude/Player.h"
 #include "Macros.h"
 #include "Controller.h"
@@ -15,12 +16,9 @@ Player::~Player()
 {
 }
 
-bool Player::decreaseLife()
+int Player::decreaseLife()
 {
-	this->m_life--;
-    if (this->m_life == 0)
-        return false;
-    return true;
+	return --this->m_life;
 }
 
 void Player::increaseLife()
@@ -34,15 +32,15 @@ void Player::move(sf::Time& deltaTime)
     m_prevPos = m_icon.getPosition();
 
     // set initial icon
-    //m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
-    m_icon.setTexture(*TextureHolder::instance().getPlayerRunningIcon());
+    //m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
+    m_icon.setTexture(*resourcesManager::instance().getPlayerRunningIcon());
 
     //get direction of movement
 	m_direction = getDirectionFromKey();
 
     //set texture
     if (m_direction == STAND)
-        m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
+        m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
     else
     changeToCorrectDisplay(); //change the scale to face the right direction
     
@@ -101,9 +99,9 @@ void Player::handleCollision(Enemy& enemy, Controller& game)
     enemy.handleCollision(*this, game);
 }
 
-void Player::handleCollision(Bar& bar, Controller&)
+void Player::handleCollision(Bar&, Controller&)
 {
-    m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::charOnBarIcon));
+    m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::charOnBarIcon));
 
     if (m_direction == DirectionVec[(int)Direction::Up])
         this->m_icon.setPosition(m_prevPos);
@@ -114,13 +112,14 @@ void Player::handleCollision(Bar& bar, Controller&)
 void Player::handleCollision(Ladder& ladder, Controller&)
 {
     if (this->contains(ladder.Center()))
-        m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerClimbingIcon));
+        m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::playerClimbingIcon));
 }
 
 void Player::handleCollision(Bonus&, Controller&)
 {
     static sf::Sound bonusHit;
-    bonusHit.setBuffer(*TextureHolder::instance().getSound(Recording::bonus));
+    bonusHit.setBuffer(*resourcesManager::instance().getSound(Recording::bonus));
+    bonusHit.setVolume(2);
     bonusHit.play();
 }
 

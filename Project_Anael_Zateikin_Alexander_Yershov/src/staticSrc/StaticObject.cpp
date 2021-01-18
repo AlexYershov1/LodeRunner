@@ -9,10 +9,6 @@ StaticObject::StaticObject(Elements symbol, const sf::Vector2f& position, int ma
 {
 }
 
-StaticObject::~StaticObject()
-{
-}
-
 const sf::Vector2f StaticObject::Center() const
 {
 	const auto rect = this->m_icon.getGlobalBounds();

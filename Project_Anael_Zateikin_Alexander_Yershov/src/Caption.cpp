@@ -1,11 +1,12 @@
 #pragma once
+#pragma warning (disable : 4996)
 #include "Caption.h"
-#include "TextureHolder.h"
+#include "resourcesManager.h"
 
 
 Caption::Caption() : m_level(0), m_score(0), m_stageTime(10), m_timelessLevel(false)
 {
-	this->m_scoreText.setFont(*TextureHolder::instance().getFont());
+	this->m_scoreText.setFont(*resourcesManager::instance().getFont());
 	this->m_scoreText.setCharacterSize(CAP_CHAR_SIZE);
 	this->m_scoreText.setPosition(BUFF_DISTANCE, WINDOW_HEIGHT + BUFF_DISTANCE);
 	this->m_scoreText.setColor(sf::Color::Green);
@@ -13,23 +14,31 @@ Caption::Caption() : m_level(0), m_score(0), m_stageTime(10), m_timelessLevel(fa
 	this->m_scoreText.setOutlineThickness(CAP_OUTLINE_THICKNESS);
 	updateScore(m_score);
 
-	this->m_levelText.setFont(*TextureHolder::instance().getFont());
+	this->m_levelText.setFont(*resourcesManager::instance().getFont());
 	this->m_levelText.setCharacterSize(CAP_CHAR_SIZE);
-	this->m_levelText.setPosition(BUFF_DISTANCE + WINDOW_WIDTH / 3, WINDOW_HEIGHT + BUFF_DISTANCE);
+	this->m_levelText.setPosition(BUFF_DISTANCE + WINDOW_WIDTH / 4, WINDOW_HEIGHT + BUFF_DISTANCE);
 	this->m_levelText.setColor(sf::Color::Green);
 	this->m_levelText.setOutlineColor(sf::Color::Magenta);
 	this->m_levelText.setOutlineThickness(CAP_OUTLINE_THICKNESS);
 
-	this->m_stageTimeText.setFont(*TextureHolder::instance().getFont());
+	this->m_livesText.setFont(*resourcesManager::instance().getFont());
+	this->m_livesText.setCharacterSize(CAP_CHAR_SIZE);
+	this->m_livesText.setPosition(BUFF_DISTANCE + WINDOW_WIDTH / 4 * 2, WINDOW_HEIGHT + BUFF_DISTANCE);
+	this->m_livesText.setColor(sf::Color::Green);
+	this->m_livesText.setOutlineColor(sf::Color::Magenta);
+	this->m_livesText.setOutlineThickness(CAP_OUTLINE_THICKNESS);
+	updateLife(NUM_OF_LIVES);
+
+	this->m_stageTimeText.setFont(*resourcesManager::instance().getFont());
 	this->m_stageTimeText.setCharacterSize(CAP_CHAR_SIZE);
-	this->m_stageTimeText.setPosition(BUFF_DISTANCE + WINDOW_WIDTH / 3 * 2, WINDOW_HEIGHT + BUFF_DISTANCE);
+	this->m_stageTimeText.setPosition(BUFF_DISTANCE + WINDOW_WIDTH / 4 * 3, WINDOW_HEIGHT + BUFF_DISTANCE);
 	this->m_stageTimeText.setColor(sf::Color::Green);
 	this->m_stageTimeText.setOutlineColor(sf::Color::Magenta);
 	this->m_stageTimeText.setOutlineThickness(CAP_OUTLINE_THICKNESS);
 	
-	this->m_musicIcon.setTexture(*TextureHolder::instance().getMusicIcon(true));
+	this->m_musicIcon.setTexture(*resourcesManager::instance().getMusicIcon(true));
 	this->m_musicIcon.setPosition(WINDOW_WIDTH - MUSIC_ICON_POS, WINDOW_HEIGHT + CAPTION_HEIGHT - MUSIC_ICON_POS);
-	this->m_musicIcon.scale(0.07, 0.07);
+	this->m_musicIcon.scale(MUSIC_ICON_SCALE);
 
 }
 
@@ -52,7 +61,7 @@ void Caption::updateTime(float time)
 	}
 }
 
-void Caption::updateLevel(float time)
+void Caption::updateLevel(int time)
 {
 	if (time == -1)
 	{
@@ -64,7 +73,6 @@ void Caption::updateLevel(float time)
 		m_stageTime = time;
 	this->m_level++;
 	this->m_levelText.setString("Level:" + std::to_string(this->m_level));
-	//m_timelessLevel = false;
 	this->m_Timer.restart();
 }
 
@@ -72,6 +80,11 @@ void Caption::updateScore(int addedScore)
 {
 	this->m_score += addedScore;
 	this->m_scoreText.setString("Score:" + std::to_string(this->m_score));
+}
+
+void Caption::updateLife(int lifeLeft)
+{
+	this->m_livesText.setString("Lives:" + std::to_string(lifeLeft));
 }
 
 int Caption::getLvl() const
@@ -92,7 +105,7 @@ void Caption::resetLvl()
 	m_Timer.restart();
 }
 
-void Caption::resetTime(float time)
+void Caption::resetTime(int time)
 {
 	m_stageTime = time;
 }
@@ -103,6 +116,7 @@ void Caption::draw(sf::RenderWindow& window)
 	updateTime(0);
 	window.draw(this->m_scoreText);
 	window.draw(this->m_levelText);
+	window.draw(this->m_livesText);
 	window.draw(this->m_stageTimeText);
 	window.draw(this->m_musicIcon);
 }
@@ -133,5 +147,5 @@ bool Caption::MusicIconContains(const sf::Event& evnt) const
 
 void Caption::setMusicIcon(bool isSoundOn)
 {
-	this->m_musicIcon.setTexture(*TextureHolder::instance().getMusicIcon(isSoundOn));
+	this->m_musicIcon.setTexture(*resourcesManager::instance().getMusicIcon(isSoundOn));
 }

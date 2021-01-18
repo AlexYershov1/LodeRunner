@@ -14,7 +14,7 @@ Coin::~Coin()
 	coinsLeft--;
 }
 
-void Coin::handleCollision(Player& ply, Controller& game)
+void Coin::handleCollision(Player&, Controller& game)
 {
 	game.eraseObject(*this);
 	game.increaseScore();

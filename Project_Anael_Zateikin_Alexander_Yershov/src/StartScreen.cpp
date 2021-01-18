@@ -14,7 +14,7 @@ StartScreen::StartScreen()
 	m_header.setStyle(sf::Text::Style::Bold | sf::Text::Style::Italic);
 	m_header.setCharacterSize(HEADER_SIZE);
 	m_header.setPosition(HEADER_POS);
-	m_header.setString("Get Every Penny !");
+	m_header.setString("Get The Gold !");
 	m_header.setColor(sf::Color::Magenta);
 	m_header.setOutlineColor(sf::Color::Black);
 	m_header.setOutlineThickness(OUTLINE_THICKNESS);
@@ -36,6 +36,9 @@ StartScreen::StartScreen()
 	m_exit.setString("Exit");
 	m_exit.setOutlineColor(sf::Color::Magenta);
 	m_exit.setOutlineThickness(OUTLINE_THICKNESS);
+
+	this->m_background.setSize({ WINDOW_WIDTH, WINDOW_HEIGHT + CAPTION_HEIGHT });
+	this->m_background.setTexture(resourcesManager::instance().getbackGround(true));
 }
 
 StartScreen::~StartScreen()
@@ -47,6 +50,7 @@ void StartScreen::activateStartScreen(sf::RenderWindow& window)
 	while (window.isOpen())
 	{
 		window.clear(sf::Color::White);
+		window.draw(this->m_background);
 		window.draw(this->m_header);
 		window.draw(this->m_start);
 		window.draw(this->m_exit);

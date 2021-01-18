@@ -3,7 +3,7 @@
 
 GameObject::GameObject(Elements symbol, const sf::Vector2f& location, int mapWidth, int mapHeight)
 {
-	auto texturePtr = TextureHolder::instance().getIcon(symbol);
+	auto texturePtr = resourcesManager::instance().getIcon(symbol);
 	m_icon.setTexture(*texturePtr);
 	
 	auto xScaleValue = (float)WINDOW_WIDTH / ((float)ICON_SIZE * (float)mapWidth);

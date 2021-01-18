@@ -165,6 +165,7 @@ Elements Board::getSymbol(int row, int col)
 	default:
 		break;
 	}
+	return Elements::empty;	// to avoid warning
 }
 
 void Board::draw(sf::RenderWindow& window)
@@ -204,6 +205,7 @@ float Board::getStaticIconInfo(bool isWidth) const
 		else
 			return (**it).getIconHeight();
 	}
+	return NULL;	// to avoid warning
 }
 
 bool Board::LvlWon()
@@ -269,7 +271,8 @@ bool Board::checkIfFloorSymbol(int row, int col) const
 {
 	if(row == 0 ) //ceiling
 		return false;
-	if (m_map[row - 1][col] == WALL_C) //check if there is a wall above
+	int rowIndex = row - 1;	// correct row index
+	if (m_map[rowIndex][col] == WALL_C) //check if there is a wall above
 		return false;
 
 	return true; //is a floor

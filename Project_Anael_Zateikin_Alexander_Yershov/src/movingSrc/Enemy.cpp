@@ -5,8 +5,7 @@
 Enemy::Enemy(Elements symbol, const sf::Vector2f& position, int mapW, int mapH)
 	: MovingObject(symbol, position, mapW, mapH)	
 {
-	m_direction = DirectionVec[(int)Direction::Left];	// direction of movement)
-	//this->m_icon.scale(-1, 1);	// flipIcon();
+	m_direction = DirectionVec[(int)Direction::Left];	// direction of movement
 	m_icon.scale(0.9f, 0.9f);
 }
 
@@ -19,7 +18,7 @@ void Enemy::move(sf::Time& clock)
 	m_prevPos = m_icon.getPosition();
 
 	// set to default icon
-	m_icon.setTexture(*TextureHolder::instance().getEnemyChangingIcon());
+	m_icon.setTexture(*resourcesManager::instance().getEnemyChangingIcon());
 
 	//change the scale to face the right direction
 	changeToCorrectDisplay();
@@ -40,11 +39,9 @@ void Enemy::handleCollision(GameObject& obj, Controller& game)
 	obj.handleCollision(*this, game);
 }
 
-void Enemy::handleCollision(Wall& wall, Controller&)
+void Enemy::handleCollision(Wall&, Controller&)
 {
 	handleBlock();
-	//correctStuckInAWall(wall);
-	//if stuck in a wall
 }
 
 void Enemy::handleCollision(Floor& floor, Controller&)
@@ -66,28 +63,27 @@ void Enemy::handleCollision(Floor& floor, Controller&)
 	else
 		this->moveToPrevPos(); //case of after falling
 
-	//
 	if(m_direction == DirectionVec[(int)Direction::Down]) //if regular enemy after fall
 		m_direction = DirectionVec[(int)Direction::Left];
 
 }
 
-void Enemy::handleCollision(Player& ply, Controller& game)
+void Enemy::handleCollision(Player&, Controller& game)
 {
 	game.strike();
 }
 
 void Enemy::handleCollision(Bar&, Controller&)
 {
-	m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::charOnBarIcon));
+	m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::charOnBarIcon));
 	if(m_direction == DirectionVec[(int)Direction::Up] || m_direction == DirectionVec[(int)Direction::Down])
 		this->m_icon.move(0, this->getIconHeight());
 }
 
-void Enemy::handleCollision(Ladder& ladder, Controller& game)
+void Enemy::handleCollision(Ladder& ladder, Controller&)
 {
 	if(this->contains(ladder.Center()))
-		m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
+		m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
 }
 
 void Enemy::handleBlock() 
@@ -97,23 +93,4 @@ void Enemy::handleBlock()
 		m_direction = DirectionVec[(int)Direction::Right];
 	else
 		m_direction = DirectionVec[(int)Direction::Left];
-
-	//this->m_icon.scale(-1, 1);	// flipIcon();
-}
-
-void Enemy::correctStuckInAWall(Wall& wall)
-{
-	//if stuck 
-	if (m_prevPos == getPos())
-	{
-		/*
-		//if stuck under wall
-		if (((wall.getPos().y + wall.getIconHeight()) - this->centerDown().y) < 1.0f && //close to top
-			m_prevPos.y == this->getPos().y)  //not after fall
-		{
-			m_prevPos = this->getPos();//questionable
-				m_icon.move(0, -1); //move one pixel up
-		}
-		*/
-	}
 }

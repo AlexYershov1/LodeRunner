@@ -40,13 +40,13 @@ void SmartEnemy::move(sf::Time& clock)
 void SmartEnemy::handleCollision(Ladder& ladder, Controller& game)
 {
 	auto sigma = game.getStaticIconInfo(GET_WIDTH) / (SIGMA+1);
-	if (std::abs(ladder.Center().x - this->centerDown().x) < /*SIGMA*/ sigma + 50) //if close to the center of the ladder
+	if (std::abs(ladder.Center().x - this->centerDown().x) < /*SIGMA*/ sigma) //if close to the center of the ladder
 	{
 		if (std::abs(Player::plyLocation.y - this->getPos().y) > sigma)
 		{
 			if (m_direction != DirectionVec[(int)Direction::Down] && m_direction != DirectionVec[(int)Direction::Up])
 				m_prevDirection = m_direction;																	//PROBLEMATIC
-			m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
+			m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
 			if (Player::plyLocation.y > this->getPos().y) // player is underneath me
 				this->m_direction = DirectionVec[(int)Direction::Down];
 			else if (Player::plyLocation.y < this->getPos().y) // player is above me

@@ -1,7 +1,7 @@
 #pragma once
-#include "TextureHolder.h"
+#include "resourcesManager.h"
 
-TextureHolder::TextureHolder() : m_enemySerialNumber(0), m_playerIconSerialNum(0)
+resourcesManager::resourcesManager() : m_enemySerialNumber(0), m_playerIconSerialNum(0)
 {
 	setImagesForObj();
 	createSwitchingIcons();
@@ -9,20 +9,21 @@ TextureHolder::TextureHolder() : m_enemySerialNumber(0), m_playerIconSerialNum(0
 	createPlayerSwitchingIcons();
 	createAudio();
 	createMusicIcon();
+	createBackgrounds();
 }
 
-TextureHolder::~TextureHolder()
+resourcesManager::~resourcesManager()
 {
 }
 
-TextureHolder& TextureHolder::instance()
+resourcesManager& resourcesManager::instance()
 {
-	static TextureHolder inst;
+	static resourcesManager inst;
 	return inst;
 }
 
 // load all the object images
-void TextureHolder::setImagesForObj()
+void resourcesManager::setImagesForObj()
 {
 	sf::Texture newImage;
 
@@ -53,12 +54,12 @@ void TextureHolder::setImagesForObj()
 	this->m_font.loadFromFile("SundayMorning.ttf");
 }
 
-sf::Texture* TextureHolder::getIcon(const Elements symbol)
+sf::Texture* resourcesManager::getIcon(const Elements symbol)
 {
 	return &this->m_textures[(int)symbol];
 }
 
-void TextureHolder::createSwitchingIcons()
+void resourcesManager::createSwitchingIcons()
 {
 	
 	sf::Texture newImage;
@@ -76,7 +77,7 @@ void TextureHolder::createSwitchingIcons()
 	m_iconVec.push_back(newImage);
 }
 
-void TextureHolder::createEnemySwitchingIcons()
+void resourcesManager::createEnemySwitchingIcons()
 {
 	sf::Texture newImage;
 
@@ -118,7 +119,7 @@ void TextureHolder::createEnemySwitchingIcons()
 
 }
 
-void TextureHolder::createPlayerSwitchingIcons()
+void resourcesManager::createPlayerSwitchingIcons()
 {
 	sf::Texture newImage;
 
@@ -159,7 +160,7 @@ void TextureHolder::createPlayerSwitchingIcons()
 	m_playerAnime.push_back(newImage);
 }
 
-void TextureHolder::createAudio()
+void resourcesManager::createAudio()
 {
 	sf::SoundBuffer newSound;
 
@@ -176,7 +177,7 @@ void TextureHolder::createAudio()
 	m_audioVec.push_back(newSound);
 }
 
-void TextureHolder::createMusicIcon()
+void resourcesManager::createMusicIcon()
 {
 	sf::Texture newImage;
 
@@ -187,12 +188,23 @@ void TextureHolder::createMusicIcon()
 	m_musicTextureVec.push_back(newImage);
 }
 
-sf::Texture* TextureHolder::getChangingIcon(const MovingObjTexture symbol)
+void resourcesManager::createBackgrounds()
+{
+	sf::Texture newImage;
+
+	newImage.loadFromFile("background1.jpg");
+	m_backgroundVec.push_back(newImage);
+
+	newImage.loadFromFile("background2.png");
+	m_backgroundVec.push_back(newImage);
+}
+
+sf::Texture* resourcesManager::getChangingIcon(const MovingObjTexture symbol)
 {
 	return &this->m_iconVec[(int)symbol];
 }
 
-sf::Texture* TextureHolder::getEnemyChangingIcon()
+sf::Texture* resourcesManager::getEnemyChangingIcon()
 {
 	if (this->enemyAnimetionTimer.getElapsedTime().asMilliseconds() >= 20)
 	{
@@ -204,7 +216,7 @@ sf::Texture* TextureHolder::getEnemyChangingIcon()
 	return &this->m_enemyAnime[m_enemySerialNumber];
 }
 
-sf::Texture* TextureHolder::getPlayerRunningIcon()
+sf::Texture* resourcesManager::getPlayerRunningIcon()
 {
 	if (this->playerAnimationTimer.getElapsedTime().asMilliseconds() >= 20)
 	{
@@ -216,12 +228,12 @@ sf::Texture* TextureHolder::getPlayerRunningIcon()
 	return &this->m_playerAnime[m_playerIconSerialNum];
 }
 
-sf::SoundBuffer* TextureHolder::getSound(Recording record)
+sf::SoundBuffer* resourcesManager::getSound(Recording record)
 {
 	return &this->m_audioVec[(int)record];
 }
 
-sf::Texture* TextureHolder::getMusicIcon(bool soundOn)
+sf::Texture* resourcesManager::getMusicIcon(bool soundOn)
 {
 	if (soundOn)
 		return &this->m_musicTextureVec[0];
@@ -229,7 +241,15 @@ sf::Texture* TextureHolder::getMusicIcon(bool soundOn)
 		return &this->m_musicTextureVec[1];
 }
 
-sf::Font* TextureHolder::getFont()
+const sf::Texture* resourcesManager::getbackGround(bool isFirstBG)
+{
+	if (isFirstBG)
+		return &this->m_backgroundVec[0];
+	else
+		return &this->m_backgroundVec[1];
+}
+
+sf::Font* resourcesManager::getFont()
 {
 	return &this->m_font;
 }

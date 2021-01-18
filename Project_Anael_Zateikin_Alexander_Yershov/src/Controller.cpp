@@ -19,9 +19,14 @@ void Controller::run()
 {
 	// set background music
 	sf::Sound backGroundMusic;
-	backGroundMusic.setBuffer(*TextureHolder::instance().getSound(Recording::background));
+	backGroundMusic.setBuffer(*resourcesManager::instance().getSound(Recording::background));
 	backGroundMusic.play();
 	backGroundMusic.setLoop(true);
+	backGroundMusic.setVolume(2);
+	// set background image
+	sf::RectangleShape mainBackground;
+	mainBackground.setSize({ WINDOW_WIDTH, WINDOW_HEIGHT + CAPTION_HEIGHT });
+	mainBackground.setTexture(resourcesManager::instance().getbackGround(false));
 	// game loop
 	m_menu.activateStartScreen(this->m_gameWindow);
 
@@ -34,6 +39,7 @@ void Controller::run()
 	{
 		//clear, draw , display
 		this->m_gameWindow.clear(sf::Color::White);
+		this->m_gameWindow.draw(mainBackground);
 		draw();
 		this->m_gameWindow.display();
 		
@@ -95,7 +101,7 @@ void Controller::run()
 void Controller::newLvl()
 {
 	static sf::Sound winSound;
-	winSound.setBuffer(*TextureHolder::instance().getSound(Recording::win));
+	winSound.setBuffer(*resourcesManager::instance().getSound(Recording::win));
 	winSound.play();
 
 	m_caption.updateScore(STAGE_VALUE * m_caption.getLvl());
@@ -106,12 +112,8 @@ void Controller::newLvl()
 	
 
 	if (!m_map.readLvlMap()) //if reached last level
-	{
 		newGame();
-		
-		//this->m_caption.updateLevel(STAGE_TIME);	// param to be changed
-		//run();	// game over
-	}
+
 	m_caption.updateLevel(m_map.getInitLevelTime());	// param to be changed
 	createObject();
 	updatePlayerLife(updatedLife);
@@ -120,39 +122,29 @@ void Controller::newLvl()
 void Controller::strike()	// player lost a life, level resets
 {
 	static sf::Sound strikeSound;
-	strikeSound.setBuffer(*TextureHolder::instance().getSound(Recording::strike));
+	strikeSound.setBuffer(*resourcesManager::instance().getSound(Recording::strike));
 	strikeSound.play();
 
-	if (!updatePlayerLife() /*|| m_caption.getTime() <= 0*/)	// no more strikes left
+	int livesLeft = updatePlayerLife();
+	if (!livesLeft /*|| m_caption.getTime() <= 0*/)	// no more strikes left
 	{
 		m_isStrike = true;
 		resetLvl();
 		m_map.resetLvlMap();
 		
 		newGame();
-		/*
-		m_menu.activateStartScreen(this->m_gameWindow);
-		m_timer.restart();
-		m_map.readLvlMap();
-		createObject();
-		this->m_caption.resetLevelNum();
-		m_caption.updateLevel(m_map.getInitLevelTime());
-		//m_caption.un
-		//this->m_caption.updateLevel(STAGE_TIME);	// param to be changed
-		//run();	// game over
-		*/
-		m_caption.updateLevel(m_map.getInitLevelTime());
-		createObject();
 
+		m_caption.updateLevel(m_map.getInitLevelTime());
+		createObject();
 	}
+
 	else
-		moveBackToRespawnLoc();	// move all the movable objects to respawn location
-	if (m_caption.getTime() <= 0)
 	{
-		
-		m_caption.resetTime(m_map.getInitLevelTime());
+		moveBackToRespawnLoc();	// move all the movable objects to respawn location
+		m_caption.updateLife(livesLeft);
 	}
-
+	
+	m_caption.resetTime(m_map.getInitLevelTime());
 }
 
 float Controller::getStaticIconInfo(bool isWidth) const
@@ -297,7 +289,7 @@ void Controller::createObject()
 	}
 }
 
-bool Controller::updatePlayerLife(int update)
+int Controller::updatePlayerLife(int update)
 {
 	for (auto& movable : m_movingObj)
 	{
@@ -311,7 +303,7 @@ bool Controller::updatePlayerLife(int update)
 		}
 			
 	}
-	return true;
+	return NULL;
 }
 
 int Controller::resetLvl()
