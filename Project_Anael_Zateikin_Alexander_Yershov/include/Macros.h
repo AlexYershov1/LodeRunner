@@ -13,7 +13,7 @@ const int NUM_OF_BONUS_TYPES = 4;
 const float BASE_SPEED = 100.0;
 const float FALL_SPEED = 20.0;
 const float STEP = 35.0;
-const int NUM_OF_LIVES = 2;
+const int NUM_OF_LIVES = 3;
 const int COIN_VALUE = 2, STAGE_VALUE = 50;
 const float STAGE_TIME = 90;
 const float BONUS_TIME = 30;
