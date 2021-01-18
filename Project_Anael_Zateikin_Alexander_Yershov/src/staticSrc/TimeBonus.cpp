@@ -8,5 +8,6 @@ TimeBonus::~TimeBonus()
 void TimeBonus::handleCollision(Player& ply, Controller& game)
 {
 	game.addTime();
-	game.eraseObject(*this); 
+	game.eraseObject(*this);
+	ply.handleCollision(*this, game);
 }

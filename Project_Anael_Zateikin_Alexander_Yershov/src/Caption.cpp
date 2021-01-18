@@ -26,7 +26,11 @@ Caption::Caption() : m_level(0), m_score(0), m_stageTime(10), m_timelessLevel(fa
 	this->m_stageTimeText.setColor(sf::Color::Green);
 	this->m_stageTimeText.setOutlineColor(sf::Color::Magenta);
 	this->m_stageTimeText.setOutlineThickness(CAP_OUTLINE_THICKNESS);
-	//updateTime(m_stageTime);
+	
+	this->m_musicIcon.setTexture(*TextureHolder::instance().getMusicIcon(true));
+	this->m_musicIcon.setPosition(WINDOW_WIDTH - MUSIC_ICON_POS, WINDOW_HEIGHT + CAPTION_HEIGHT - MUSIC_ICON_POS);
+	this->m_musicIcon.scale(0.07, 0.07);
+
 }
 
 Caption::~Caption()
@@ -95,6 +99,7 @@ void Caption::draw(sf::RenderWindow& window)
 	window.draw(this->m_scoreText);
 	window.draw(this->m_levelText);
 	window.draw(this->m_stageTimeText);
+	window.draw(this->m_musicIcon);
 }
 
 void Caption::resetLevel(float stageTime)
@@ -112,4 +117,16 @@ void Caption::resetScore()
 {
 	m_score = 0;
 	updateScore(0);
+}
+
+bool Caption::MusicIconContains(const sf::Event& evnt) const
+{
+	if (this->m_musicIcon.getGlobalBounds().contains(evnt.mouseButton.x, evnt.mouseButton.y))
+		return true;
+	return false;
+}
+
+void Caption::setMusicIcon(bool isSoundOn)
+{
+	this->m_musicIcon.setTexture(*TextureHolder::instance().getMusicIcon(isSoundOn));
 }

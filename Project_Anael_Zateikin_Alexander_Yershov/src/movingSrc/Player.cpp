@@ -111,7 +111,12 @@ void Player::handleCollision(Ladder& ladder, Controller&)
         m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerClimbingIcon));
 }
 
-
+void Player::handleCollision(Bonus&, Controller&)
+{
+    static sf::Sound bonusHit;
+    bonusHit.setBuffer(*TextureHolder::instance().getSound(Recording::bonus));
+    bonusHit.play();
+}
 
 sf::Vector2f Player::getDirectionFromKey() const
 {

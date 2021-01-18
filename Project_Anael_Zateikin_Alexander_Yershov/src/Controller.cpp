@@ -17,6 +17,11 @@ Controller::~Controller()
 
 void Controller::run()
 {
+	// set background music
+	sf::Sound backGroundMusic;
+	backGroundMusic.setBuffer(*TextureHolder::instance().getSound(Recording::background));
+	backGroundMusic.play();
+	backGroundMusic.setLoop(true);
 	// game loop
 	m_menu.activateStartScreen(this->m_gameWindow);
 
@@ -34,14 +39,12 @@ void Controller::run()
 		
 		for (auto evnt = sf::Event(); m_gameWindow.pollEvent(evnt); )
 		{
-		
-		
 			switch (evnt.type)
 			{
 			case sf::Event::Closed:
 				m_gameWindow.close();
 				break;
-			case sf::Event::KeyPressed:
+			case sf::Event::KeyPressed:		// handles digging event
 				if (evnt.key.code == sf::Keyboard::X) // dig right
 				{
 					dig(true);
@@ -49,6 +52,21 @@ void Controller::run()
 				else if (evnt.key.code == sf::Keyboard::Z) // dig left
 				{
 					dig(false);
+				}
+				break;
+			case sf::Event::MouseButtonReleased:		// stopping and resuming background music
+				if (m_caption.MusicIconContains(evnt))
+				{
+					if (backGroundMusic.getStatus() == sf::SoundSource::Status::Playing)
+					{
+						backGroundMusic.stop();
+						m_caption.setMusicIcon(false);
+					}	
+					else
+					{
+						backGroundMusic.play();
+						m_caption.setMusicIcon(true);
+					}
 				}
 				break;
 			default:
@@ -70,15 +88,16 @@ void Controller::run()
 
 		if (m_caption.getTime() <= 0)	// level time is up
 			strike();
-
-		// if(gameOver())
-			// activateStartScreen(this->m_window);
 	}
 }
 
 
 void Controller::newLvl()
 {
+	static sf::Sound winSound;
+	winSound.setBuffer(*TextureHolder::instance().getSound(Recording::win));
+	winSound.play();
+
 	m_caption.updateScore(STAGE_VALUE * m_caption.getLvl());
 	
 	m_caption.setTimelessOff();
@@ -100,6 +119,10 @@ void Controller::newLvl()
 
 void Controller::strike()	// player lost a life, level resets
 {
+	static sf::Sound strikeSound;
+	strikeSound.setBuffer(*TextureHolder::instance().getSound(Recording::strike));
+	strikeSound.play();
+
 	if (!updatePlayerLife())	// no more strikes left
 	{
 		m_isStrike = true;

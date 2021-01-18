@@ -6,6 +6,8 @@ TextureHolder::TextureHolder() : m_enemySerialNumber(0)
 	setImagesForObj();
 	createSwitchingIcons();
 	createEnemySwitchingIcons();
+	createAudio();
+	createMusicIcon();
 }
 
 TextureHolder::~TextureHolder()
@@ -115,6 +117,34 @@ void TextureHolder::createEnemySwitchingIcons()
 
 }
 
+void TextureHolder::createAudio()
+{
+	sf::SoundBuffer newSound;
+
+	newSound.loadFromFile("bonusSound.wav");
+	m_audioVec.push_back(newSound);
+
+	newSound.loadFromFile("strikeSound.wav");
+	m_audioVec.push_back(newSound);
+
+	newSound.loadFromFile("winSound.wav");
+	m_audioVec.push_back(newSound);
+
+	newSound.loadFromFile("backgroundMusic.ogg");
+	m_audioVec.push_back(newSound);
+}
+
+void TextureHolder::createMusicIcon()
+{
+	sf::Texture newImage;
+
+	newImage.loadFromFile("musicOn.png");
+	m_musicTextureVec.push_back(newImage);
+
+	newImage.loadFromFile("musicOff.png");
+	m_musicTextureVec.push_back(newImage);
+}
+
 sf::Texture* TextureHolder::getChangingIcon(const MovingObjTexture symbol)
 {
 	return &this->m_iconVec[(int)symbol];
@@ -130,6 +160,19 @@ sf::Texture* TextureHolder::getEnemyChangingIcon()
 		enemyAnimetionTimer.restart();
 	}
 	return &this->m_enemyAnime[m_enemySerialNumber];
+}
+
+sf::SoundBuffer* TextureHolder::getSound(Recording record)
+{
+	return &this->m_audioVec[(int)record];
+}
+
+sf::Texture* TextureHolder::getMusicIcon(bool soundOn)
+{
+	if (soundOn)
+		return &this->m_musicTextureVec[0];
+	else
+		return &this->m_musicTextureVec[1];
 }
 
 sf::Font* TextureHolder::getFont()

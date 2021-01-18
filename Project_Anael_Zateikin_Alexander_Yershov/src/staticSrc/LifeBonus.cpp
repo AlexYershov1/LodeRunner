@@ -11,4 +11,5 @@ void LifeBonus::handleCollision(Player& ply, Controller& game)
 {
 	ply.increaseLife();
 	game.eraseObject(*this);
+	ply.handleCollision(*this, game);
 }
