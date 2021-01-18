@@ -1,3 +1,4 @@
+#pragma warning (disable : 4996)
 #include "StartScreen.h"
 #include "Macros.h"
 
@@ -85,8 +86,7 @@ bool StartScreen::handleClick(const sf::Vector2f& Location, sf::RenderWindow& wi
 		return true;
 	if (this->m_exit.getGlobalBounds().contains(Location))
 		window.close();
-	else
-		return false;
+	return false;
 }
 
 void StartScreen::handleMove(const sf::Vector2f& Location)
