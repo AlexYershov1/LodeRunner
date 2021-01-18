@@ -21,9 +21,7 @@ public:
 	virtual void handleCollision(Bonus&, Controller&) override {};
 	
 protected:
-	//sf::Vector2f m_direction = DirectionVec[(int)Direction::Left];	// direction of movement
 	void handleBlock();
-	void correctStuckInAWall(Wall&);
 private:
 	
 };

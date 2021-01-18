@@ -3,7 +3,7 @@
 
 
 //grapics
-const int WINDOW_WIDTH = 1000;
+const int WINDOW_WIDTH = 1500;
 const int WINDOW_HEIGHT = 800;
 const int CAPTION_HEIGHT = 100;
 const float ICON_SIZE = 512;
@@ -36,6 +36,7 @@ const int CAP_CHAR_SIZE = 30;
 const float CAP_OUTLINE_THICKNESS = 3.0;
 const int BUFF_DISTANCE = 10;
 const int MUSIC_ICON_POS = 40;
+const sf::Vector2f MUSIC_ICON_SCALE = { 0.07f, 0.07f };
 
 const char WALL_C = '#', EMPTY_C = ' ', BAR_C = '-', PLAYER_C = '@',
 ENEMY_C = '%', LADDER_C = 'H', COIN_C = '*', BONUS_C = '?' ;

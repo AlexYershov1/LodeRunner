@@ -4,11 +4,11 @@
 #include <vector>
 #include "Macros.h"
 
-class TextureHolder
+class resourcesManager
 {
 public:
-	~TextureHolder();
-	static TextureHolder& instance();
+	~resourcesManager();
+	static resourcesManager& instance();
 	
 	// get functions
 	sf::Texture* getIcon(const Elements);
@@ -17,11 +17,12 @@ public:
 	sf::Texture* getPlayerRunningIcon();
 	sf::SoundBuffer* getSound(Recording);
 	sf::Texture* getMusicIcon(bool);
+	const sf::Texture* getbackGround(bool);
 	sf::Font* getFont();
 private:
-	TextureHolder();
-	TextureHolder(const TextureHolder&) = default;
-	TextureHolder& operator=(const TextureHolder&) = default;
+	resourcesManager();
+	resourcesManager(const resourcesManager&) = default;
+	resourcesManager& operator=(const resourcesManager&) = default;
 
 	void setImagesForObj();
 	void createSwitchingIcons();
@@ -29,8 +30,11 @@ private:
 	void createPlayerSwitchingIcons();
 	void createAudio();
 	void createMusicIcon();
+	void createBackgrounds();
+
 	std::vector<sf::Texture> m_textures;
 	std::vector<sf::Texture> m_iconVec;
+	std::vector<sf::Texture> m_backgroundVec;
 	std::vector<sf::SoundBuffer> m_audioVec;
 
 	std::vector<sf::Texture> m_playerAnime;

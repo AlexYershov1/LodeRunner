@@ -7,7 +7,7 @@ class StaticObject : public GameObject
 {
 public:
 	StaticObject(Elements, const sf::Vector2f&, int, int);
-	~StaticObject();
+	virtual ~StaticObject() {};
 
 	
 	virtual void handleCollision(GameObject&, Controller&) override {};

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 //#include <vector>
-//#include "TextureHolder.h"
+//#include "resourcesManager.h"
 class Floor;
 class Controller;
 

@@ -8,12 +8,13 @@ public:
 	Caption();
 	~Caption();
 	void updateTime(float);
-	void updateLevel(float);
+	void updateLevel(int);
 	void updateScore(int);
+	void updateLife(int);
 	int getLvl() const;
 	float getTime() const;
 	void resetLvl();
-	void resetTime(float); 
+	void resetTime(int); 
 	void draw(sf::RenderWindow&);
 	void resetLevelNum();
 	void setTimelessOff();
@@ -30,6 +31,7 @@ private:
 	sf::Text m_scoreText;
 	sf::Text m_stageTimeText;
 	sf::Text m_levelText;
+	sf::Text m_livesText;
 
 	sf::Sprite m_musicIcon;
 };

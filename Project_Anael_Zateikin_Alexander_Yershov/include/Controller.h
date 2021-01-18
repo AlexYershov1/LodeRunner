@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include "Board.h"
-#include "TextureHolder.h"
+#include "resourcesManager.h"
 #include "movingInclude/Player.h"
 #include "movingInclude/DumbEnemy.h"
 #include "movingInclude/MediocreEnemy.h"
@@ -31,7 +31,7 @@ private:
 	void dig(bool);
 	void createObject();
 	void newLvl();
-	bool updatePlayerLife(int update = 0);
+	int updatePlayerLife(int update = 0);
 	int resetLvl();
 	void moveBackToRespawnLoc();
 	std::unique_ptr<MovingObject> createMovingObject(Elements, sf::Vector2f, int, int);
@@ -39,7 +39,7 @@ private:
 	Board m_map;
 	std::vector<std::unique_ptr<MovingObject>> m_movingObj;
 
-	//TextureHolder m_textures;
+	//resourcesManager m_textures;
 	sf::RenderWindow m_gameWindow;
 	sf::Clock m_timer;
 	StartScreen m_menu;

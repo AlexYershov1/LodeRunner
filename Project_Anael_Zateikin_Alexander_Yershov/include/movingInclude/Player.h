@@ -8,7 +8,7 @@ public:
 	//using MovingObject::MovingObject;
 	Player(Elements, const sf::Vector2f& , int , int);
 	~Player();
-	bool decreaseLife();	// decreases players' life by 1
+	int decreaseLife();	// decreases players' life by 1
 	void increaseLife();
 	virtual void move(sf::Time&) override;
 	int getLife() const;
