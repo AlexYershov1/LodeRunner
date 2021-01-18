@@ -1,11 +1,12 @@
 #pragma once
 #include "TextureHolder.h"
 
-TextureHolder::TextureHolder() : m_enemySerialNumber(0)
+TextureHolder::TextureHolder() : m_enemySerialNumber(0), m_playerIconSerialNum(0)
 {
 	setImagesForObj();
 	createSwitchingIcons();
 	createEnemySwitchingIcons();
+	createPlayerSwitchingIcons();
 	createAudio();
 	createMusicIcon();
 }
@@ -34,7 +35,7 @@ void TextureHolder::setImagesForObj()
 	newImage.loadFromFile("enemy.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("player.png");
+	newImage.loadFromFile("playerFront.png"); //change to player stand
 	m_textures.push_back(newImage);
 
 	newImage.loadFromFile("wall.png");
@@ -65,7 +66,7 @@ void TextureHolder::createSwitchingIcons()
 	m_iconVec.push_back(this->m_textures[(int)Elements::player]);
 	m_iconVec.push_back(this->m_textures[(int)Elements::enemy]);
 
-	newImage.loadFromFile("climbingPlayer.png");
+	newImage.loadFromFile("playerBack.png");
 	m_iconVec.push_back(newImage);
 
 	newImage.loadFromFile("enemyBack.png");
@@ -117,6 +118,47 @@ void TextureHolder::createEnemySwitchingIcons()
 
 }
 
+void TextureHolder::createPlayerSwitchingIcons()
+{
+	sf::Texture newImage;
+
+	newImage.loadFromFile("0_Warrior_Run_000.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_001.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_002.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_003.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_004.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_005.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_006.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_007.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_008.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_009.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_010.png");
+	m_playerAnime.push_back(newImage);
+
+	newImage.loadFromFile("0_Warrior_Run_011.png");
+	m_playerAnime.push_back(newImage);
+}
+
 void TextureHolder::createAudio()
 {
 	sf::SoundBuffer newSound;
@@ -160,6 +202,18 @@ sf::Texture* TextureHolder::getEnemyChangingIcon()
 		enemyAnimetionTimer.restart();
 	}
 	return &this->m_enemyAnime[m_enemySerialNumber];
+}
+
+sf::Texture* TextureHolder::getPlayerRunningIcon()
+{
+	if (this->playerAnimationTimer.getElapsedTime().asMilliseconds() >= 20)
+	{
+		if (m_playerIconSerialNum >= 11)
+			m_playerIconSerialNum = 0;
+		m_playerIconSerialNum++;
+		playerAnimationTimer.restart();
+	}
+	return &this->m_playerAnime[m_playerIconSerialNum];
 }
 
 sf::SoundBuffer* TextureHolder::getSound(Recording record)

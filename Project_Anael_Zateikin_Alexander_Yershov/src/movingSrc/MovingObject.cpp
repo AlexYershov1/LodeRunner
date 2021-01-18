@@ -45,6 +45,7 @@ void MovingObject::moveToPrevPos()
 
 void MovingObject::changeToCorrectDisplay()
 {
+
 	//if direction is left but was right before
 	if (m_direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
 	{

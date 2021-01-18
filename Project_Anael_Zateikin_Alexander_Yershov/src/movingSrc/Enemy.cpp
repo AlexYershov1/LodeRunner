@@ -40,9 +40,11 @@ void Enemy::handleCollision(GameObject& obj, Controller& game)
 	obj.handleCollision(*this, game);
 }
 
-void Enemy::handleCollision(Wall&, Controller&)
+void Enemy::handleCollision(Wall& wall, Controller&)
 {
 	handleBlock();
+	//correctStuckInAWall(wall);
+	//if stuck in a wall
 }
 
 void Enemy::handleCollision(Floor& floor, Controller&)
@@ -63,6 +65,11 @@ void Enemy::handleCollision(Floor& floor, Controller&)
 	}
 	else
 		this->moveToPrevPos(); //case of after falling
+
+	//
+	if(m_direction == DirectionVec[(int)Direction::Down]) //if regular enemy after fall
+		m_direction = DirectionVec[(int)Direction::Left];
+
 }
 
 void Enemy::handleCollision(Player& ply, Controller& game)
@@ -92,4 +99,21 @@ void Enemy::handleBlock()
 		m_direction = DirectionVec[(int)Direction::Left];
 
 	//this->m_icon.scale(-1, 1);	// flipIcon();
+}
+
+void Enemy::correctStuckInAWall(Wall& wall)
+{
+	//if stuck 
+	if (m_prevPos == getPos())
+	{
+		/*
+		//if stuck under wall
+		if (((wall.getPos().y + wall.getIconHeight()) - this->centerDown().y) < 1.0f && //close to top
+			m_prevPos.y == this->getPos().y)  //not after fall
+		{
+			m_prevPos = this->getPos();//questionable
+				m_icon.move(0, -1); //move one pixel up
+		}
+		*/
+	}
 }

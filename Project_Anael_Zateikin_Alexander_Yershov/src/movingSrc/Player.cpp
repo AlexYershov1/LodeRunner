@@ -34,16 +34,22 @@ void Player::move(sf::Time& deltaTime)
     m_prevPos = m_icon.getPosition();
 
     // set initial icon
-    m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
+    //m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
+    m_icon.setTexture(*TextureHolder::instance().getPlayerRunningIcon());
 
     //get direction of movement
 	m_direction = getDirectionFromKey();
+
+    //set texture
+    if (m_direction == STAND)
+        m_icon.setTexture(*TextureHolder::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
+    else
+    changeToCorrectDisplay(); //change the scale to face the right direction
     
-    //change the scale to face the right direction
-    changeToCorrectDisplay(); 
 
     if (this->getFall())
         m_direction = DirectionVec[(int)Direction::Down];
+
     //move the sprite
 	m_icon.move(m_direction * BASE_SPEED * deltaTime.asSeconds());
     

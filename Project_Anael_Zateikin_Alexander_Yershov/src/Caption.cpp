@@ -92,6 +92,11 @@ void Caption::resetLvl()
 	m_Timer.restart();
 }
 
+void Caption::resetTime(float time)
+{
+	m_stageTime = time;
+}
+
 
 void Caption::draw(sf::RenderWindow& window)
 {
@@ -102,7 +107,7 @@ void Caption::draw(sf::RenderWindow& window)
 	window.draw(this->m_musicIcon);
 }
 
-void Caption::resetLevel(float stageTime)
+void Caption::resetLevelNum()
 {
 	m_level = 0;
 	//updateLevel(stageTime);

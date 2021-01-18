@@ -123,26 +123,60 @@ void Controller::strike()	// player lost a life, level resets
 	strikeSound.setBuffer(*TextureHolder::instance().getSound(Recording::strike));
 	strikeSound.play();
 
-	if (!updatePlayerLife())	// no more strikes left
+	if (!updatePlayerLife() /*|| m_caption.getTime() <= 0*/)	// no more strikes left
 	{
 		m_isStrike = true;
 		resetLvl();
 		m_map.resetLvlMap();
-		m_map.resetStreamPtr();
-
-		//
+		
+		newGame();
+		/*
 		m_menu.activateStartScreen(this->m_gameWindow);
 		m_timer.restart();
 		m_map.readLvlMap();
 		createObject();
-		this->m_caption.resetLevel(m_map.getInitLevelTime());
+		this->m_caption.resetLevelNum();
+		m_caption.updateLevel(m_map.getInitLevelTime());
+		//m_caption.un
 		//this->m_caption.updateLevel(STAGE_TIME);	// param to be changed
 		//run();	// game over
+		*/
+		m_caption.updateLevel(m_map.getInitLevelTime());
+		createObject();
+
 	}
 	else
 		moveBackToRespawnLoc();	// move all the movable objects to respawn location
+	if (m_caption.getTime() <= 0)
+	{
+		
+		m_caption.resetTime(m_map.getInitLevelTime());
+	}
 
 }
+
+float Controller::getStaticIconInfo(bool isWidth) const
+{
+	return m_map.getStaticIconInfo(isWidth);
+}
+
+void Controller::newGame()
+{
+
+	m_menu.activateStartScreen(this->m_gameWindow);
+
+	//reset statistics 
+	m_caption.setTimelessOff();
+	m_caption.resetScore();
+	m_timer.restart();
+	m_map.resetStreamPtr();
+
+	//read new level
+	m_map.readLvlMap();
+	this->m_caption.resetLevelNum();
+	//createObject();
+}
+
 
 void Controller::move(sf::Time deltatime)
 {
@@ -213,19 +247,6 @@ void Controller::addTime()
 	this->m_caption.updateTime(BONUS_TIME);
 }
 
-void Controller::newGame()
-{
-
-	m_menu.activateStartScreen(this->m_gameWindow);
-	//reset score 
-	m_caption.resetScore();
-	m_timer.restart();
-	m_map.resetStreamPtr();
-	m_map.readLvlMap();
-	this->m_caption.resetLevel(m_map.getInitLevelTime());
-	createObject();
-}
-
 void Controller::dig(bool direction)
 {
 	for (auto& movable : m_movingObj)
@@ -234,17 +255,15 @@ void Controller::dig(bool direction)
 		{
 			auto digLocation = (*movable).centerDown();
 			if (direction)
-				digLocation.x += m_map.getStaticIconInfo(true);
+				digLocation.x += m_map.getStaticIconInfo(GET_WIDTH);
 			else
-				digLocation.x -= m_map.getStaticIconInfo(true);
-			digLocation.y += m_map.getStaticIconInfo(false) / 2;
+				digLocation.x -= m_map.getStaticIconInfo(GET_WIDTH);
+			digLocation.y += m_map.getStaticIconInfo(GET_HEIGHT) / 2;
 
 			m_map.dig(digLocation);
 			break;
-		}
-			
+		}	
 	}
-	
 }
 
 void Controller::createObject()

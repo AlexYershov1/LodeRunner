@@ -187,6 +187,7 @@ void Board::eraseObject(StaticObject& staticObj)
 	}
 }
 
+//The function takes the first static object and returns the wanted dimention (height / width)
 float Board::getStaticIconInfo(bool isWidth) const
 {
 	if (this->m_staticObj.size() != 0)

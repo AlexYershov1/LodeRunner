@@ -2,6 +2,7 @@
 #include "movingInclude/Player.h"
 #include "staticInclude/Ladder.h"
 #include "staticInclude/Floor.h"
+#include "Controller.h"
 
 
 SmartEnemy::~SmartEnemy()
@@ -36,11 +37,12 @@ void SmartEnemy::move(sf::Time& clock)
 	Enemy::move(clock);
 }
 
-void SmartEnemy::handleCollision(Ladder& ladder, Controller&)
+void SmartEnemy::handleCollision(Ladder& ladder, Controller& game)
 {
-	if (std::abs(ladder.Center().x - this->centerDown().x) < SIGMA + 50) //if close to the center of the ladder
+	auto sigma = game.getStaticIconInfo(GET_WIDTH) / (SIGMA+1);
+	if (std::abs(ladder.Center().x - this->centerDown().x) < /*SIGMA*/ sigma + 50) //if close to the center of the ladder
 	{
-		if (std::abs(Player::plyLocation.y - this->getPos().y) > SIGMA)
+		if (std::abs(Player::plyLocation.y - this->getPos().y) > sigma)
 		{
 			if (m_direction != DirectionVec[(int)Direction::Down] && m_direction != DirectionVec[(int)Direction::Up])
 				m_prevDirection = m_direction;																	//PROBLEMATIC
