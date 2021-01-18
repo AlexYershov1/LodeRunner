@@ -126,12 +126,12 @@ void Controller::strike()	// player lost a life, level resets
 	strikeSound.play();
 
 	int livesLeft = updatePlayerLife();
-	if (!livesLeft /*|| m_caption.getTime() <= 0*/)	// no more strikes left
+	if (!livesLeft )	// no more strikes left
 	{
 		m_isStrike = true;
 		resetLvl();
 		m_map.resetLvlMap();
-		
+		livesLeft = NUM_OF_LIVES;
 		newGame();
 
 		m_caption.updateLevel(m_map.getInitLevelTime());
@@ -139,10 +139,9 @@ void Controller::strike()	// player lost a life, level resets
 	}
 
 	else
-	{
 		moveBackToRespawnLoc();	// move all the movable objects to respawn location
-		m_caption.updateLife(livesLeft);
-	}
+		
+	m_caption.updateLife(livesLeft);
 	
 	m_caption.resetTime(m_map.getInitLevelTime());
 }
