@@ -26,6 +26,7 @@ configure_file ("enemyRun/0_Citizen_Walk_021.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("enemyRun/0_Citizen_Walk_022.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("enemyRun/0_Citizen_Walk_023.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("enemyRun/0_Citizen_Walk_024.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("enemyRun/0_Citizen_Walk_025.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("playerRun/0_Warrior_Run_000.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("playerRun/0_Warrior_Run_001.png" ${CMAKE_BINARY_DIR} COPYONLY)
