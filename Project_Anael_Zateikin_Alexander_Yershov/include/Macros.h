@@ -13,11 +13,17 @@ const int NUM_OF_BONUS_TYPES = 4;
 const float BASE_SPEED = 100.0;
 const float FALL_SPEED = 20.0;
 const float STEP = 35.0;
-const int NUM_OF_LIVES = 1;
+const int NUM_OF_LIVES = 2;
 const int COIN_VALUE = 2, STAGE_VALUE = 50;
 const float STAGE_TIME = 90;
 const float BONUS_TIME = 30;
 const float SIGMA = 4.0;
+//const float VERTICAL_SIGMA = 1.0f;
+const float RELATIVE_SIGMA = 10;
+
+const bool GET_WIDTH = true;
+const bool GET_HEIGHT = false;
+
 
 // for start screen
 const int HEADER_SIZE = 60;
@@ -34,6 +40,7 @@ const int MUSIC_ICON_POS = 40;
 const char WALL_C = '#', EMPTY_C = ' ', BAR_C = '-', PLAYER_C = '@',
 ENEMY_C = '%', LADDER_C = 'H', COIN_C = '*', BONUS_C = '?' ;
 
+const sf::Vector2f STAND = { 0,0 };
 const sf::Vector2f DirectionVec[] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 
 enum class Elements

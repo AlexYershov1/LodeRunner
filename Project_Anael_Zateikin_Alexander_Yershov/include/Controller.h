@@ -25,6 +25,7 @@ public:
 	void addEnemy(); 
 	void addTime();
 	void strike();
+	float getStaticIconInfo(bool) const;
 private:
 	void newGame();
 	void dig(bool);

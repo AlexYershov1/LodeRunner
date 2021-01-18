@@ -14,6 +14,7 @@ public:
 	sf::Texture* getIcon(const Elements);
 	sf::Texture* getChangingIcon(MovingObjTexture);
 	sf::Texture* getEnemyChangingIcon();
+	sf::Texture* getPlayerRunningIcon();
 	sf::SoundBuffer* getSound(Recording);
 	sf::Texture* getMusicIcon(bool);
 	sf::Font* getFont();
@@ -25,17 +26,23 @@ private:
 	void setImagesForObj();
 	void createSwitchingIcons();
 	void createEnemySwitchingIcons();
+	void createPlayerSwitchingIcons();
 	void createAudio();
 	void createMusicIcon();
 	std::vector<sf::Texture> m_textures;
 	std::vector<sf::Texture> m_iconVec;
 	std::vector<sf::SoundBuffer> m_audioVec;
 
+	std::vector<sf::Texture> m_playerAnime;
 	std::vector<sf::Texture> m_enemyAnime;
 	sf::Font m_font;
 	std::vector<sf::Texture> m_musicTextureVec;
 
 	int m_enemySerialNumber;
+	int m_playerIconSerialNum;
 	sf::Clock enemyAnimetionTimer;
+	sf::Clock playerAnimationTimer;
+
+	
 };
 

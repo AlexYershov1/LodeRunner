@@ -13,8 +13,9 @@ public:
 	int getLvl() const;
 	float getTime() const;
 	void resetLvl();
+	void resetTime(float); 
 	void draw(sf::RenderWindow&);
-	void resetLevel(float);
+	void resetLevelNum();
 	void setTimelessOff();
 	void resetScore();
 	bool MusicIconContains(const sf::Event&) const;
