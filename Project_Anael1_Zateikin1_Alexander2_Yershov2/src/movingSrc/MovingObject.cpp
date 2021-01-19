@@ -45,7 +45,7 @@ void MovingObject::changeToCorrectDisplay()
 	//if direction is left but was right before
 	if (m_direction == DirectionVec[(int)Direction::Left] && (m_icon.getScale().x > 0))
 	{
-		m_icon.scale(-1, 1);
+		m_icon.scale(-1, 1);	//mirror display - look left
 		m_prevPos.x += m_icon.getGlobalBounds().width;      //to correct the previous location after mirroring the sprite
 		m_icon.move(m_icon.getGlobalBounds().width, 0);
 	}
@@ -53,7 +53,7 @@ void MovingObject::changeToCorrectDisplay()
 	//if direction is right but was left before
 	else if (m_direction == DirectionVec[(int)Direction::Right] && (m_icon.getScale().x < 0))
 	{
-		m_icon.scale(-1, 1);
+		m_icon.scale(-1, 1);	//mirror display - look right
 		m_prevPos.x -= m_icon.getGlobalBounds().width;  //to correct the previous location after mirroring the sprite
 		m_icon.move(-m_icon.getGlobalBounds().width, 0);
 		}
@@ -82,5 +82,9 @@ void MovingObject::setFall(bool update)
 void MovingObject::respawn()
 {
 	this->m_icon.setPosition(this->m_respawnLocation);
+
+	//restore to respawn display
+	if(m_icon.getScale().x < 0) //if facing left
+		m_icon.scale(-1, 1);	//mirror display - look right
 }
 
