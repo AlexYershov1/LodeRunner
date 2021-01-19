@@ -17,9 +17,9 @@ void Floor::handleCollision(Enemy& enemy, Controller& game)
 void Floor::dig()
 {
 	m_eliminated = true;
-	m_prevPos = this->getPos();
-	this->m_icon.setPosition(-this->getIconWidth(), -this->getIconHeight());
-	m_construction.restart();
+	m_prevPos = this->getPos();	
+	this->m_icon.setPosition(-this->getIconWidth(), -this->getIconHeight()); //move outside of window range
+	m_construction.restart();	
 }
 
 void Floor::draw(sf::RenderWindow& window)
@@ -31,7 +31,7 @@ void Floor::draw(sf::RenderWindow& window)
 		if (m_construction.getElapsedTime().asSeconds() > 3)
 		{
 			m_eliminated = false;
-			this->m_icon.setPosition(m_prevPos);
+			this->m_icon.setPosition(m_prevPos);	//restore display
 		}
 	}
 }

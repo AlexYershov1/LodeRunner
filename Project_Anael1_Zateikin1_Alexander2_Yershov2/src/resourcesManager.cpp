@@ -36,7 +36,7 @@ void resourcesManager::setImagesForObj()
 	newImage.loadFromFile("0_Citizen_Walk_013.png");
 	m_textures.push_back(newImage);
 
-	newImage.loadFromFile("playerFront.png"); //change to player stand
+	newImage.loadFromFile("playerFront.png"); 
 	m_textures.push_back(newImage);
 
 	newImage.loadFromFile("wall.png");

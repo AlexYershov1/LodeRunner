@@ -80,14 +80,13 @@ void Controller::run()
 			}
 		}
 
-		move(m_timer.restart());	 //send deltaTime to move function
+		move(m_timer.restart());
 		
 		if (m_isStrike)
 		{
 			m_isStrike = false;
 			continue;
 		}
-		//continue
 
 		if (m_map.LvlWon())
 			newLvl();
@@ -111,12 +110,13 @@ void Controller::newLvl()
 	m_map.resetLvlMap();		  //removes all the static objects and frees map vectors
 	
 
-	if (!m_map.readLvlMap()) //if reached last level
+	if (!m_map.readLvlMap()) //if reached last level 
 		newGame();
+	else
+		updatePlayerLife(updatedLife);
 
-	m_caption.updateLevel(m_map.getInitLevelTime());	// param to be changed
+	m_caption.updateLevel(m_map.getInitLevelTime());
 	createObject();
-	updatePlayerLife(updatedLife);
 }
 
 void Controller::strike()	// player lost a life, level resets
@@ -131,7 +131,7 @@ void Controller::strike()	// player lost a life, level resets
 		m_isStrike = true;
 		resetLvl();
 		m_map.resetLvlMap();
-		livesLeft = NUM_OF_LIVES;
+		//livesLeft = NUM_OF_LIVES;
 		newGame();
 
 		m_caption.updateLevel(m_map.getInitLevelTime());
@@ -139,9 +139,11 @@ void Controller::strike()	// player lost a life, level resets
 	}
 
 	else
+	{
 		moveBackToRespawnLoc();	// move all the movable objects to respawn location
+		m_caption.updateLife(livesLeft);
+	}
 		
-	m_caption.updateLife(livesLeft);
 	
 	m_caption.resetTime(m_map.getInitLevelTime());
 }
@@ -153,7 +155,6 @@ float Controller::getStaticIconInfo(bool isWidth) const
 
 void Controller::newGame()
 {
-
 	m_menu.activateStartScreen(this->m_gameWindow);
 
 	//reset statistics 
@@ -161,11 +162,12 @@ void Controller::newGame()
 	m_caption.resetScore();
 	m_timer.restart();
 	m_map.resetStreamPtr();
+	updatePlayerLife(NUM_OF_LIVES);
+	m_caption.updateLife(NUM_OF_LIVES);
 
 	//read new level
 	m_map.readLvlMap();
-	this->m_caption.resetLevelNum();
-	//createObject();
+	m_caption.resetLevelNum();
 }
 
 
@@ -175,7 +177,7 @@ void Controller::move(sf::Time deltatime)
 	for (auto& movable : m_movingObj)
 	{
 		movable->move(deltatime);
-		checkCollision(*movable, deltatime);			//operates on this
+		checkCollision(*movable, deltatime);
 
 		
 		if (m_isStrike)
@@ -187,7 +189,6 @@ void Controller::move(sf::Time deltatime)
 
 void Controller::checkCollision(MovingObject& thisObj, sf::Time deltatime)
 {
-	//bool collided = false;
 	// check collision between player and enemies
 	for (auto& movable : m_movingObj)
 	{
@@ -198,20 +199,21 @@ void Controller::checkCollision(MovingObject& thisObj, sf::Time deltatime)
 			//might reach strike
 			if (m_isStrike)
 				return;
-		
 		}
 	}
-	m_map.checkCollision(thisObj, *this, deltatime) ;
+	m_map.checkCollision(thisObj, *this, deltatime) ; //check collisions with static objects
 }
 
 void Controller::draw()
 {
+	//draw static objects
 	this->m_map.draw(this->m_gameWindow);
+
 	//draw moving
 	for (auto& movable : m_movingObj)
 		movable->draw(this->m_gameWindow);
 	
-	//draw captions : clock, score, life...
+	//draw captions 
 	this->m_caption.draw(this->m_gameWindow);
 }
 
@@ -244,11 +246,14 @@ void Controller::dig(bool direction)
 	{
 		if (typeid(*movable) == typeid(Player))
 		{
+			//calculate the dig location
 			auto digLocation = (*movable).centerDown();
-			if (direction)
+
+			if (direction)	//if right
 				digLocation.x += m_map.getStaticIconInfo(GET_WIDTH);
-			else
+			else			//left
 				digLocation.x -= m_map.getStaticIconInfo(GET_WIDTH);
+
 			digLocation.y += m_map.getStaticIconInfo(GET_HEIGHT) / 2;
 
 			m_map.dig(digLocation);
@@ -260,10 +265,10 @@ void Controller::dig(bool direction)
 void Controller::createObject()
 {
 	Elements symbol;
-	//sf::Texture* icon;
-	sf::Vector2f position ; //xPos, yPos
+	sf::Vector2f position ;
 	float xPos, yPos;
 
+	//convert a location in a char vector to a location on the window
 	for (int row = 0; row < m_map.getHeight(); row++)
 	{
 		for (int col = 0; col < m_map.getWidth(); col++)
@@ -299,8 +304,7 @@ int Controller::updatePlayerLife(int update)
 				return dynamic_cast<Player*>(plyPtr)->decreaseLife();
 			else
 				dynamic_cast<Player*>(plyPtr)->setLife(update);
-		}
-			
+		}	
 	}
 	return NULL;
 }
@@ -343,7 +347,7 @@ std::unique_ptr<MovingObject> Controller::createMovingObject(Elements type, sf::
 std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f position, int mapW, int mapH)
 {
 	int choice = rand() % NUM_OF_ENEMIE_TYPES; //choose one of three enemy types
-	//return std::make_unique<SmartEnemy>(Elements::enemy, position, mapW, mapH);
+	
 	switch ((EnemyType)choice)
 	{
 	case EnemyType::dumb :
