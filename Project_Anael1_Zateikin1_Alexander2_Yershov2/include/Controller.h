@@ -24,13 +24,13 @@ public:
 	void increaseScore();
 	void addEnemy(); 
 	void addTime();
-	void strike();
+	void strike(sf::Sound&);
 	float getStaticIconInfo(bool) const;
 private:
 	void newGame();
 	void dig(bool);
 	void createObject();
-	void newLvl();
+	void newLvl(sf::Sound&);
 	int updatePlayerLife(int update = 0);
 	int resetLvl();
 	void moveBackToRespawnLoc();
