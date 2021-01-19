@@ -39,7 +39,6 @@ private:
 	Board m_map;
 	std::vector<std::unique_ptr<MovingObject>> m_movingObj;
 
-	//resourcesManager m_textures;
 	sf::RenderWindow m_gameWindow;
 	sf::Clock m_timer;
 	StartScreen m_menu;
