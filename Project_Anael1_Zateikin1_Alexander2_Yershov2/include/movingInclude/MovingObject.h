@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 //#include <vector>
-//#include "resourcesManager.h"
+
 class Floor;
 class Controller;
 
@@ -11,12 +11,12 @@ public:
 	MovingObject(Elements, const sf::Vector2f&, int, int);
 	virtual ~MovingObject() = 0;
 
-	void fall(const sf::Time&);
 	virtual void move(sf::Time&) = 0;
+
+	void fall(const sf::Time&);
 	sf::Vector2f getRespawnLocation() const;
 
-	//virtual void handleCollision(GameObject&, Controller&) override;
-	//virtual void handleCollision(Floor&, Controller&) override;
+
 	const sf::Vector2f centerDown() const;
 	void moveToPrevPos();
 	void changeToCorrectDisplay();
