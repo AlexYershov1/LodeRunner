@@ -19,6 +19,7 @@ void Controller::run()
 {
 	// set background music
 	sf::Sound backGroundMusic;
+	sf::Sound effect;
 	backGroundMusic.setBuffer(*resourcesManager::instance().getSound(Recording::background));
 	backGroundMusic.play();
 	backGroundMusic.setLoop(true);
@@ -90,19 +91,18 @@ void Controller::run()
 		//continue
 
 		if (m_map.LvlWon())
-			newLvl();
+			newLvl(effect);
 
 		if (m_caption.getTime() <= 0)	// level time is up
-			strike();
+			strike(effect);
 	}
 }
 
 
-void Controller::newLvl()
+void Controller::newLvl(sf::Sound& effect)
 {
-	static sf::Sound winSound;
-	winSound.setBuffer(*resourcesManager::instance().getSound(Recording::win));
-	winSound.play();
+	effect.setBuffer(*resourcesManager::instance().getSound(Recording::win));
+	effect.play();
 
 	m_caption.updateScore(STAGE_VALUE * m_caption.getLvl());
 	
@@ -119,11 +119,10 @@ void Controller::newLvl()
 	updatePlayerLife(updatedLife);
 }
 
-void Controller::strike()	// player lost a life, level resets
+void Controller::strike(sf::Sound& effect)	// player lost a life, level resets
 {
-	static sf::Sound strikeSound;
-	strikeSound.setBuffer(*resourcesManager::instance().getSound(Recording::strike));
-	strikeSound.play();
+	effect.setBuffer(*resourcesManager::instance().getSound(Recording::strike));
+	effect.play();
 
 	int livesLeft = updatePlayerLife();
 	if (!livesLeft )	// no more strikes left

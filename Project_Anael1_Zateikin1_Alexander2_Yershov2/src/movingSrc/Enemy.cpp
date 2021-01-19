@@ -70,7 +70,8 @@ void Enemy::handleCollision(Floor& floor, Controller&)
 
 void Enemy::handleCollision(Player&, Controller& game)
 {
-	game.strike();
+	static sf::Sound effect;
+	game.strike(effect);
 }
 
 void Enemy::handleCollision(Bar&, Controller&)
