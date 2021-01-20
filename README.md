@@ -70,3 +70,7 @@ Main data bases: m_movingObj - vector of all moving objects, located in Controll
 Together the two vectors make up the map.
 
 Notes:
+1. All the levels of the game are stored in a single file.
+2. The dig action removes the floor completely and if a character walkes on that floor, it will fall through the missing floor.
+A character cannot step on a character stuck in a pit.
+3. When a character falls - it cannot move sideways untill it reaches a valid surface to stop the fall.
