@@ -71,6 +71,9 @@ Together the two vectors make up the map.
 
 Notes:
 1. All the levels of the game are stored in a single file.
+To add a file, the user must copy the new board and paste it into the file "board.txt".
+The user MUST make sure that there is an empty line before the new inserted level and make sure that there is an empty line at the end of the new board 
+(meaning the last row of the board must end with a newline).
 2. The dig action removes the floor completely and if a character walkes on that floor, it will fall through the missing floor.
 A character cannot step on a character stuck in a pit.
 3. When a character falls - it cannot move sideways untill it reaches a valid surface to stop the fall.
