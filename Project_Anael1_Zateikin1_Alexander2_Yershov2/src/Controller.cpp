@@ -347,6 +347,10 @@ std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f position, int mapW, int mapH
 {
 	int choice = rand() % NUM_OF_ENEMIE_TYPES; //choose one of three enemy types
 	
+	//
+	return std::make_unique<SmartEnemy>(Elements::enemy, position, mapW, mapH);
+	//
+
 	switch ((EnemyType)choice)
 	{
 	case EnemyType::dumb :
