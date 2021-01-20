@@ -6,6 +6,7 @@ GameObject::GameObject(Elements symbol, const sf::Vector2f& location, int mapWid
 	auto texturePtr = resourcesManager::instance().getIcon(symbol);
 	m_icon.setTexture(*texturePtr);
 	
+	//set the correct scale to fill the board according to map size
 	auto xScaleValue = (float)WINDOW_WIDTH / ((float)ICON_SIZE * (float)mapWidth);
 	auto yScaleValue = (float)WINDOW_HEIGHT / ((float)ICON_SIZE * (float)mapHeight);
 

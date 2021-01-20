@@ -63,7 +63,7 @@ void Caption::updateTime(float time)
 
 void Caption::updateLevel(int time)
 {
-	if (time == -1)
+	if (time == -1) //if a timeless level
 	{
 		m_timelessLevel = true;
 		this->m_stageTimeText.setString("Time left: ----");
@@ -124,7 +124,6 @@ void Caption::draw(sf::RenderWindow& window)
 void Caption::resetLevelNum()
 {
 	m_level = 0;
-	//updateLevel(stageTime);
 }
 
 void Caption::setTimelessOff()

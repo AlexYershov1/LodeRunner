@@ -4,15 +4,13 @@ DumbEnemy::~DumbEnemy()
 {
 }
 
+//this enemy changes its direction randomly after a constant anount of seconds
 void DumbEnemy::move(sf::Time& clock)
 {
-	if (m_changeDircectionAlarm.getElapsedTime().asSeconds() > 5)
+	if (m_changeDircectionAlarm.getElapsedTime().asSeconds() > DELTA_TIME)
 	{
-		//auto prevd = m_direction;
+		
 		this->m_direction = DirectionVec[(rand() % 2)];
-
-		//if (this->m_direction != prevd)
-		//	this->m_icon.scale(-1, 1);
 
 		m_changeDircectionAlarm.restart();
 	}

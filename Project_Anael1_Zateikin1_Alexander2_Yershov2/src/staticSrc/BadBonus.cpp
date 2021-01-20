@@ -9,6 +9,6 @@ BadBonus::~BadBonus()
 void BadBonus::handleCollision(Player& ply, Controller& game)
 {
 	game.addEnemy();
-	game.eraseObject(*this);
+	game.eraseObject(*this); //remove from statics vector
 	ply.handleCollision(*this, game);
 }

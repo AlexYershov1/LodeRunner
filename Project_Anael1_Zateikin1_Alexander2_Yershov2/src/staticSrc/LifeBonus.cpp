@@ -2,7 +2,6 @@
 #include "Controller.h"
 
 
-
 LifeBonus::~LifeBonus()
 {
 }

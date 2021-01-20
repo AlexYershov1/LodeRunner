@@ -32,7 +32,6 @@ void Player::move(sf::Time& deltaTime)
     m_prevPos = m_icon.getPosition();
 
     // set initial icon
-    //m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::playerDefaultIcon));
     m_icon.setTexture(*resourcesManager::instance().getPlayerRunningIcon());
 
     //get direction of movement
@@ -52,7 +51,7 @@ void Player::move(sf::Time& deltaTime)
 	m_icon.move(m_direction * BASE_SPEED * deltaTime.asSeconds());
     
     //check bounds
-    if (outOfBounds()) //shouln't send anything - works on this object
+    if (outOfBounds())
         this->moveToPrevPos();
     
     this->setFall(false);

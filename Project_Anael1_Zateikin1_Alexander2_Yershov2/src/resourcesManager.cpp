@@ -210,6 +210,7 @@ sf::Texture* resourcesManager::getChangingIcon(const MovingObjTexture symbol)
 	return &this->m_iconVec[(int)symbol];
 }
 
+//to create the "run" effect
 sf::Texture* resourcesManager::getEnemyChangingIcon()
 {
 	if (this->enemyAnimetionTimer.getElapsedTime().asMilliseconds() >= 20)

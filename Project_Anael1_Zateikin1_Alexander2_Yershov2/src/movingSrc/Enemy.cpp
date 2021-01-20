@@ -74,9 +74,11 @@ void Enemy::handleCollision(Player&, Controller& game)
 	game.strike(effect);
 }
 
+
 void Enemy::handleCollision(Bar&, Controller&)
 {
 	m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::charOnBarIcon));
+
 	if(m_direction == DirectionVec[(int)Direction::Up] || m_direction == DirectionVec[(int)Direction::Down])
 		this->m_icon.move(0, this->getIconHeight());
 }
@@ -89,7 +91,8 @@ void Enemy::handleCollision(Ladder& ladder, Controller&)
 
 void Enemy::handleBlock() 
 {
-	m_icon.setPosition(m_prevPos);
+	moveToPrevPos();
+	//chage direction
 	if (m_direction == DirectionVec[(int)Direction::Left])
 		m_direction = DirectionVec[(int)Direction::Right];
 	else

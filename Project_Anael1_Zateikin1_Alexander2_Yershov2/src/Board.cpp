@@ -5,7 +5,6 @@
 Board::Board() : m_height(0), m_width(0) , m_initLevelTime(0)
 {
 	this->m_fRead.open("board.txt", std::ios_base::in);
-	// maybe call read size and read map
 }
 
 Board::~Board()
@@ -66,9 +65,9 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 			collided = true;
 		}
 	}
-	if (!collided)
+	if (!collided)	//if no collisions occurred
 	{
-		thisObj.fall(deltaTime);  //fall if you can
+		thisObj.fall(deltaTime);  //fall 
 		for (auto& unmovable : m_staticObj)
 		{
 			if (unmovable != nullptr && thisObj.collidesWith(*unmovable))
@@ -94,10 +93,6 @@ void Board::checkCollision(MovingObject& thisObj, Controller& game, const sf::Ti
 std::unique_ptr<Bonus> selectBonusType(sf::Vector2f position, int mapW, int mapH)
 {
 	int choice = rand() % NUM_OF_BONUS_TYPES; //choose one of three enemy types
-
-	//
-	//return std::make_unique<BadBonus>(Elements::bonus, position, mapW, mapH);
-	//
 
 	switch ((BonusType)choice)
 	{
@@ -208,7 +203,7 @@ float Board::getStaticIconInfo(bool isWidth) const
 	return NULL;	// to avoid warning
 }
 
-bool Board::LvlWon()
+bool Board::LvlWon() const
 {
 	for (auto& unmoveble : m_staticObj)
 	{
@@ -243,10 +238,8 @@ void Board::dig(const sf::Vector2f& Location)
 
 void Board::resetStreamPtr()
 {
-	//std::string line;
 	this->m_fRead.clear();
 	this->m_fRead.seekg(std::ios_base::beg);
-	//getline(m_fRead, line);
 }
 
 void Board::readLvlSize()
@@ -277,10 +270,3 @@ bool Board::checkIfFloorSymbol(int row, int col) const
 
 	return true; //is a floor
 }
-
-bool Board::checkFloorUnder(const MovingObject& movingObj, const StaticObject& floor) const
-{
-	return floor.contains(movingObj.centerDown())  ;
-}
-
-

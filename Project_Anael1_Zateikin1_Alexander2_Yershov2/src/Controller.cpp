@@ -130,7 +130,6 @@ void Controller::strike(sf::Sound& effect)	// player lost a life, level resets
 		m_isStrike = true;
 		resetLvl();
 		m_map.resetLvlMap();
-		//livesLeft = NUM_OF_LIVES;
 		newGame();
 
 		m_caption.updateLevel(m_map.getInitLevelTime());
@@ -154,6 +153,7 @@ float Controller::getStaticIconInfo(bool isWidth) const
 
 void Controller::newGame()
 {
+	//start screen
 	m_menu.activateStartScreen(this->m_gameWindow);
 
 	//reset statistics 
@@ -163,10 +163,10 @@ void Controller::newGame()
 	m_map.resetStreamPtr();
 	updatePlayerLife(NUM_OF_LIVES);
 	m_caption.updateLife(NUM_OF_LIVES);
+	m_caption.resetLevelNum();
 
 	//read new level
 	m_map.readLvlMap();
-	m_caption.resetLevelNum();
 }
 
 
@@ -179,7 +179,7 @@ void Controller::move(sf::Time deltatime)
 		checkCollision(*movable, deltatime);
 
 		
-		if (m_isStrike)
+		if (m_isStrike) //if bumped into an enemy
 			break;
 		if (size < m_movingObj.size())
 			break;
@@ -347,10 +347,6 @@ std::unique_ptr<Enemy> selectEnemyType(sf::Vector2f position, int mapW, int mapH
 {
 	int choice = rand() % NUM_OF_ENEMIE_TYPES; //choose one of three enemy types
 	
-	//
-	return std::make_unique<SmartEnemy>(Elements::enemy, position, mapW, mapH);
-	//
-
 	switch ((EnemyType)choice)
 	{
 	case EnemyType::dumb :

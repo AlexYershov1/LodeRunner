@@ -36,14 +36,17 @@ void SmartEnemy::move(sf::Time& clock)
 
 void SmartEnemy::handleCollision(Ladder& ladder, Controller& game)
 {
-	auto sigma = game.getStaticIconInfo(GET_WIDTH) / (SIGMA + 1);
-	if (std::abs(ladder.Center().x - this->centerDown().x) < /*SIGMA*/ sigma) //if close to the center of the ladder
+	auto sigma = game.getStaticIconInfo(GET_WIDTH) / (SIGMA + 1); 
+
+	if (std::abs(ladder.Center().x - this->centerDown().x) < sigma) //if close to the center of the ladder
 	{
-		if (std::abs(Player::plyLocation.y - this->getPos().y) > sigma)
+		if (std::abs(Player::plyLocation.y - this->getPos().y) > sigma)	//if player is not on the same level as enemy
 		{
-			if (m_direction != DirectionVec[(int)Direction::Down] && m_direction != DirectionVec[(int)Direction::Up])
-				m_prevDirection = m_direction;																	//PROBLEMATIC
 			m_icon.setTexture(*resourcesManager::instance().getChangingIcon(MovingObjTexture::enemyClimbingIcon));
+
+			if (m_direction != DirectionVec[(int)Direction::Down] && m_direction != DirectionVec[(int)Direction::Up])
+				m_prevDirection = m_direction;																	
+			
 			if (Player::plyLocation.y > this->getPos().y) // player is underneath me
 				this->m_direction = DirectionVec[(int)Direction::Down];
 			else if (Player::plyLocation.y < this->getPos().y) // player is above me
@@ -52,19 +55,10 @@ void SmartEnemy::handleCollision(Ladder& ladder, Controller& game)
 		
 		if (this->getPos() == this->m_prevPos)	// stuck in ladder
 		{
-			this->m_icon.move(0, -1);			//this makes the enemy get stuck UNDER a floor...
+			this->m_icon.move(0, -1);			//lift up
 			this->m_direction = this->m_prevDirection;
-		}
-		
+		}	
 	}
-	//testing
-	/*
-	if (ladder.contains(this->centerDown()) && (m_prevPos.y < getPos().y))  //if after fall and on a ladder
-	{
-		//m_prevDirection = m_direction;
-		m_direction = DirectionVec[(int)Direction::Left];
-	}
-	*/
 }
 
 void SmartEnemy::handleCollision(Floor& floor, Controller&)
@@ -75,7 +69,7 @@ void SmartEnemy::handleCollision(Floor& floor, Controller&)
 		if ((floor.getPos().y - this->centerDown().y) < 1.0f && //close to top
 			m_prevPos.y == this->getPos().y)  //not after fall
 		{
-			m_prevPos = this->getPos();//questionable
+			m_prevPos = this->getPos();
 			m_icon.move(0, -1); //move one pixel up
 		}
 		else if (m_direction == DirectionVec[(int)Direction::Right])
@@ -83,16 +77,16 @@ void SmartEnemy::handleCollision(Floor& floor, Controller&)
 			//check if should save old direction
 			m_prevDirection = m_direction;
 			m_direction = DirectionVec[(int)Direction::Left];
-			this->moveToPrevPos();			//check this!
+			this->moveToPrevPos();			
 		}
 		else if (m_direction == DirectionVec[(int)Direction::Left])
 		{
 			m_prevDirection = m_direction;
 			m_direction = DirectionVec[(int)Direction::Right];
-			this->moveToPrevPos();			//check this!
+			this->moveToPrevPos();			
 		}
 	}
-	else if (floor.contains(this->centerDown()) && (m_prevPos.y == getPos().y))
+	else if (floor.contains(this->centerDown()) && (m_prevPos.y == getPos().y)) //stuck inside a floor
 	{
 		m_icon.setPosition(this->getPos().x, floor.getPos().y - 1.0f - this->getIconHeight()); //move above floor
 	}
