@@ -31,7 +31,9 @@ sf::Vector2f MovingObject::getRespawnLocation() const
 const sf::Vector2f MovingObject::centerDown() const
 {
 	const auto rect = this->m_icon.getGlobalBounds();
-	sf::Vector2f Location = { this->getPos().x + rect.width / 2, this->getPos().y + rect.height };
+	sf::Vector2f Location = { rect.left + rect.width / 2, rect.top + rect.height };
+
+	//sf::Vector2f Location = { this->getPos().x + rect.width / 2, this->getPos().y + rect.height };
 	return Location;
 }
 void MovingObject::moveToPrevPos()
