@@ -17,12 +17,9 @@ void SmartEnemy::move(sf::Time& clock)
 		{
 			if (this->getPos() == m_prevPos) // stuck
 				m_direction = m_prevDirection;	// continue sideways (look for ladder)
-
-
-			//this creates a problem - the enemy is on a ladder, with no floor under him , tries to go sideways (because stuck) 
 		}
 	}
-	else //what if player stuck?
+	else 
 	{
 		if (Player::plyLocation.x < this->getPos().x)	// player is to the left of me
 		{		
@@ -39,7 +36,7 @@ void SmartEnemy::move(sf::Time& clock)
 
 void SmartEnemy::handleCollision(Ladder& ladder, Controller& game)
 {
-	auto sigma = game.getStaticIconInfo(GET_WIDTH) / (SIGMA+1);
+	auto sigma = game.getStaticIconInfo(GET_WIDTH) / (SIGMA + 1);
 	if (std::abs(ladder.Center().x - this->centerDown().x) < /*SIGMA*/ sigma) //if close to the center of the ladder
 	{
 		if (std::abs(Player::plyLocation.y - this->getPos().y) > sigma)
