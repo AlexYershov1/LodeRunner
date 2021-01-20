@@ -8,6 +8,5 @@ public:
 	~TimeBonus();
 
 	virtual void handleCollision(Player&, Controller&) override;
-private:
-	
+
 };

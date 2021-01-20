@@ -8,21 +8,25 @@ const int WINDOW_HEIGHT = 800;
 const int CAPTION_HEIGHT = 100;
 const float ICON_SIZE = 512;
 const int SEED = 7;
+
+//game statistics
 const int NUM_OF_ENEMIE_TYPES = 3;
 const int NUM_OF_BONUS_TYPES = 4;
+const int COIN_VALUE = 2, STAGE_VALUE = 50;
+const float STAGE_TIME = 90;
+const float BONUS_TIME = 30;
+
+//moving statistics
 const float BASE_SPEED = 100.0;
 const float FALL_SPEED = 20.0;
 const float STEP = 35.0;
 const int NUM_OF_LIVES = 3;
-const int COIN_VALUE = 2, STAGE_VALUE = 50;
-const float STAGE_TIME = 90;
-const float BONUS_TIME = 30;
-const float SIGMA = 4.0;
-//const float VERTICAL_SIGMA = 1.0f;
-const float RELATIVE_SIGMA = 10;
 
+//for functions
 const bool GET_WIDTH = true;
 const bool GET_HEIGHT = false;
+const float SIGMA = 4.0;
+const int DELTA_TIME = 5;
 
 
 // for start screen

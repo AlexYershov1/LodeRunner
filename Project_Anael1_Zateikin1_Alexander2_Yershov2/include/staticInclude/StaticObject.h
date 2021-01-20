@@ -9,7 +9,6 @@ public:
 	StaticObject(Elements, const sf::Vector2f&, int, int);
 	virtual ~StaticObject() {};
 
-	
 	virtual void handleCollision(GameObject&, Controller&) override {};
 	virtual void handleCollision(Wall&, Controller&) override {};
 	virtual void handleCollision(Player&, Controller&) = 0;
@@ -19,10 +18,7 @@ public:
 	virtual void handleCollision(Ladder&, Controller&) override {};
 	virtual void handleCollision(Coin&, Controller&) override {};
 	virtual void handleCollision(Bonus&, Controller&) override {};
-	const sf::Vector2f Center() const;
-protected:
-
-private:
 	
+	const sf::Vector2f Center() const;	//calculate the center of the object
 };
 

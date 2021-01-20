@@ -8,7 +8,5 @@ public:
 	virtual ~Bonus() {};
 
 	virtual void handleCollision(Enemy&, Controller&) override {};
-private:
-
 };
 

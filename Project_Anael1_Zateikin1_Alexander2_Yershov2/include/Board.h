@@ -21,22 +21,23 @@ public:
 	Board();
 	~Board();
 	
-	bool readLvlMap();
+	bool readLvlMap();		//read a level
 	std::unique_ptr<StaticObject> createStaticObject(Elements, sf::Vector2f);
 	void checkCollision(MovingObject&, Controller&, const sf::Time& );
+
 	// get functions
 	int getWidth() const;
 	int getHeight() const;
 	int getInitLevelTime() const;
 	Elements getSymbol(int, int);
 	void draw(sf::RenderWindow&);
-	void eraseObject(StaticObject&);
-
 	float getStaticIconInfo(bool) const;
-	bool LvlWon();
+
+	void eraseObject(StaticObject&);
+	bool LvlWon() const;
 	void resetLvlMap();
 	void dig(const sf::Vector2f&);
-	void resetStreamPtr();
+	void resetStreamPtr();	//return stream pointer to begining of file
 private:
 	std::ifstream m_fRead;
 	std::vector<std::string> m_map;
@@ -45,9 +46,8 @@ private:
 	int m_width;
 	int m_initLevelTime;
 
-
 	void readLvlSize();
 	bool checkIfFloorSymbol(int, int) const;
-	bool checkFloorUnder(const MovingObject&, const StaticObject&) const;
+	//bool checkFloorUnder(const MovingObject&, const StaticObject&) const;
 };
 static std::unique_ptr<Bonus> selectBonusType(sf::Vector2f, int, int);

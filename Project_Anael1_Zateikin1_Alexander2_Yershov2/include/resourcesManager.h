@@ -42,11 +42,10 @@ private:
 	sf::Font m_font;
 	std::vector<sf::Texture> m_musicTextureVec;
 
+	//members to aid in crearing a "run" effect
 	int m_enemySerialNumber;
 	int m_playerIconSerialNum;
 	sf::Clock enemyAnimetionTimer;
 	sf::Clock playerAnimationTimer;
-
-	
 };
 
