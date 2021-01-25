@@ -1,7 +1,7 @@
 # LodeRunner
 Lode Runner project with SFML.
 
-Project creators: Alexander Yershov 319140943,  and Anael Zateikin 207190216.
+Project creators: Alexander Yershov,  and Anael Zateikin.
 
 This is the Lode Runner game created with SFML.
 
